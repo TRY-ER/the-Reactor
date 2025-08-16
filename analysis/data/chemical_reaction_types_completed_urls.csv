@@ -1,0 +1,68 @@
+Serial No.,Reaction Type,Description,General Formula,Source
+1,Synthesis/Combination Reaction,Two or more reactants combine to form a single product,A + B → AB,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
+2,Decomposition Reaction,A single compound breaks down into two or more simpler substances,AB → A + B,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
+3,Single Displacement/Substitution,A more reactive element displaces a less reactive element from its compound,A + BC → AC + B,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
+4,Double Displacement/Substitution,Two compounds exchange ions to produce two new compounds,AB + CD → AD + CB,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
+5,Combustion Reaction,"A substance reacts with oxygen, releasing energy as heat and light",CₓHᵧ + O₂ → CO₂ + H₂O + energy,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
+6,Acid-Base/Neutralization,An acid reacts with a base to produce salt and water,Acid + Base → Salt + Water,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); Britannica (https://www.britannica.com/science/chemical-reaction)
+7,Precipitation Reaction,An insoluble solid (precipitate) forms when two aqueous solutions are mixed,AB + CD → AD(s) + BC,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/)
+8,Redox/Oxidation-Reduction,Oxidation and reduction occur together (electron transfer),Oxidation/Reduction,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); Britannica (https://www.britannica.com/science/chemical-reaction); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
+9,Addition Reaction,Two or more molecules combine to form a larger molecule (adduct),A=B + C → A-B-C,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Addition reaction
+10,Elimination Reaction,Two substituents are removed from a molecule in either a one- or two-step mechanism,A-B-C → A=B + C,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Elimination reaction
+11,Substitution Reaction,One functional group is replaced by another,A-B + C → A-C + B,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction)
+12,Pericyclic Reaction,Concerted reactions involving cyclic transition states,Cyclic mechanism,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction)
+13,Rearrangement Reaction,Atoms or groups migrate within a molecule to form structural isomers,A-B-C → A-C-B,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Rearrangement reaction
+14,Photochemical Reaction,Reactions initiated or driven by light energy,A + hν → B,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Photochemistry
+15,Diels-Alder Reaction,Cycloaddition between a conjugated diene and dienophile to form cyclohexene derivative,[4+2] cycloaddition,Wikipedia - Diels-Alder reaction (https://en.wikipedia.org/wiki/Chemical_reaction); BYJU'S (https://byjus.com/chemistry/types-of-chemical-reactions/)
+16,Olefin Metathesis,Exchange of double bonds between carbon atoms in alkenes,R₁-CH=CH-R₂ + R₃-CH=CH-R₄ → R₁-CH=CH-R₃ + R₂-CH=CH-R₄,Wikipedia - Olefin metathesis (https://en.wikipedia.org/wiki/Chemical_reaction); Master Organic Chemistry (https://www.masterorganicchemistry.com/reaction-guide/olefin-metathesis/)
+17,Cycloaddition Reaction,Formation of rings through simultaneous bond formation,[m+n] cycloaddition,Wikipedia - Cycloaddition (https://en.wikipedia.org/wiki/Chemical_reaction)
+18,Coupling Reaction,"Two reactant molecules are bonded together, often with metal catalysts",R-M + R'-X → R-R' + M-X,https://en.wikipedia.org/wiki/Chemical_reaction
+19,Free Radical Reaction,Reactions involving free radical intermediates,Initiation → Propagation → Termination,https://en.wikipedia.org/wiki/Chemical_reaction
+20,Ring-Opening Reaction,Breaking of cyclic structures to form open-chain compounds,Cyclic → Open chain,https://byjus.com/chemistry/epoxide-reactions/
+21,Ring-Closing Reaction,Formation of cyclic structures from open-chain precursors,Open chain → Cyclic,https://en.wikipedia.org/wiki/Ring-closing_metathesis
+22,Complexation Reaction,Formation of coordination complexes between metal ions and ligands,M + nL → MLₙ,https://en.wikipedia.org/wiki/Chemical_reaction
+23,Ligand Substitution,Replacement of one ligand with another in a coordination complex,MLₙX + Y → MLₙY + X,https://utkaluniversity.ac.in/wp-content/uploads/2022/03/Inorg_React_Mech_NDas.pdf
+24,Electron Transfer Reaction,Transfer of electrons between inorganic complexes,Outer-sphere or Inner-sphere,https://utkaluniversity.ac.in/wp-content/uploads/2022/03/Inorg_React_Mech_NDas.pdf
+25,Solid-State Reaction,Reactions occurring between solid reactants,Solid + Solid → Product,https://www.vedantu.com/question-answer/what-is-a-solidstate-reaction-class-11-chemistry-cbse-60c97714e5187b2947e21e3f
+26,Gas-Forming Reaction,Reactions that produce gaseous products,Reactants → Products + Gas,https://wisc.pb.unizin.org/minimisgenchem/chapter/m3q3-4-acids-bases-neutralization-and-gas-forming-reactions/
+27,Metal Displacement,A more reactive metal displaces a less reactive metal from solution,M₁ + M₂X → M₁X + M₂,https://www.savemyexams.com/igcse/chemistry/edexcel/19/revision-notes/2-inorganic-chemistry/2-4-reactivity-series/2-4-2-metal-displacement-reactions/
+28,Electrochemical Reaction,Reactions involving electron transfer at electrode-electrolyte interfaces,"Oxidation at anode, Reduction at cathode",https://byjus.com/jee/electrochemistry/
+29,Electrolysis,Chemical decomposition using electric current,Compound + electrical energy → Products,https://en.wikipedia.org/wiki/Electrolysis
+30,Galvanic Cell Reaction,Spontaneous redox reactions producing electrical energy,Spontaneous redox → Electrical energy,https://en.wikipedia.org/wiki/Galvanic_cell
+31,Electroplating,Deposition of metals using electric current,Mⁿ⁺ + ne⁻ → M(s),https://en.wikipedia.org/wiki/Electroplating
+32,Enzymatic Reaction,Reactions catalyzed by biological enzymes,Substrate + Enzyme → Products + Enzyme,https://en.wikipedia.org/wiki/Enzyme_kinetics
+33,Group Transfer Reaction,Transfer of functional groups between molecules,Donor + Acceptor → Modified products,https://wou.edu/chemistry/courses/online-chemistry-textbooks/ch103-allied-health-chemistry/ch103-chapter-6-introduction-to-organic-chemistry-and-biological-molecules/
+34,Hydrolysis Reaction,Breaking of bonds using water,A-B + H₂O → A-H + B-OH,https://en.wikipedia.org/wiki/Hydrolysis
+35,Anabolic Reaction,Biosynthetic reactions that build complex molecules,Simple → Complex (energy required),https://en.wikipedia.org/wiki/Anabolism
+36,Catabolic Reaction,Breakdown reactions that release energy,Complex → Simple (energy released),https://en.wikipedia.org/wiki/Catabolism
+37,Homogeneous Catalysis,Catalysis where catalyst and reactants are in the same phase,Reactants + Catalyst → Products + Catalyst,https://en.wikipedia.org/wiki/Homogeneous_catalysis
+38,Heterogeneous Catalysis,Catalysis where catalyst and reactants are in different phases,Reactants + Catalyst → Products + Catalyst,https://en.wikipedia.org/wiki/Heterogeneous_catalysis
+39,Biocatalysis,Catalysis using biological catalysts (enzymes),Substrate + Enzyme → Products + Enzyme,https://en.wikipedia.org/wiki/Biocatalysis
+40,Autocatalysis,Reaction where one of the products acts as a catalyst,A → B (where B catalyzes A → B),https://en.wikipedia.org/wiki/Autocatalysis
+41,Photo-dissociation,Breaking of bonds using light energy,AB + hν → A* + B*,https://en.wikipedia.org/wiki/Photodissociation
+42,Photo-isomerization,Light-induced structural rearrangements,A + hν → B (isomer),https://en.wikipedia.org/wiki/Photoisomerization
+43,Photo-addition,Addition reactions initiated by light,A + B + hν → AB,https://www.slideshare.net/slideshow/photoaddition-and-photo-fragmentation-reaction/249369371
+44,Photo-substitution,Substitution reactions driven by light,A + BC + hν → AB + C,https://www.degruyterbrill.com/document/doi/10.1351/pac197541040433/pdf?srsltid=AfmBOorLBFwsW03B0nWg3XugPLjJAJvWZ62xjm-8qPmZQHqgH35M8mRc
+45,Photo-redox Reaction,Redox reactions initiated by light,A + B + hν → A⁺ + B⁻,https://en.wikipedia.org/wiki/Photoredox_catalysis
+46,Addition Polymerization,Monomers add to form polymers without loss of atoms,nA → (A)ₙ,https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Chemistry_for_Changing_Times_(Hill_and_McCreary)/10%3A_Polymers/10.03%3A_Addition_Polymerization_-_One__One__One__..._Gives_One
+47,Condensation Polymerization,Monomers combine with loss of small molecules,nA + nB → (AB)ₙ + nC,https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Chemistry_for_Changing_Times_(Hill_and_McCreary)/10%3A_Polymers/10.05%3A_Condensation_Polymers
+48,Ring-Opening Polymerization,Cyclic monomers open to form linear polymers,Cyclic monomer → Linear polymer,https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Polymer_Chemistry_(Schaller)/02%3A_Synthetic_Methods_in_Polymer_Chemistry/2.08%3A_Ring-Opening_Polymerization
+49,Free Radical Polymerization,Polymerization initiated by free radicals,Initiation → Propagation → Termination,https://chem.libretexts.org/Courses/Purdue/Purdue_Chem_26100%3A_Organic_Chemistry_I_(Wenthold)/Chapter_08%3A_Reactions_of_Alkenes/8.7.Polymerization/Free_Radical_Polymerization
+50,Ionic Polymerization,Polymerization using ionic initiators,Anionic or Cationic mechanism,https://en.wikipedia.org/wiki/Ionic_polymerization
+51,Nuclear Fission,Heavy nucleus splits into lighter nuclei with energy release,Heavy nucleus → Lighter nuclei + neutrons + energy,https://en.wikipedia.org/wiki/Nuclear_fission
+52,Nuclear Fusion,Light nuclei combine to form heavier nucleus,Light nuclei → Heavy nucleus + energy,https://en.wikipedia.org/wiki/Nuclear_fusion
+53,Nuclear Decay,Spontaneous breakdown of unstable nuclei,Unstable nucleus → Stable nucleus + radiation,https://brilliant.org/wiki/nuclear-decay/
+54,Nuclear Transmutation,Artificial transformation of one element to another,Target + Projectile → Product + Ejectile,https://en.wikipedia.org/wiki/Nuclear_transmutation
+55,Scattering Reaction,Collision between particles resulting in direction change,Elastic or Inelastic scattering,https://mdcollege.in/wp-content/uploads/2023/02/FYBSc.P2_U2_Nuclear-reactions-.pdf
+56,Spallation Reaction,High-energy particle breaks nucleus into fragments,Nucleus + High-energy particle → Fragments,https://en.wikipedia.org/wiki/Spallation
+57,Crystallization,Formation of ordered crystalline structures from solution,Dissolved → Crystalline solid,https://en.wikipedia.org/wiki/Crystallization
+58,Recrystallization,Purification by dissolving and re-forming crystals,Impure solid → Pure crystals,https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Physical_Properties_of_Matter/Solutions_and_Mixtures/Case_Studies/RECRYSTALLIZATION
+59,Grignard Reaction,Reaction of Grignard reagent with carbonyl compounds,RMgX + C=O → R-C-OH,https://en.wikipedia.org/wiki/Grignard_reaction
+60,Aldol Reaction,Formation of β-hydroxy carbonyl compounds,2RCHO → RCH(OH)CH(R)CHO,https://en.wikipedia.org/wiki/Aldol_reaction
+61,Claisen Condensation,Formation of β-dicarbonyl compounds from esters,2RCO₂Et → RCOCH(R)CO₂Et,https://en.wikipedia.org/wiki/Claisen_condensation
+62,Wittig Reaction,Formation of alkenes from aldehydes/ketones and ylides,R₂C=O + Ph₃P=CR₂ → R₂C=CR₂,https://en.wikipedia.org/wiki/Wittig_reaction
+63,Heck Reaction,Palladium-catalyzed coupling of aryl halides with alkenes,ArX + alkene → Ar-alkene,https://en.wikipedia.org/wiki/Heck_reaction
+64,Suzuki Reaction,Palladium-catalyzed cross-coupling reaction,R-X + R'-B(OR)₂ → R-R',https://en.wikipedia.org/wiki/Suzuki_reaction
+65,Chain Reaction,"Self-propagating reactions with initiation, propagation, and termination",Initiation → Propagation → Termination,https://en.wikipedia.org/wiki/Chain_reaction
+66,Oscillating Reaction,Reactions showing periodic changes in concentration,Non-linear kinetics,https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_for_the_Biosciences_(LibreTexts)/09%3A_Chemical_Kinetics/9.11%3A_Oscillating_Reactions
+67,Clock Reaction,Reactions with sudden color/property changes after delay,Delayed appearance of product,https://en.wikipedia.org/wiki/Iodine_clock_reaction
