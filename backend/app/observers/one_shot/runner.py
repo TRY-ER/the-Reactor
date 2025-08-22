@@ -9,7 +9,7 @@ from app.observers.output_schema import OutputSchema
 from agents.extensions.models.litellm_model import LitellmModel
 
 
-ALLOWED_MODELS = ["groq", "xai"]
+ALLOWED_MODELS = ["groq", "xai", 'google', "anthropic"]
 
 async def run_agent(
               model_type: str,

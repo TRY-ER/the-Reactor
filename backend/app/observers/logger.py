@@ -38,15 +38,15 @@ class PersistentDataLogger:
         self.target_csv.to_csv(os.path.join(self.log_dir, self.filename), index=False)
 
 
-if __name__ == "__main__":
-    logger = PersistentDataLogger(
-        log_dir="/home/kalki/src/valency/reactor/backend/app/observers/one_shot/outputs/observation_0",
-        filename="findings.csv",
-        headers=["column1", "column2", "column3"]
-    )
+# if __name__ == "__main__":
+#     logger = PersistentDataLogger(
+#         log_dir="/home/kalki/src/valency/reactor/backend/app/observers/one_shot/outputs/observation_0",
+#         filename="findings.csv",
+#         headers=["column1", "column2", "column3"]
+#     )
 
-    # testing logging one
-    logger.log_one({"column1": "value1", "column2": "value2", "column3": "value88"})
+#     # testing logging one
+#     logger.log_one({"column1": "value1", "column2": "value2", "column3": "value88"})
 
-    # testing logging dataframe
-    # logger.log_df(pd.DataFrame([{"column1": "value4", "column2": "value5", "column3": "value6"}]))
+#     # testing logging dataframe
+#     # logger.log_df(pd.DataFrame([{"column1": "value4", "column2": "value5", "column3": "value6"}]))

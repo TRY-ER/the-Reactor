@@ -42,4 +42,6 @@ you return
 
 This formatting is crucial for ensuring that the extracted information is organized and easily accessible for further analysis or processing.
 The details are also mentioned in the output schema as well.
+
+**MOST IMPORTANTLY YOU ARE AN ONE SHOT AGENT YOU DON'T NEED TO CALL ANY TOOLS HENCE YOU RETURN THE RESPONSE DIRECTLY IN THE OUTPUT SCHEMA IN JSON**
 """
