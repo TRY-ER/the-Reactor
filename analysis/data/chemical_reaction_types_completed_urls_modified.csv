@@ -1,0 +1,403 @@
+Serial No.,Reaction Type,Description,General Formula,Source,Generated Prompt
+1,Synthesis/Combination Reaction,Two or more reactants combine to form a single product,A + B → AB,https://en.wikipedia.org/wiki/Chemical_reaction,"A synthesis (or combination) reaction involves two or more simple substances combining to form a more complex compound, typically represented as \( A + B \rightarrow AB \). This type of reaction is characterized by multiple reactants yielding a single product. An example is the formation of iron(II) sulfide from iron and sulfur:
+
+\[ 8 \text{Fe} + \text{S}_8 \rightarrow 8 \text{FeS} \]
+
+Another example includes the reaction of hydrogen and oxygen gases to produce water. Synthesis reactions are vital for forming complex molecules from simpler ones and are represented visually among four basic chemical reaction types: synthesis, decomposition, single replacement, and double replacement."
+2,Decomposition Reaction,A single compound breaks down into two or more simpler substances,AB → A + B,https://en.wikipedia.org/wiki/Chemical_reaction,"A decomposition reaction involves a complex substance breaking down into simpler components, essentially the reverse of a synthesis reaction. It is represented as \( AB \rightarrow A + B \). An example is the electrolysis of water, where water (\(2H_2O\)) decomposes into oxygen (\(O_2\)) and hydrogen gas (\(2H_2\))."
+3,Single Displacement/Substitution,A more reactive element displaces a less reactive element from its compound,A + BC → AC + B,https://en.wikipedia.org/wiki/Chemical_reaction,"In a single displacement reaction, an uncombined element replaces another in a compound, effectively exchanging places with an element within the compound. The general form of this reaction is \( A + BC \rightarrow AC + B \). An example is when magnesium replaces hydrogen in water, forming solid magnesium hydroxide and releasing hydrogen gas: \( \text{Mg} + 2 \text{H}_2\text{O} \rightarrow \text{Mg(OH)}_2 + \text{H}_2 \)."
+4,Double Displacement/Substitution,Two compounds exchange ions to produce two new compounds,AB + CD → AD + CB,https://en.wikipedia.org/wiki/Chemical_reaction,"Double Displacement Reaction Summary:
+
+In a double displacement reaction, the anions and cations of two compounds exchange places, resulting in the formation of two new compounds. The general form is: 
+
+\[ AB + CD \rightarrow AD + CB \]
+
+**Example 1:** When barium chloride (BaCl₂) reacts with magnesium sulfate (MgSO₄), the sulfate ion (SO₄²⁻) exchanges with two chloride ions (2Cl⁻), forming barium sulfate (BaSO₄) and magnesium chloride (MgCl₂).
+
+**Example 2:** The reaction of lead(II) nitrate (Pb(NO₃)₂) with potassium iodide (2KI) produces lead(II) iodide (PbI₂) and potassium nitrate (2KNO₃).
+
+Key Reaction: 
+\[ \text{Pb(NO}_3\text{)}_2 + 2 \text{KI} \rightarrow \text{PbI}_2 \downarrow + 2 \text{KNO}_3 \]
+
+This type of reaction is characterized by the formation of a precipitate and is critical in various chemical applications and analyses."
+5,Combustion Reaction,"A substance reacts with oxygen, releasing energy as heat and light",CₓHᵧ + O₂ → CO₂ + H₂O + energy,https://en.wikipedia.org/wiki/Chemical_reaction,"In a combustion reaction, an element or compound reacts with an oxidant, typically oxygen, producing energy as heat or light. Combustion commonly involves hydrocarbons. For example, the combustion of 1 mole (114 g) of octane (\( \text{C}_8\text{H}_{18} \)) in oxygen releases 5500 kJ and results in carbon dioxide and water: 
+
+\[ \text{C}_8\text{H}_{18(l)} + \frac{25}{2} \text{O}_2(g) \rightarrow 8 \text{CO}_2(g) + 9 \text{H}_2\text{O}(l) \]
+
+Other elements like carbon, magnesium, and sulfur can also undergo combustion:
+
+\[ 2 \text{Mg}(s) + \text{O}_2(g) \rightarrow 2 \text{MgO}(s) \]
+
+\[ \text{S}(s) + \text{O}_2(g) \rightarrow \text{SO}_2(g) \]"
+6,Acid-Base/Neutralization,An acid reacts with a base to produce salt and water,Acid + Base → Salt + Water,https://en.wikipedia.org/wiki/Chemical_reaction,"In Brønsted–Lowry acid-base theory, an acid-base reaction involves the transfer of protons (H⁺) from an acid to a base. The acid loses a proton to form its conjugate base, while the base gains a proton to form its conjugate acid. The reaction is reversible, maintaining equilibrium determined by the acid and base dissociation constants (Kₐ and Kᵦ). A special case of this is neutralization, where equal amounts of acid and base form a neutral salt. Acid-base reactions can be defined by different theories: 
+
+1. **Arrhenius**: Acids release H₃O⁺ ions in water; bases release OH⁻ ions.
+2. **Brønsted-Lowry**: Acids are proton donors; bases are proton acceptors.
+3. **Lewis**: Acids are electron-pair acceptors; bases are electron-pair donors. 
+
+These definitions provide frameworks for understanding the nature and outcomes of acid-base interactions."
+7,Precipitation Reaction,An insoluble solid (precipitate) forms when two aqueous solutions are mixed,AB + CD → AD(s) + BC,https://en.wikipedia.org/wiki/Chemical_reaction,"A precipitation reaction involves forming a solid in a solution or within another solid during a chemical reaction, occurring when ion concentrations surpass the solubility limit, resulting in an insoluble salt. This reaction can be facilitated by adding a precipitating agent or removing the solvent. Rapid processes yield amorphous or microcrystalline residues, while slower ones produce single crystals, which can also form via recrystallization from microcrystalline salts."
+8,Redox/Oxidation-Reduction,Oxidation and reduction occur together (electron transfer),Oxidation/Reduction,https://en.wikipedia.org/wiki/Chemical_reaction,"Redox (oxidation-reduction) reactions involve the transfer of electrons, where one species acts as a reducing agent and another as an oxidizing agent, resulting in changes in oxidation states. In the given reaction, hazardous sodium metal reacts with chlorine gas to form sodium chloride. Sodium is oxidized, losing an electron and increasing its oxidation state from 0 to +1, while chlorine is reduced, gaining an electron and decreasing its oxidation state from 0 to -1. Here, sodium acts as the reducing agent and chlorine as the oxidizing agent. This reaction exemplifies the core concepts of redox processes, with electron transfer leading to compound formation."
+9,Addition Reaction,Two or more molecules combine to form a larger molecule (adduct),A=B + C → A-B-C,https://en.wikipedia.org/wiki/Chemical_reaction,"**Addition Reaction Summary**
+
+Addition reactions involve the conversion of double or triple bonds into single bonds by adding atoms or groups to the carbon atoms involved in the unsaturation. They are a counterpart to elimination reactions, which involve removing substituents to form multiple bonds.
+
+Key Steps:
+1. **Electrophilic Addition**: A common addition mechanism where an electrophile initially attacks the π-bond of a double bond, leading to the formation of a carbocation, which is then attacked by a nucleophile. This is exemplified by the addition of hydrogen bromide (HBr) across a double bond, where H+ adds first to form a carbocation followed by the nucleophilic attack by Br-.
+
+2. **Nucleophilic Addition**: Occurs frequently in carbonyl compounds. An example is the nucleophilic addition-elimination mechanism often seen in reactions involving carbonylic compounds.
+
+3. **Markovnikov’s Rule**: In electrophilic additions to asymmetric alkenes, the electrophile attaches in such a way that the more stable carbocation is formed, often leading to the more substituted carbon becoming bonded to the electrophile.
+
+Applications:
+- Utilized in synthesizing crucial organic compounds, including alcohols, alkanes, and various substituted hydrocarbons.
+- Important in polymerization processes, such as the formation of polymers via radical mechanisms.
+
+Understanding addition reactions and their mechanisms, such as electrophilic and nucleophilic addition, is essential for predicting the outcomes of organic synthesis and reactivity."
+10,Elimination Reaction,Two substituents are removed from a molecule in either a one- or two-step mechanism,A-B-C → A=B + C,https://en.wikipedia.org/wiki/Chemical_reaction,"### Elimination Reaction Summary
+
+**Reaction Type:** Elimination Reaction
+
+Elimination reactions are processes that transform organic molecules by removing substituents, forming multiple bonds such as double or triple bonds. This involves the elimination of a leaving group and typically requires a base. There are two main types: 
+
+1. **E1 Mechanism (Unimolecular Elimination):**
+   - Involves two steps, starting with the formation of a carbocation as the leaving group is expelled.
+   - A proton is then removed from the adjacent carbon, resulting in a double bond.
+   - Competes with S_N1 substitution reactions.
+
+2. **E2 Mechanism (Bimolecular Elimination):**
+   - Occurs in a single step where the base attacks a proton simultaneously as the leaving group departs, forming a double bond without forming an intermediate.
+   - Competes with S_N2 substitution reactions.
+   - The anti-position attack is typical.
+
+Elimination reactions are used for converting alkyl halides to alkenes and alkynes. The choice of base and the reaction conditions can dictate the formation of double or triple bonds and guide the reaction's regioselectivity.
+
+**Additional Notes:**
+- The electrostatic attack of a proton and Markovnikov's rule guide the regiochemistry in electrophilic addition of hydrogen halides.
+- Nucleophilic addition-elimination mechanisms can also occur, particularly in aromatic compounds.
+- Elimination reactions can produce more stable double bonds and are strategic in organic synthesis for constructing complex molecular architectures.
+
+These details underscore the significance of base choice and mechanistic pathways in achieving desired structural transformations via elimination reactions."
+11,Substitution Reaction,One functional group is replaced by another,A-B + C → A-C + B,https://en.wikipedia.org/wiki/Chemical_reaction,"In a substitution reaction, a functional group in a chemical compound is replaced by another group. This involves substituting species into nucleophilic, electrophilic, or radical substitution. 
+
+1. **Nucleophilic Substitution:** A nucleophile with excess electrons replaces a part of the substrate. It commonly involves S<sub>N</sub>1 and S<sub>N</sub>2 mechanisms. 
+   - **S<sub>N</sub>1:** Two steps; slow formation of a carbocation, followed by nucleophile attack.
+   - **S<sub>N</sub>2:** One-step back-side attack, leading to stereochemical inversion (Walden inversion).
+
+2. **Electrophilic Substitution:** The species with positive charge (electrophile) substitutes into the aromatic system, commonly in aromatic hydrocarbons, leading to the formation of a σ-complex and subsequent restoration of aromaticity.
+
+3. **Radical Substitution:** Involves radicals, often initiated by light or heat in a chain reaction, as seen in halogenation.
+
+These reactions are pivotal in synthetic and industrial chemistry for creating complex molecules."
+12,Pericyclic Reaction,Concerted reactions involving cyclic transition states,Cyclic mechanism,https://en.wikipedia.org/wiki/Chemical_reaction,"Pericyclic reactions are a class of organic reactions characterized by concerted cyclic movements of electrons. A key type is cycloaddition, where two or more double bond-containing molecules form a cyclic structure. An important example is the Diels–Alder reaction, a [4+2] cycloaddition, involving a conjugated diene and a substituted alkene to produce a substituted cyclohexene. These transformations are noteworthy for their stereospecificity and the construction of complex cyclic systems, making them valuable for synthesis in organic chemistry."
+13,Rearrangement Reaction,Atoms or groups migrate within a molecule to form structural isomers,A-B-C → A-C-B,https://en.wikipedia.org/wiki/Chemical_reaction,"A rearrangement reaction is a broad class of organic reactions characterized by a ""change of connectivity"" within a molecule. Typically intramolecular, these reactions often involve the movement of a substituent, such as in a 1,2-shift, where a group moves from one atom to an adjacent atom. An example includes the skeletal isomerization of n-butane to isobutane and pentane to isopentane. Common rearrangements include the Wagner–Meerwein and Beckmann rearrangements. These reactions are significant in industries like oil refining due to their role in converting straight-chain alkanes to branched isomers, which have better combustion properties for engines."
+14,Photochemical Reaction,Reactions initiated or driven by light energy,A + hν → B,https://en.wikipedia.org/wiki/Chemical_reaction,"Photochemical reactions involve atoms or molecules absorbing photons from light to reach an excited state. This surplus energy can break chemical bonds, forming radicals. Types include hydrogen-oxygen reactions, radical polymerization, chain reactions, and rearrangement reactions.
+
+A notable example is photosynthesis, where solar energy converts carbon dioxide and water into glucose, releasing oxygen. Other applications include human vision, driven by the photochemical reaction of rhodopsin, and bioluminescence in fireflies triggered by an enzyme. Significant atmospheric photochemical reactions, such as ozone formation, play a crucial role in atmospheric chemistry.
+
+The image illustrates a Paternò-Büchi reaction, where a photoexcited carbonyl group reacts with an olefin to yield an oxetane."
+15,Diels-Alder Reaction,Cycloaddition between a conjugated diene and dienophile to form cyclohexene derivative,[4+2] cycloaddition,https://en.wikipedia.org/wiki/Chemical_reaction,"**Diels-Alder Reaction Summary:**
+
+The Diels-Alder reaction is a [4+2] cycloaddition reaction between a conjugated diene and a dienophile, forming a substituted cyclohexene. This pericyclic reaction involves the interaction of pi orbitals forming new sigma bonds, leading to a cyclohexene derivative. In the provided image, the mechanism displays electron flow from the diene to the dienophile, resulting in a cyclic product. The orbital overlap illustration emphasizes the interaction between the p-orbitals of the diene and the dienophile's unsaturated system, transitioning to sp³ orbitals in the product. This reaction is stereospecific and concerted, meaning it occurs in a single step without intermediates, crucial for synthesizing complex cyclic structures in organic chemistry."
+16,Olefin Metathesis,Exchange of double bonds between carbon atoms in alkenes,R₁-CH=CH-R₂ + R₃-CH=CH-R₄ → R₁-CH=CH-R₃ + R₂-CH=CH-R₄,https://en.wikipedia.org/wiki/Chemical_reaction,"Olefin metathesis is an organic reaction involving the redistribution of olefin fragments by breaking and reforming carbon-carbon double bonds. It offers fewer by-products and hazardous wastes compared to alternative methods. Key catalysts include Schrock and Grubbs catalysts, essential for facilitating the reaction. Schrock catalysts are based on molybdenum(VI) and tungsten(VI) supported by alkoxide and imido ligands, while Grubbs catalysts utilize ruthenium(II) carbene complexes. This reaction revolutionized organic synthesis, and Schrock, Grubbs, and Chauvin received the 2005 Nobel Prize in Chemistry for their contributions."
+17,Cycloaddition Reaction,Formation of rings through simultaneous bond formation,[m+n] cycloaddition,https://en.wikipedia.org/wiki/Chemical_reaction,"Cycloaddition reactions are chemical reactions in which two or more unsaturated molecules combine to form a cyclic adduct with altered bond multiplicity. These reactions are typically concerted and pericyclic, belonging to the class of addition reactions that do not require nucleophiles or electrophiles. Described using two notations, the older system uses parentheses for atom count, such as the Diels-Alder reaction as a (4+2)-cycloaddition. The IUPAC-preferred notation, introduced by Woodward and Hoffmann, uses square brackets to indicate electrons involved, such as the [4+2] notation for Diels-Alder and [3+2] for 1,3-dipolar cycloaddition. These reactions are key in synthetic organic chemistry."
+18,Coupling Reaction,"Two reactant molecules are bonded together, often with metal catalysts",R-M + R'-X → R-R' + M-X,https://en.wikipedia.org/wiki/Chemical_reaction,"In the context of organic chemistry, a coupling reaction involves the bonding of two reactant molecules, typically facilitated by a metal catalyst. A prominent example is where an organometallic compound (R-M) reacts with an organic halide (R'-X) to form a new carbon–carbon bond. The most prevalent type is the cross-coupling reaction, recognized in the 2010 Nobel Prize awarded to Heck, Negishi, and Suzuki for their work on palladium-catalyzed cross coupling.
+
+Coupling reactions are classified into two types: 
+1. **Homocouplings** - Join two identical partners resulting in a symmetrical product (R–R).
+2. **Heterocouplings** - Join two different partners resulting in an unsymmetrical product (R–R').
+
+The Ullmann reaction, an example of homocoupling, is depicted where two identical aryl halides (Ar-X) react using copper to form a biaryl product. Historical coupling reactions include:
+
+- **Wurtz reaction (1855):** Uses sodium as a reductant in dry ether.
+- **Pinacol coupling (1859):** Utilizes various metals requiring a proton donor.
+- **Glaser coupling (1869):** Employs Cu with O₂ as the H-acceptor.
+- **Ullmann reaction (1901):** Requires Cu and high temperatures.
+- **Fittig reaction:** Similar to Wurtz but uses aromatic halides.
+- **Scholl reaction (1910):** Uses NaAlCl₄ and high heat, with O₂ as an H-acceptor.
+
+These reactions illustrate essential methods for constructing complex organic molecules through strategic carbon–carbon bond formation."
+19,Free Radical Reaction,Reactions involving free radical intermediates,Initiation → Propagation → Termination,https://en.wikipedia.org/wiki/Chemical_reaction,"A free radical reaction involves free radicals, often found in organic reactions. Key studies include the discovery of the triphenylmethyl radical and the lead-mirror experiment by Paneth, which demonstrated the creation and movement of methyl radicals. These reactions, prevalent in organic synthesis, are typically initiated by radical initiators like peroxides and follow a chain mechanism with initiation, propagation, and termination steps. Inhibitors can slow the reaction, while radical disproportionation presents a challenge. These reactions usually occur in the gas phase and are not heavily influenced by the medium's polarity.
+
+Kinetically, the reaction rate in a steady state depends on the concentration of initiating and terminating species, with a rate expressed as \( \text{rate} = k_{\text{obs}} [I]^{3/2} \), reflecting a broken-order dependence. Reactivity is influenced by bond types, with carbon-hydrogen bonds reacting in the order: primary < secondary < tertiary < benzylic < allylic, and stabilized through resonance and captodative effects."
+20,Ring-Opening Reaction,Breaking of cyclic structures to form open-chain compounds,Cyclic → Open chain,https://byjus.com/chemistry/epoxide-reactions/,"The text discusses ring-opening reactions of epoxides, which are three-membered cyclic ethers with one oxygen atom. These rings have high ring tension due to the geometric strain, as the bond angles are 60° instead of the ideal 109.5° for sp³ hybridized atoms. This strain contributes to their reactivity with nucleophiles, despite the weak nature of oxygen as a leaving group. The ring-opening reaction is facilitated by this strain, making epoxides more susceptible to nucleophilic attack. In contrast, larger cyclic ethers do not undergo similar reactions under the same conditions due to reduced ring strain."
+21,Ring-Closing Reaction,Formation of cyclic structures from open-chain precursors,Open chain → Cyclic,https://en.wikipedia.org/wiki/Ring-closing_metathesis,"**Summary of Ring-Closing Metathesis (RCM):**
+
+Ring-closing metathesis (RCM) is an important reaction type in organic chemistry used for the synthesis of unsaturated rings through the intramolecular metathesis of two terminal alkenes, forming a cycloalkene and ethylene as by-products. Typically catalyzed by transition metals like Ru, Mo, and W, RCM is highly valued for its role in creating diverse ring sizes, commonly between 5-7 atoms, but extending to larger macrocycles. 
+
+The process was notably advanced by chemists Robert H. Grubbs and Richard R. Schrock, who received the Nobel Prize for their contributions to olefin metathesis. Furthermore, RCM's efficiency and broad applicability make it a key method in green chemistry due to its atom economy. Ethylene is the main by-product, underscoring its environmentally conscious design. RCM remains a rich field for continued research and review."
+22,Complexation Reaction,Formation of coordination complexes between metal ions and ligands,M + nL → MLₙ,https://en.wikipedia.org/wiki/Chemical_reaction,"In complexation reactions, multiple ligands interact with a metal atom to create a coordination complex. This process involves ligands donating their lone pairs to the empty orbitals of the metal atom, forming dipolar bonds. These ligands are Lewis bases and can be ions or neutral molecules such as carbon monoxide, ammonia, or water. The 18-electron rule is often applied to predict the number of ligands that bind to a central metal atom, signifying that the valence shells of a transition metal ideally accommodate 18 electrons. The symmetry and structure can be further analyzed using crystal field theory and ligand field theory. Complexation also includes ligand exchange and redox processes that modify the oxidation state of the central metal atom. An example of such a complex is Ferrocene, which features an iron atom coordinated between two cyclopentadienyl ligands."
+23,Ligand Substitution,Replacement of one ligand with another in a coordination complex,MLₙX + Y → MLₙY + X,https://utkaluniversity.ac.in/wp-content/uploads/2022/03/Inorg_React_Mech_NDas.pdf,"**Summary of Ligand Substitution Reaction: Associative Mechanism**
+
+The reaction involves nucleophilic substitution via an associative (A) \(S_N2\) mechanism, characterized by the formation of an intermediate with a higher coordination number (CN) than the reactant. The mechanism consists of two steps:
+
+1. Formation of Intermediate: 
+   \[
+   ML_5X + Y \rightarrow ML_5XY 
+   \]
+   This step is slow and the intermediate is rarely isolatable.
+
+2. Release of Leaving Group: 
+   \[
+   ML_5XY \rightarrow ML_5Y + X 
+   \]
+   This step is fast.
+
+The reaction pathway features a narrow transition state (TS) with a negative entropy change (\(\Delta S\)). The kinetic expression for these associative reactions is defined as:
+\[ 
+\frac{d[ML_5Y]}{dt} = \frac{k_1k_2[ML_5X][Y]}{k_{-1} + k_2}
+\]
+The intermediate and transition state structures can be Capped Octahedral and Penta Bipyramidal. Such reactions are critical for understanding kinetics and mechanisms in coordination chemistry."
+24,Electron Transfer Reaction,Transfer of electrons between inorganic complexes,Outer-sphere or Inner-sphere,https://utkaluniversity.ac.in/wp-content/uploads/2022/03/Inorg_React_Mech_NDas.pdf,"Electron transfer reactions (redox reactions) in transition metal complexes involve the transfer of an electron from one species to another, specifically between complexes. The reaction can be represented as: 
+
+\[ \text{M}_1^{(x+)}\text{L}_n + \text{M}_2^{(y+)}\text{L}'_n \rightarrow \text{M}_1^{(x+1)+}\text{L}_n + \text{M}_2^{(y-1)+}\text{L}'_n \]
+
+This involves -1 electron (oxidation) and +1 electron (reduction). These reactions are characterized by their rapidity, surpassing ligand exchange rates, and may not always involve ligand exchange. They play crucial roles in biological processes, particularly in metalloenzymes."
+25,Solid-State Reaction,Reactions occurring between solid reactants,Solid + Solid → Product,https://www.vedantu.com/question-answer/what-is-a-solidstate-reaction-class-11-chemistry-cbse-60c97714e5187b2947e21e3f,"Solid-state reactions occur without solvents, classified as mechanochemical processes. Reactants have limited contact and are typically ground, melted, or heated (around 1000-1500°C) to form polycrystalline inorganic solids. These reactions, also known as dry media or solventless reactions, are used in organic synthesis and metal alloy production (e.g., carbon steel, Fe-Ni). Key influencing factors include the chemical and morphological properties of reagents, reactivity, surface area, free energy changes, and reaction conditions like temperature and pressure. While they minimize chemical waste and cost, they may produce toxic byproducts and are not ideal for mass production."
+26,Gas-Forming Reaction,Reactions that produce gaseous products,Reactants → Products + Gas,https://wisc.pb.unizin.org/minimisgenchem/chapter/m3q3-4-acids-bases-neutralization-and-gas-forming-reactions/,"**Summary of Gas-Forming Reactions**
+
+Gas-forming reactions involve ionic compounds containing carbonate, sulfite, and sulfide anions reacting with acids to produce a salt, water, and a gas. Carbonates yield carbon dioxide, metal sulfites release sulfur dioxide, and metal sulfides produce hydrogen sulfide. The reactions are illustrated by:
+
+- Carbonates: 
+  \[
+  \text{CO}_3^{2-}(\text{aq}) + 2 \text{H}^+(\text{aq}) \rightarrow \text{H}_2\text{CO}_3(\text{aq}) \rightarrow \text{CO}_2(\text{g}) + \text{H}_2\text{O}(l)
+  \]
+
+- Sulfites: 
+  \[
+  \text{SO}_3^{2-}(\text{aq}) + 2 \text{H}^+(\text{aq}) \rightarrow \text{H}_2\text{SO}_3(\text{aq}) \rightarrow \text{SO}_2(\text{g}) + \text{H}_2\text{O}(l)
+  \]
+
+- Sulfides:
+  \[
+  \text{S}^{2-}(\text{aq}) + 2 \text{H}^+(\text{aq}) \rightarrow \text{H}_2\text{S}(\text{g})
+  \]
+
+The produced acids (\(\text{H}_2\text{CO}_3\) and \(\text{H}_2\text{SO}_3\)) are unstable and decompose into gas and water. 
+
+**Example Reactions:**
+
+1. **Calcium Carbonate with Hydrochloric Acid:**
+
+   - Overall:
+     \[
+     \text{CaCO}_3(\text{s}) + 2 \text{HCl}(\text{aq}) \rightarrow \text{CaCl}_2(\text{aq}) + \text{CO}_2(\text{g}) + \text{H}_2\text{O}(l)
+     \]
+
+   - Complete Ionic:
+     \[
+     \text{CaCO}_3(\text{s}) + 2 \text{H}^+(\text{aq}) + 2 \text{Cl}^-(\text{aq}) \rightarrow \text{Ca}^{2+}(\text{aq}) + 2 \text{Cl}^-(\text{aq}) + \text{CO}_2(\text{g}) + \text{H}_2\text{O}(l)
+     \]
+
+   - Net Ionic:
+     \[
+     \text{CaCO}_3(\text{s}) + 2 \text{H}^+(\text{aq}) \rightarrow \text{Ca}^{2+}(\text{aq}) + \text{CO}_2(\text{g}) + \text{H}_2\text{O}(l)
+     \]
+
+2. **Calcium Sulfite with Hydrochloric Acid:**
+
+   - Overall:
+     \[
+     \text{CaSO}_3(\text{s}) + 2 \text{HCl}(\text{aq}) \rightarrow \text{CaCl}_2(\text{aq}) + \text{SO}_2(\text{g}) + \text{H}_2\text{O}(l)
+     \]
+
+3. **Sodium Sulfide with Hydrochloric Acid:**
+
+   - Overall:
+     \[
+     \text{Na}_2\text{S}(\text{s}) + 2 \text{HCl}(\text{aq}) \rightarrow 2 \text{NaCl}(\text{aq}) + \text{H}_2\text{S}(\text{g})
+     \]
+
+These reactions are characterized by the formation of gaseous products and are fundamental in understanding acid-base interactions."
+27,Metal Displacement,A more reactive metal displaces a less reactive metal from solution,M₁ + M₂X → M₁X + M₂,https://www.savemyexams.com/igcse/chemistry/edexcel/19/revision-notes/2-inorganic-chemistry/2-4-reactivity-series/2-4-2-metal-displacement-reactions/,"Metal displacement reactions involve a more reactive metal displacing a less reactive metal from its compounds, as indicated by the reactivity series. These reactions typically involve heating a metal with a metal oxide or an aqueous solution of a metal compound. For instance, zinc can reduce copper(II) oxide to form zinc oxide and copper: 
+
+Zn + CuO → ZnO + Cu.
+
+A table of metal oxide displacement shows various reactions, such as:
+
+- Iron(III) oxide and aluminum (thermite reaction) form iron and aluminum oxide:
+  \( \text{Fe}_2\text{O}_3 + 2\text{Al} \rightarrow 2\text{Fe} + \text{Al}_2\text{O}_3 \).
+
+- Sodium oxide and magnesium show no reaction due to sodium's higher reactivity.
+
+- Silver oxide and copper produce silver and copper(II) oxide:
+  \( \text{Ag}_2\text{O} + \text{Cu} \rightarrow 2\text{Ag} + \text{CuO} \).
+
+- Zinc oxide and calcium yield zinc and calcium oxide:
+  \( \text{ZnO} + \text{Ca} \rightarrow \text{Zn} + \text{CaO} \).
+
+- Lead(II) oxide and silver do not react as lead is more reactive than silver."
+28,Electrochemical Reaction,Reactions involving electron transfer at electrode-electrolyte interfaces,"Oxidation at anode, Reduction at cathode",https://byjus.com/jee/electrochemistry/,"### Electrochemical Reaction Summary
+
+**Electrochemistry** is the study of the relationship between electrical energy and chemical changes, focusing on reactions that involve the input or generation of electric currents. Two main categories are **electrolysis** and **spontaneous redox reactions**.
+
+**Electrochemical Cells** are devices where these reactions occur. They convert chemical energy into electrical energy (or vice versa) in a process where the Gibbs free energy decreases. There are two major types: **galvanic cells** and **electrolytic cells**.
+
+**Galvanic Cells**:
+- Convert chemical energy to electrical energy using redox reactions.
+- Comprised of two compartments with separate oxidation and reduction sites.
+- Example: The Daniell cell, where zinc and copper undergo a redox reaction.
+
+**Reactions in a Daniell Cell**:
+- **Overall Reaction**: Zn(s) + Cu²⁺(aq) → Zn²⁺ + Cu(s)
+- **At Anode (Oxidation)**: Zn(s) → Zn²⁺ + 2e⁻
+- **At Cathode (Reduction)**: Cu²⁺(aq) + 2e⁻ → Cu(s)
+
+Electrochemical reactions can also require electrical energy to proceed, as seen in electrolytic cells."
+29,Electrolysis,Chemical decomposition using electric current,Compound + electrical energy → Products,https://en.wikipedia.org/wiki/Electrolysis,"Electrolysis is a chemical process using direct electric current (DC) to drive a non-spontaneous chemical reaction, primarily to separate elements from ores using an electrolytic cell. Key to this process is the decomposition potential, the minimum voltage needed. The term ""electrolysis,"" introduced by Michael Faraday in 1834, combines Greek roots meaning ""amber"" (linked to electrical phenomena) and ""dissolution."" Historically, William Nicholson and Anthony Carlisle expanded on Volta's work, observing gas production from water during electrolysis. The accompanying image depicts a Hofmann apparatus for this process."
+30,Galvanic Cell Reaction,Spontaneous redox reactions producing electrical energy,Spontaneous redox → Electrical energy,https://en.wikipedia.org/wiki/Galvanic_cell,"A galvanic cell, named after scientists Luigi Galvani and Alessandro Volta, is an electrochemical cell generating electric current through spontaneous oxidation-reduction reactions. It consists of two different metal electrodes, each in separate solutions and connected by a salt bridge or porous membrane. An example includes a zinc anode and copper cathode setup. Volta invented the voltaic pile, the first electrical battery, evolving from multiple galvanic cells to a single cell design."
+31,Electroplating,Deposition of metals using electric current,Mⁿ⁺ + ne⁻ → M(s),https://en.wikipedia.org/wiki/Electroplating,"Electroplating, or electrodeposition, is a process of coating a solid surface with a metal layer using a direct electric current. The object to be coated acts as the cathode in an electrolytic cell, with a salt solution of the coating metal as the electrolyte, and the anode as an inert or same-metal conductor. Widely used in industries and decorative arts, electroplating enhances object qualities like abrasion resistance, corrosion resistance, and appearance. It's also employed in electronic applications such as printed circuit boards and copper purification. Throwing power impacts uniformity of the electroplated layer, influenced by solution composition and current density."
+32,Enzymatic Reaction,Reactions catalyzed by biological enzymes,Substrate + Enzyme → Products + Enzyme,https://en.wikipedia.org/wiki/Enzyme_kinetics,"Enzymatic reactions involve enzyme-catalyzed chemical processes that accelerate reaction rates in biological systems. The reaction involves an enzyme (E) binding with a substrate (S) to form an enzyme-substrate complex (ES), which transitions through a state (ES*) to form a product (P), while regenerating the enzyme. This process is summarized by the mechanism: E + S ⇌ ES ⇌ ES* ⇌ EP ⇌ E + P.
+
+Enzyme kinetics studies these reactions by measuring the rates and conditions affecting them, providing insights into enzyme activity, metabolism regulation, and drug interactions. Some enzymes catalyze single-substrate reactions, while others facilitate multi-substrate reactions, such as dehydrogenases. Enzyme kinetics can highlight the rate-determining steps in these reactions, often involving a chemical alteration or structural change affecting the enzyme or substrates."
+33,Group Transfer Reaction,Transfer of functional groups between molecules,Donor + Acceptor → Modified products,https://wou.edu/chemistry/courses/online-chemistry-textbooks/ch103-allied-health-chemistry/ch103-chapter-6-introduction-to-organic-chemistry-and-biological-molecules/,"In group transfer reactions, a functional group is transferred from a donor molecule to an acceptor molecule. The image illustrates the transfer of an amine group from an α-amino acid (donor) to an α-keto acid (acceptor), resulting in a new α-amino acid and a new α-keto acid. This specific type of group transfer is crucial in biological systems for producing α-amino acids used in protein synthesis. Here, the donor's amine group is replaced by an oxygen to form a ketone, while the acceptor's carbonyl oxygen is replaced by the amine group."
+34,Hydrolysis Reaction,Breaking of bonds using water,A-B + H₂O → A-H + B-OH,https://en.wikipedia.org/wiki/Hydrolysis,"Hydrolysis is a chemical reaction where a water molecule breaks one or more chemical bonds, typically used in substitution and elimination reactions, with water serving as the nucleophile. It involves the cleavage of biomolecules to separate larger molecules into components. For instance, carbohydrates like sucrose can be hydrolyzed into glucose and fructose, a process known as saccharification. Hydrolysis can be seen as the reverse of a condensation reaction, where water is added to break bonds, contrasting with condensation where water is removed to join molecules. The reaction can achieve chemical equilibrium with condensation, indicating reversibility."
+35,Anabolic Reaction,Biosynthetic reactions that build complex molecules,Simple → Complex (energy required),https://en.wikipedia.org/wiki/Anabolism,"Anabolic reactions are metabolic pathways that construct macromolecules such as DNA and RNA from smaller units, requiring energy input in an endergonic process. Anabolism is the constructive phase of metabolism and is synonymous with biosynthesis. These reactions involve polymerization, using condensation reactions to create macromolecules like nucleic acids, proteins, and polysaccharides, facilitated by enzymes and cofactors.
+
+Energy for anabolic processes is often derived from ATP cleavage, involving reduction reactions that decrease entropy, necessitating energy input. Precursor molecules are joined using chemical energy from cofactors like NAD⁺ and FAD. Overall, anabolism requires energy, making it unfavorable without external sources."
+36,Catabolic Reaction,Breakdown reactions that release energy,Complex → Simple (energy released),https://en.wikipedia.org/wiki/Catabolism,"Catabolic reactions involve the breakdown of complex molecules into simpler ones, releasing energy used for cellular activities. These reactions are a key component of metabolism, providing the chemical energy necessary for the maintenance and growth of cells. In catabolism, large molecules such as proteins, polysaccharides, and fats are broken into smaller units like amino acids, monosaccharides, and fatty acids, respectively. This process often involves hydrolysis and oxidation pathways, utilizing enzymes and coenzymes such as NAD+.
+
+Cells use monomers released from these reactions to construct new polymer molecules or degrade them further into simple waste products. Examples include glycolysis and the breakdown of muscle protein for energy during starvation. Catabolic pathways are ATP-dependent, helping in energy regulation and cellular respiration. Hormones like cortisol, glucagon, and adrenaline play roles in facilitating catabolic reactions. A diagram of carbon metabolism illustrates the pathways for free energy involving carbohydrates and lipids."
+37,Homogeneous Catalysis,Catalysis where catalyst and reactants are in the same phase,Reactants + Catalyst → Products + Catalyst,https://en.wikipedia.org/wiki/Homogeneous_catalysis,"Homogeneous catalysis involves a catalyst in the same phase as the reactants, usually in a solution. A key application is acetic acid production, with enzymes serving as examples. Acid catalysis is highlighted, where protons act as catalysts through water self-ionization, promoting ester hydrolysis. An equation illustrates this: CH₃CO₂CH₃ + H₂O ⇌ CH₃CO₂H + CH₃OH. Transition metal catalysis, involving hydrogenation and transfer hydrogenation, is also discussed. A constrained geometry complex displays a transition metal catalyst used in polyolefin production, such as polyethylene and polypropylene."
+38,Heterogeneous Catalysis,Catalysis where catalyst and reactants are in different phases,Reactants + Catalyst → Products + Catalyst,https://en.wikipedia.org/wiki/Heterogeneous_catalysis,"Heterogeneous catalysis involves catalysts in a different phase than the reactants, typically solid catalysts with gas-phase reactants. This process facilitates adsorption, reaction, and desorption on the catalyst's surface, influencing reaction kinetics. It's crucial for large-scale, selective production and significantly impacts the global GDP by enabling 90% of chemical production, including the Haber–Bosch process for ammonia synthesis. Adsorption, a key step, involves physisorption (weak) and chemisorption (strong), with desorption releasing the adsorbate. The Lennard-Jones model assists in predicting molecular interactions."
+39,Biocatalysis,Catalysis using biological catalysts (enzymes),Substrate + Enzyme → Products + Enzyme,https://en.wikipedia.org/wiki/Biocatalysis,"Biocatalysis involves using biological systems or their parts, like enzymes, to accelerate chemical reactions, particularly on organic compounds. Enzymes can be used in isolation or within living cells. Advances in biotechnology, such as directed evolution, have allowed for the creation of modified enzymes capable of facilitating novel reactions otherwise challenging for traditional synthetic chemistry. When these enzymes contribute to organic synthesis, the process is known as chemoenzymatic synthesis, and the resulting reactions are referred to as chemoenzymatic reactions."
+40,Autocatalysis,Reaction where one of the products acts as a catalyst,A → B (where B catalyzes A → B),https://en.wikipedia.org/wiki/Autocatalysis,"Autocatalysis is a chemical reaction where the reaction products serve as catalysts for the same reaction, leading to a self-sustaining process. The page outlines that such reactions can collectively form a network where products catalyze various steps, ensuring the entire set is self-sustaining with energy input. Notable examples include the acid-catalyzed hydrolysis of esters, the autoxidation of hydrocarbons, and specific oscillating reactions like the Belousov–Zhabotinsky reaction. Autocatalysis is also observed in solid-state reactions, impacting growth rates, as seen in electroless plating where deposition rates escalate after initial nucleation."
+41,Photo-dissociation,Breaking of bonds using light energy,AB + hν → A* + B*,https://en.wikipedia.org/wiki/Photodissociation,"Photodissociation, also known as photolysis or photodecomposition, is a chemical reaction where molecules are broken down by the absorption of light (photons). This process involves photons interacting with target molecules, causing them to dissociate into two fragments. Light involved can be vacuum ultraviolet (VUV), ultraviolet (UV), visible, or infrared (IR). Photon energies are sufficient to break covalent bonds or detach ligands from coordination complexes. In photosynthesis, photolysis is part of the light-dependent reactions, specifically the conversion of water to diatomic oxygen, contributing to the oxygenation of Earth's atmosphere. This occurs in the thylakoids of cyanobacteria and the chloroplasts of green algae and plants. The reaction is typically expressed as: H₂A + 2 photons → 2 e⁻ + 2 H⁺ + A."
+42,Photo-isomerization,Light-induced structural rearrangements,A + hν → B (isomer),https://en.wikipedia.org/wiki/Photoisomerization,"**Photo-isomerization Summary**
+
+Photo-isomerization is an isomerization process induced by photoexcitation, commonly involving reversible changes and known for its role in photoswitchable compounds. It plays a significant role in applications like vision (retinal isomerization in the eye), pigments for rewritable media, molecular electronics, and enhancements in liquid crystals used in holography and optical switching.
+
+**Key Examples:**
+- **Azobenzenes, Stilbenes, and Spiropyrans:** Prominent compounds undergoing photo-isomerization.
+- **Norbornadiene to Quadricyclane Conversion:** Catalyzed by UV light, releasing energy suitable for solar energy storage.
+
+**Mechanism Details:**
+Photo-isomerization involves transformation between states through trans–cis or open-closed ring transitions often involving double bonds. These changes occur via photonic energy absorption, facilitating molecular reorientation."
+43,Photo-addition,Addition reactions initiated by light,A + B + hν → AB,https://www.slideshare.net/slideshow/photoaddition-and-photo-fragmentation-reaction/249369371,"**Photo-addition Reaction Summary**
+
+Photo-addition is a biomolecular photochemical process where electronically excited molecules form a single product. A notable example is the Paternò-Büchi reaction, which involves the photoaddition of a triplet carbonyl group with the ground state of an alkene to form a four-membered oxetane. The reaction specifics include:
+
+1. **Paternò-Büchi Reaction**: Involves the addition of a carbonyl (C=O) group to an alkene, creating an oxetane.
+
+2. **Addition of C-H Across a C=O Bond**: Involves the interaction of photochemically excited components leading to new bond formations, useful in synthesizing complex molecular frameworks.
+
+3. **Addition of X-H Across a C=C Bond**: Represents the process where a bond is formed across carbon-carbon double bonds through photochemical excitation.
+
+These reactions are integral in synthetic organic chemistry, enabling the formation of complex molecules in a controlled manner."
+44,Photo-substitution,Substitution reactions driven by light,A + BC + hν → AB + C,https://www.degruyterbrill.com/document/doi/10.1351/pac197541040433/pdf?srsltid=AfmBOorLBFwsW03B0nWg3XugPLjJAJvWZ62xjm-8qPmZQHqgH35M8mRc,"The image depicts photosubstitution reactions of aromatic compounds focusing on the hydrolysis of 4-nitroveratrole and dimethoxynitronaphthalenes. 
+
+**Key Reactions:**
+1. **4-Nitroveratrole Hydrolysis:**
+   - **Thermal Pathway:** Uses Δ and OH⁻, converting the methoxy group to a hydroxyl group.
+   - **Photochemical Pathway:** Involves hv and OH⁻, achieving similar substitution.
+
+2. **2,3-Dimethoxy-5- and -6-Nitronaphthalene Hydrolysis:**
+   - Performed under hv with OH⁻ in a CH₃CN/H₂O solvent, converting methoxy groups to hydroxyl groups.
+
+These reactions illustrate the effect of thermal and photochemical conditions on substitution mechanisms in aromatic compounds."
+45,Photo-redox Reaction,Redox reactions initiated by light,A + B + hν → A⁺ + B⁻,https://en.wikipedia.org/wiki/Photoredox_catalysis,"Photo-redox catalysis involves single-electron transfer using light energy to activate catalysts, typically transition-metal complexes like Ru(bipy)₃²⁺. Upon absorbing light, these sensitizers initiate a metal-to-ligand charge transfer, reaching an excited state. This state can return to the ground level through fluorescence or intersystem crossing to a triplet state, which has a longer lifespan due to spin-forbidden transitions. The triplet state can transfer energy or undergo phosphorescence. Ru(bipy)₃²⁺, a typical catalyst, exhibits a triplet state lifetime of approximately 1100 ns, allowing for extensive electron-transfer reactions before reverting to its ground state."
+46,Addition Polymerization,Monomers add to form polymers without loss of atoms,nA → (A)ₙ,https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Chemistry_for_Changing_Times_(Hill_and_McCreary)/10%3A_Polymers/10.03%3A_Addition_Polymerization_-_One__One__One__..._Gives_One,"Addition polymerization, also known as chain-growth polymerization, involves monomers bonding directly without losing any atoms. This process requires an initiator to start a chain reaction. It typically involves a free-radical initiator donating an electron to a monomer, making it reactive for further bonding. The process includes three stages: chain initiation, where the radical reacts with a monomer; chain propagation, where the growing polymer chain continually adds monomers; and chain termination, where two radicals react to stop the process. Polyethylene synthesis exemplifies this method. This polymerization occurs without forming by-products, distinguishing it from condensation polymerization."
+47,Condensation Polymerization,Monomers combine with loss of small molecules,nA + nB → (AB)ₙ + nC,https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Chemistry_for_Changing_Times_(Hill_and_McCreary)/10%3A_Polymers/10.05%3A_Condensation_Polymers,"Condensation polymerization, also known as step-growth polymerization, involves monomers with two or more functional groups reacting to form polymers, usually with the elimination of small molecules like water. Illustrated here is the formation of Nylon 66 from adipic acid and hexamethylene diamine. The reaction gives off water as a byproduct and forms peptide bonds, linking monomer units into a repeating structure. Unlike addition polymerization, this involves carbon-heteroatom bonds and produces polymers such as nylons and proteins. These polymers are vital due to their structural diversity and applicability in textiles and other materials."
+48,Ring-Opening Polymerization,Cyclic monomers open to form linear polymers,Cyclic monomer → Linear polymer,https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Polymer_Chemistry_(Schaller)/02%3A_Synthetic_Methods_in_Polymer_Chemistry/2.08%3A_Ring-Opening_Polymerization,"Ring-opening polymerization (ROP) is a method used to create polymers by opening cyclic esters (lactones) or amides (lactams) to form extended chain structures, primarily driven by the release of ring strain. An example is the polymerization of caprolactone to produce polycaprolactone. Unlike condensation polymerization, ROP monomers contain only one functional group, negating the need for complementary monomers. The reaction creates the same type of functional groups in both reactants and products, such as esters, leading to processes like ring-opening trans-esterification polymerization (ROTEP) with lactones. ROP generally begins with an initiator like an alkoxide anion, which adds to the monomer, promoting a chain reaction. Polymerization is quenched by converting the alkoxide to a less reactive alcohol. Caprolactone and similar esters can also undergo polymerization using anionic methods or Lewis acid catalysis."
+49,Free Radical Polymerization,Polymerization initiated by free radicals,Initiation → Propagation → Termination,https://chem.libretexts.org/Courses/Purdue/Purdue_Chem_26100%3A_Organic_Chemistry_I_(Wenthold)/Chapter_08%3A_Reactions_of_Alkenes/8.7.Polymerization/Free_Radical_Polymerization,"Free radical polymerization is a process primarily involving alkenes or functionally substituted alkenes used in addition reactions, facilitated by radical initiators like peroxides or azo compounds. The process involves converting a π-bond in monomers to a σ-bond in polymers, an exothermic reaction producing linear macromolecules. Four polymerization types are noted: radical, cationic, anionic, and coordination catalytic, varying by initiator and reactivity. Radical reactions are stabilized by inhibiting impurities, requiring pure monomers. Radical initiators, such as tert-butyl peroxide, benzoyl peroxide, and azobisisobutyronitrile, generate the free radicals essential for the reaction progression."
+50,Ionic Polymerization,Polymerization using ionic initiators,Anionic or Cationic mechanism,https://en.wikipedia.org/wiki/Ionic_polymerization,"Ionic polymerization is a chain-growth polymerization where active centers are ions or ion pairs, serving as an alternative to radical polymerization. It involves anionic and cationic types, initiated by reactive compounds such as titanium or aluminum complexes for cationic, and group 1 metals like lithium for anionic. Stability is afforded by counterions opposite in charge to the active species. It requires specific monomers: those with electron-releasing groups for cationic and stable anions with electron-withdrawing groups for anionic.
+
+Reaction rate is influenced by solvent polarity, monomer purity, and coordination with ion pairs. Solvents like pentane and chloroform can enhance or hinder the reaction. Coordination and solvation play crucial roles in fast polymerization, preventing common termination points and enhancing overall stability."
+51,Nuclear Fission,Heavy nucleus splits into lighter nuclei with energy release,Heavy nucleus → Lighter nuclei + neutrons + energy,https://en.wikipedia.org/wiki/Nuclear_fission,"Nuclear fission is a reaction in which an atomic nucleus splits into two or more smaller nuclei, releasing a significant amount of energy and gamma photons. Discovered by Otto Hahn and Fritz Strassmann, with theoretical insight from Lise Meitner and Otto Frisch, the process involves the fission of uranium-235 into lighter elements, emitting free neutrons and a large kinetic energy. This exothermic reaction enables a chain reaction due to the neutrons released. The process is a form of nuclear transmutation, producing different elements from the original. Nuclear fission, crucial for power generation, also has applications in nuclear weapons. 
+
+In an example reaction, a neutron is absorbed by uranium-235, creating uranium-236, which splits into isotopes such as krypton-92 and barium-141, along with releasing free neutrons and gamma rays, facilitated by kinetic energy from thermal moderation."
+52,Nuclear Fusion,Light nuclei combine to form heavier nucleus,Light nuclei → Heavy nucleus + energy,https://en.wikipedia.org/wiki/Nuclear_fusion,"Nuclear fusion involves the merging of light nuclei, releasing energy due to the interplay between the attractive nuclear force and the repulsive Coulomb force. Smaller nuclei, like hydrogen, fuse when high temperatures overcome repulsion, leading to energy release as seen in stars. For instance, fusion of deuterium and tritium yields helium-4, a neutron, and 17.59 MeV of kinetic energy, with mass loss explained by \(E = \Delta mc^2\). This exothermic process powers the sun, fusing 620 million metric tons of hydrogen into helium per second, driving nucleosynthesis of elements lighter than cobalt."
+53,Nuclear Decay,Spontaneous breakdown of unstable nuclei,Unstable nucleus → Stable nucleus + radiation,https://brilliant.org/wiki/nuclear-decay/,"**Nuclear Decay Summary**
+
+The image explains two types of nuclear decay: alpha decay and beta decay.
+
+1. **Alpha Decay**: This process involves the emission of a helium-4 nucleus, known as an alpha particle. The parent nucleus loses two protons and two neutrons. As shown in the example, Radium-226 (²²⁶₈₈Ra) decays into Radon-222 (²²²₈₆Rn) and emits an alpha particle (⁴₂He). Alpha decay typically occurs in nuclei with an atomic mass of 200 or greater.
+
+2. **Beta Decay**: This type occurs in neutron-rich nuclei. A neutron is transformed into a proton, and a high-energy electron, called a beta particle, is emitted. The example provided depicts Iodine-131 (¹³¹₅₃I) decaying into Xenon-131 (¹³¹₅₄Xe) along with the emission of a beta particle (⁰₋₁β). The beta particle has high energy and can penetrate skin, potentially causing damage."
+54,Nuclear Transmutation,Artificial transformation of one element to another,Target + Projectile → Product + Ejectile,https://en.wikipedia.org/wiki/Nuclear_transmutation,"Nuclear transmutation is the conversion of one chemical element or isotope into another, achieved by altering the number of protons or neutrons in an atom's nucleus. This process can occur via nuclear reactions or radioactive decay. Historically, stellar nucleosynthesis has created most heavy elements in the universe, such as helium, oxygen, and carbon, through fusion reactions in stars. For elements heavier than iron, such as gold and lead, transmutations occur naturally in supernovae, as heavier elements require endothermic reactions for production. The provided image illustrates a proton-proton chain reaction, demonstrating the transformation of hydrogen into helium over several stages."
+55,Scattering Reaction,Collision between particles resulting in direction change,Elastic or Inelastic scattering,https://mdcollege.in/wp-content/uploads/2023/02/FYBSc.P2_U2_Nuclear-reactions-.pdf,"**Scattering Reaction Summary**
+
+Scattering reactions involve interactions where incident particles (projectiles) collide with target nuclei, resulting in elastic or inelastic scattering.
+
+**Elastic Scattering:**
+1. The projectile particle hits the target nucleus, changing direction due to interaction, while the target nucleus remains in its ground state.
+2. Kinetic energies of both the target (parent) and projectile particles are conserved, ensuring no energy loss. A common example is Rutherford's gold-alpha scattering.
+
+**Inelastic Scattering:**
+- Upon collision, the projectile causes the target nucleus to lose energy and become excited, leading to energy and momentum loss of the projectile.
+- Example reaction: \( \prescript{1}{}{H} + \prescript{7}{}{Li} \rightarrow (\prescript{7}{}{Li})^* + \prescript{1}{}{H}\) where (*) signifies an excited nucleus.
+
+Scattering reactions are critical for studying nuclear interactions and structure."
+56,Spallation Reaction,High-energy particle breaks nucleus into fragments,Nucleus + High-energy particle → Fragments,https://en.wikipedia.org/wiki/Spallation,"Spallation is a process where fragments of material (spall) are ejected from a body due to impact or stress. In various contexts such as impact mechanics, planetary physics, mining, geology, anthropology, and nuclear physics, spallation describes different phenomena, including meteor impacts, breaking rocks, and creating arrowheads. In nuclear physics, it's the process where a nucleus emits nucleons after a high-energy particle impact, reducing atomic weight.
+
+In solid mechanics, spallation occurs when tensile stress waves propagate through material, often due to cavitation. This can happen in flat plate impact tests, where fragments are formed by stress waves exceeding the material's tensile strength. In laser spallation, a pulsed laser, like Nd:YAG, creates a compressive stress wave in the substrate, leading to ultra-thin film peeling. This method helps in studying adhesion and involves wave propagation principles."
+57,Crystallization,Formation of ordered crystalline structures from solution,Dissolved → Crystalline solid,https://en.wikipedia.org/wiki/Crystallization,"Crystallization is a process that forms solids with highly organized atoms or molecules, known as crystals. Unlike amorphous solids, crystals possess regular organization and can be formed through methods like precipitation from a solution, freezing of a liquid, or gas deposition. The process depends on factors such as temperature, air pressure, cooling rate, or solute concentration. It occurs in two key steps: nucleation, where a crystalline phase appears in a supercooled or supersaturated solution, and crystal growth, where particle size increases to form the crystal state. This technique is crucial for chemical solid–liquid separation, transferring solute from liquid to solid crystalline phase, and is relevant in chemical engineering, employing equipment like crystallizers. Crystallization is closely related to precipitation, differing by producing a structured crystal rather than an amorphous solid."
+58,Recrystallization,Purification by dissolving and re-forming crystals,Impure solid → Pure crystals,https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Physical_Properties_of_Matter/Solutions_and_Mixtures/Case_Studies/RECRYSTALLIZATION,"**Recrystallization Summary**
+
+Recrystallization, or fractional crystallization, is a method for purifying an impure compound in a solvent, relying on the principle that solubility generally increases with temperature. The process begins by dissolving the impure compound in boiling solvent and cooling to promote crystallization of the pure substance, leaving impurities in solution. The slower the cooling, the larger the crystals formed, which are then isolated via filtration.
+
+**Key Points:**
+
+- **Best Conditions:** Works best when impurity quantities are small and solubility varies significantly with temperature.
+- **Disadvantages:** Time-consuming and requires identification of a suitable solvent.
+- **Procedure Overview:**
+  1. **Dissolve**: Heat solvent to dissolve impure compound.
+  2. **Cool**: Slow cooling in ice bath promotes pure crystal formation.
+  3. **Isolate Crystals**: Use vacuum filtration to separate pure crystals.
+  4. **Dry Crystals**: Dry in an aspirator and then in a glass dish.
+  
+This method, despite its slow nature, effectively yields a pure product sample when properly executed."
+59,Grignard Reaction,Reaction of Grignard reagent with carbonyl compounds,RMgX + C=O → R-C-OH,https://en.wikipedia.org/wiki/Grignard_reaction,"The Grignard reaction is an organometallic chemical reaction where Grignard reagents, which are carbon alkyl, allyl, vinyl, or aryl magnesium halides, engage with carbonyl groups in aldehydes or ketones under anhydrous conditions. Catalyzed by the addition of H+/H2O, this reaction facilitates carbon-carbon bond formation, yielding alcohols. Discovered by François Auguste Victor Grignard in 1900, it earned him the 1912 Nobel Prize in Chemistry. This reaction is crucial in organic synthesis for constructing a variety of complex molecules."
+60,Aldol Reaction,Formation of β-hydroxy carbonyl compounds,2RCHO → RCH(OH)CH(R)CHO,https://en.wikipedia.org/wiki/Aldol_reaction,"The Aldol Reaction, also known as aldol addition, is a coupling reaction in organic chemistry crucial for forming carbon-carbon bonds. It involves the nucleophilic addition of an enolized ketone to a carbonyl compound, producing β-hydroxy aldehydes or ketones, known as aldols. The reaction uses aldehydes or ketones, typically catalyzed by a base like OH⁻ or an acid, and often occurs at low temperatures (around -5 to 70 °C). Key applications include synthesizing various specialty chemicals and industrial compounds like pentaerythritol and 2-ethylhexanol, illustrating its versatility and significance in organic synthesis."
+61,Claisen Condensation,Formation of β-dicarbonyl compounds from esters,2RCO₂Et → RCOCH(R)CO₂Et,https://en.wikipedia.org/wiki/Claisen_condensation,"The Claisen condensation is a carbon–carbon bond-forming reaction between two esters or one ester and another carbonyl compound in the presence of a strong base. It produces a β-keto ester or β-diketone. Named after Rainer Ludwig Claisen, the reaction was first published in 1887. Key conditions include the use of a strong base like sodium alkoxide and the requirement that at least one reagent is enolizable, containing an α-proton to form an enolate anion.
+
+In the mechanism, nucleophilic substitution or addition occurs on a carbonyl carbon, facilitated by bases that do not interfere with these steps. Typical alkoxy groups must be good leaving groups, with ethyl and methyl esters being common. There are variations such as the classic self-condensation and mixed (""crossed"") Claisen condensation, allowing for diverse applications in organic synthesis."
+62,Wittig Reaction,Formation of alkenes from aldehydes/ketones and ylides,R₂C=O + Ph₃P=CR₂ → R₂C=CR₂,https://en.wikipedia.org/wiki/Wittig_reaction,"The Wittig reaction, named after Georg Wittig, is a coupling reaction involving an aldehyde or ketone and a triphenyl phosphonium ylide to form an alkene. This reaction introduces a methylene group, enabling transformations such as the conversion of camphor to its methylene derivative. Most commonly, the reaction uses methylenetriphenylphosphorane (Ph₃P=CH₂) and typically occurs in solvents like THF or diethyl ether.
+
+Mechanistically, unstabilized ylides form intermediates such as the oxaphosphetane, which evolves to the final alkene product. The stereochemistry of the reaction is influenced by conditions, notably lithium salts, which affect the stereochemical outcome. There is ongoing research into the interconversion of intermediates like betaine and the effects of stereochemical drift in the presence of lithium. This reaction is widely applicable for both aliphatic and aromatic aldehydes."
+63,Heck Reaction,Palladium-catalyzed coupling of aryl halides with alkenes,ArX + alkene → Ar-alkene,https://en.wikipedia.org/wiki/Heck_reaction,"The Heck Reaction, also known as the Mizoroki-Heck reaction, is a chemical reaction involving the coupling of an unsaturated halide or triflate with an alkene in the presence of a base and a palladium catalyst to form a substituted alkene. Developed by Tsutomu Mizoroki and Richard F. Heck, it was a pioneering carbon-carbon bond-forming reaction, leading to a Nobel Prize for Heck in 2010. This reaction is comparable to other Pd(0)-catalyzed cross-coupling reactions and serves as an alternative method to synthesize alkenes. 
+
+Historically, Mizoroki's 1971 work detailed the coupling of iodobenzene and styrene using potassium acetate and palladium chloride at 120 °C, whereas Heck independently optimized the reaction conditions by adjusting the palladium-acetate catalyst and removing the solvent."
+64,Suzuki Reaction,Palladium-catalyzed cross-coupling reaction,R-X + R'-B(OR)₂ → R-R',https://en.wikipedia.org/wiki/Suzuki_reaction,"The Suzuki reaction, also known as Suzuki coupling, is an organic reaction that facilitates the cross-coupling of a boronic acid with an organohalide using a palladium complex catalyst. This reaction creates a carbon-carbon single bond, contributing to the formation of polyolefins, styrenes, and substituted biphenyls. First published by Akira Suzuki in 1979, it played a significant role in the Nobel Prize in Chemistry awarded in 2010 to Suzuki, Richard F. Heck, and Ei-ichi Negishi. The reaction often involves a halide (R¹-X) and an organoboron compound (R²-BY₂) and utilizes a palladium catalyst and a base. It's an essential method for synthesizing complex molecules, often involving hydroboration or carboboration techniques. The Suzuki reaction is an important tool in the advancement of organic synthesis methodologies."
+65,Chain Reaction,"Self-propagating reactions with initiation, propagation, and termination",Initiation → Propagation → Termination,https://en.wikipedia.org/wiki/Chain_reaction,"**Chain Reaction Summary: Hydrogen-Bromine Reaction**
+
+The hydrogen-bromine reaction is a chain reaction described by the equation \( \text{H}_2 + \text{Br}_2 \rightarrow 2 \text{HBr} \). It proceeds through a series of steps:
+
+1. **Initiation**: 
+   - \( \text{Br}_2 \rightarrow 2 \text{Br}^\cdot \) (thermal or photochemical).
+   - Each Br atom is a free radical.
+
+2. **Propagation** (cycle of two steps): 
+   - \( \text{Br}^\cdot + \text{H}_2 \rightarrow \text{HBr} + \text{H}^\cdot \)
+   - \( \text{H}^\cdot + \text{Br}_2 \rightarrow \text{HBr} + \text{Br}^\cdot \)
+   - Overall, \( \text{H}_2 + \text{Br}_2 \rightarrow 2 \text{HBr} \).
+
+3. **Retardation (inhibition)**: 
+   - \( \text{H}^\cdot + \text{HBr} \rightarrow \text{H}_2 + \text{Br}^\cdot \)
+
+4. **Termination**: 
+   - \( 2 \text{Br}^\cdot \rightarrow \text{Br}_2 \)
+
+The reaction follows the steady-state approximation, showing an initial fractional order of 3/2, with a complex rate equation involving mixed-order kinetics.
+
+Additional examples include chain branching in \(\text{H}_2 + \text{O}_2 \rightarrow 2 \text{H}_2\text{O}\) and chain-growth polymerization demonstrating further chain reaction dynamics."
+66,Oscillating Reaction,Reactions showing periodic changes in concentration,Non-linear kinetics,https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_for_the_Biosciences_(LibreTexts)/09%3A_Chemical_Kinetics/9.11%3A_Oscillating_Reactions,"**Oscillating Reaction Summary:**
+
+Oscillating reactions are characterized by solutions to nonlinear differential equations, which can lead to oscillatory and chaotic behavior. A prominent example is the ""Iodine Clock Reaction."" This reaction involves iodine anions (\(I^-\)), which are colorless. When \(I^-\) is mixed with hydrogen peroxide (\(H_2O_2\)) and protons (\(H^+\)), it forms triiodide (\(I_3^-\)), displaying a dark blue color. The key reactions are:
+
+1. \(H_2O_2 + 3 I^- + 2 H^+ \rightarrow I_3^- + 2 H_2O\)
+2. \(I_3^- + 2 S_2O_3^{2-} \rightarrow 3 I^- + S_4O_6^{2-}\)
+
+The rate laws are expressed as:
+
+- \(d[I_3^-]/dt = k_1[I^-]^3 - k_2[I_3^-][S_2O_3^{2-}]^2\)
+- Further differential equations describe the concentration changes over time.
+
+The variables \(x\), \(y\), and \(z\) represent concentrations of \(I^-\), \(I_3^-\), and \(S_2O_3^{2-}\), respectively, leading to simplified equations:
+
+- \(dx/dt = -k_1x^3 + 3kyz^2\)
+- \(dy/dt = k_1x^3 - kyz^2\)
+- \(dz/dt = -kyz^2\)
+
+These equations illustrate how small parameter changes can unpredictably affect the system's evolution, demonstrating the chaotic nature of the reaction."
+67,Clock Reaction,Reactions with sudden color/property changes after delay,Delayed appearance of product,https://en.wikipedia.org/wiki/Iodine_clock_reaction,"The Iodine Clock Reaction is a classic chemical demonstration of reaction kinetics, first described by Hans Heinrich Landolt in 1886. This reaction involves iodine species and redox agents with starch, leading to a distinct color change from colorless to dark blue after a delay. Variations include using different reagents like hydrogen peroxide, sulfuric acid, and potassium iodide. In the described hydrogen peroxide variation, iodine is initially produced in a slow reaction, followed by a rapid reaction where thiosulfate reduces iodine back to iodide ions. When thiosulfate is consumed, iodine forms a complex with starch causing the blue color. Factors like pH and concentration can alter the reaction time. Cysteine can replace thiosulfate, with a similar process and result."

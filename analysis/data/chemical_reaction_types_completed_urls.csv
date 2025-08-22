@@ -1,21 +1,21 @@
 Serial No.,Reaction Type,Description,General Formula,Source
-1,Synthesis/Combination Reaction,Two or more reactants combine to form a single product,A + B → AB,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
-2,Decomposition Reaction,A single compound breaks down into two or more simpler substances,AB → A + B,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
-3,Single Displacement/Substitution,A more reactive element displaces a less reactive element from its compound,A + BC → AC + B,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
-4,Double Displacement/Substitution,Two compounds exchange ions to produce two new compounds,AB + CD → AD + CB,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
-5,Combustion Reaction,"A substance reacts with oxygen, releasing energy as heat and light",CₓHᵧ + O₂ → CO₂ + H₂O + energy,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
-6,Acid-Base/Neutralization,An acid reacts with a base to produce salt and water,Acid + Base → Salt + Water,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); Britannica (https://www.britannica.com/science/chemical-reaction)
-7,Precipitation Reaction,An insoluble solid (precipitate) forms when two aqueous solutions are mixed,AB + CD → AD(s) + BC,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); ChemTalk (https://chemistrytalk.org/types-of-chemical-reactions/)
-8,Redox/Oxidation-Reduction,Oxidation and reduction occur together (electron transfer),Oxidation/Reduction,Wikipedia (https://en.wikipedia.org/wiki/Chemical_reaction); Britannica (https://www.britannica.com/science/chemical-reaction); Vedantu (https://www.vedantu.com/chemistry/types-of-chemical-reactions)
-9,Addition Reaction,Two or more molecules combine to form a larger molecule (adduct),A=B + C → A-B-C,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Addition reaction
-10,Elimination Reaction,Two substituents are removed from a molecule in either a one- or two-step mechanism,A-B-C → A=B + C,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Elimination reaction
-11,Substitution Reaction,One functional group is replaced by another,A-B + C → A-C + B,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction)
-12,Pericyclic Reaction,Concerted reactions involving cyclic transition states,Cyclic mechanism,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction)
-13,Rearrangement Reaction,Atoms or groups migrate within a molecule to form structural isomers,A-B-C → A-C-B,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Rearrangement reaction
-14,Photochemical Reaction,Reactions initiated or driven by light energy,A + hν → B,Wikipedia - Organic reaction (https://en.wikipedia.org/wiki/Chemical_reaction); Photochemistry
-15,Diels-Alder Reaction,Cycloaddition between a conjugated diene and dienophile to form cyclohexene derivative,[4+2] cycloaddition,Wikipedia - Diels-Alder reaction (https://en.wikipedia.org/wiki/Chemical_reaction); BYJU'S (https://byjus.com/chemistry/types-of-chemical-reactions/)
-16,Olefin Metathesis,Exchange of double bonds between carbon atoms in alkenes,R₁-CH=CH-R₂ + R₃-CH=CH-R₄ → R₁-CH=CH-R₃ + R₂-CH=CH-R₄,Wikipedia - Olefin metathesis (https://en.wikipedia.org/wiki/Chemical_reaction); Master Organic Chemistry (https://www.masterorganicchemistry.com/reaction-guide/olefin-metathesis/)
-17,Cycloaddition Reaction,Formation of rings through simultaneous bond formation,[m+n] cycloaddition,Wikipedia - Cycloaddition (https://en.wikipedia.org/wiki/Chemical_reaction)
+1,Synthesis/Combination Reaction,Two or more reactants combine to form a single product,A + B → AB,https://en.wikipedia.org/wiki/Chemical_reaction
+2,Decomposition Reaction,A single compound breaks down into two or more simpler substances,AB → A + B,https://en.wikipedia.org/wiki/Chemical_reaction
+3,Single Displacement/Substitution,A more reactive element displaces a less reactive element from its compound,A + BC → AC + B,https://en.wikipedia.org/wiki/Chemical_reaction
+4,Double Displacement/Substitution,Two compounds exchange ions to produce two new compounds,AB + CD → AD + CB,https://en.wikipedia.org/wiki/Chemical_reaction
+5,Combustion Reaction,"A substance reacts with oxygen, releasing energy as heat and light",CₓHᵧ + O₂ → CO₂ + H₂O + energy,https://en.wikipedia.org/wiki/Chemical_reaction
+6,Acid-Base/Neutralization,An acid reacts with a base to produce salt and water,Acid + Base → Salt + Water,https://en.wikipedia.org/wiki/Chemical_reaction
+7,Precipitation Reaction,An insoluble solid (precipitate) forms when two aqueous solutions are mixed,AB + CD → AD(s) + BC,https://en.wikipedia.org/wiki/Chemical_reaction
+8,Redox/Oxidation-Reduction,Oxidation and reduction occur together (electron transfer),Oxidation/Reduction,https://en.wikipedia.org/wiki/Chemical_reaction
+9,Addition Reaction,Two or more molecules combine to form a larger molecule (adduct),A=B + C → A-B-C,https://en.wikipedia.org/wiki/Chemical_reaction
+10,Elimination Reaction,Two substituents are removed from a molecule in either a one- or two-step mechanism,A-B-C → A=B + C,https://en.wikipedia.org/wiki/Chemical_reaction
+11,Substitution Reaction,One functional group is replaced by another,A-B + C → A-C + B,https://en.wikipedia.org/wiki/Chemical_reaction
+12,Pericyclic Reaction,Concerted reactions involving cyclic transition states,Cyclic mechanism,https://en.wikipedia.org/wiki/Chemical_reaction
+13,Rearrangement Reaction,Atoms or groups migrate within a molecule to form structural isomers,A-B-C → A-C-B,https://en.wikipedia.org/wiki/Chemical_reaction
+14,Photochemical Reaction,Reactions initiated or driven by light energy,A + hν → B,https://en.wikipedia.org/wiki/Chemical_reaction
+15,Diels-Alder Reaction,Cycloaddition between a conjugated diene and dienophile to form cyclohexene derivative,[4+2] cycloaddition,https://en.wikipedia.org/wiki/Chemical_reaction
+16,Olefin Metathesis,Exchange of double bonds between carbon atoms in alkenes,R₁-CH=CH-R₂ + R₃-CH=CH-R₄ → R₁-CH=CH-R₃ + R₂-CH=CH-R₄,https://en.wikipedia.org/wiki/Chemical_reaction
+17,Cycloaddition Reaction,Formation of rings through simultaneous bond formation,[m+n] cycloaddition,https://en.wikipedia.org/wiki/Chemical_reaction
 18,Coupling Reaction,"Two reactant molecules are bonded together, often with metal catalysts",R-M + R'-X → R-R' + M-X,https://en.wikipedia.org/wiki/Chemical_reaction
 19,Free Radical Reaction,Reactions involving free radical intermediates,Initiation → Propagation → Termination,https://en.wikipedia.org/wiki/Chemical_reaction
 20,Ring-Opening Reaction,Breaking of cyclic structures to form open-chain compounds,Cyclic → Open chain,https://byjus.com/chemistry/epoxide-reactions/
