@@ -14,7 +14,8 @@ MODEL_PARAMS = {
         "models": [
             # "groq/moonshotai/kimi-k2-instruct",
             # "groq/deepseek-r1-distill-llama-70b",
-            "groq/openai/gpt-oss-120b"
+            "groq/openai/gpt-oss-120b",
+            "groq/openai/gpt-oss-20b",
         ]
     },
     # "openai": {

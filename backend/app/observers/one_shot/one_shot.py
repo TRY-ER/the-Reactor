@@ -15,8 +15,12 @@ import asyncio
 import time
 
 
-async def run_observation(experiment_name: str) -> None:
+async def run_observation(experiment_name: str,
+                          data_range: list[int] | None = None) -> None:
     init_agent_name = "one-shot-text"
+    max_data = 67
+    if data_range is not None:
+        max_data = len(data_range)
     # get current file path + outputs + experiment_name
     logger_file_path = os.path.join(
         os.path.dirname(__file__), 'outputs', experiment_name)
@@ -46,9 +50,11 @@ async def run_observation(experiment_name: str) -> None:
         assert MODEL_NAMES is not None
         assert type(MODEL_NAMES) is list
         for i, model_name in enumerate(MODEL_NAMES):
+            reaction_progress = 1 
             for values in provide_reaction_details(
                 "/home/kalki/src/valency/reactor/analysis/data/chemical_reaction_types_completed_urls_modified.csv",
-                    column_to_access=["Serial No.", "Reaction Type", "Generated Prompt"]):
+                    column_to_access=["Serial No.", "Reaction Type", "Generated Prompt"],
+                    custom_range=data_range):
                 reaction_type = values.get("Reaction Type", "")
                 generated_prompt = values.get("Generated Prompt", "")
                 sl_no = values.get("Serial No.", "")
@@ -93,7 +99,7 @@ async def run_observation(experiment_name: str) -> None:
                     }
 
                 except Exception as e:
-                    # print("Error occured for model type >>",
+                    # print("Error occured for model type >>", model_name)
                     # print("Error occurred while processing response:", e)
 
                     current_data = {
@@ -101,14 +107,14 @@ async def run_observation(experiment_name: str) -> None:
                         "model_type": model_type,
                         "model_name": model_name,
                         "reaction_type": reaction_type,
-                        "reactions_text": ["error"],
+                        "reactions_text": [f"error >>{str(e)}"],
                         "reactions_composition_SMILES": ["error"],
                         "reactions_SMILES": ['error'],
                         "reactions_SMARTS": ['error'],
                         "reactions_SMIRKS": ['error'],
                     }
                     execution_time =  "Error Execute" 
-                    
+
                 dummy_df.loc[len(dummy_df)] = current_data
                 # print a formatted view of the findings
                 # print(
@@ -127,18 +133,18 @@ async def run_observation(experiment_name: str) -> None:
                 progress_map = {
                     "model_type_progress": model_type_count,
                     "model_name_progress": i + 1,
-                    "reaction_type_progress": sl_no
+                    "reaction_type_progress": reaction_progress 
                 }
 
                 params_map = {
                     "max_model_types":  MODEL_PROGRESS_PARAMS['max_model_type'],
                     "max_num_models": len(MODEL_NAMES),
-                    "max_reaction_types": 67
+                    "max_reaction_types": max_data
                 }
 
                 verbose_response(current_data, params_map,
                                  progress_map, execution_time)
-                break
+                reaction_progress += 1
     logger.log_df(dummy_df)
 
 
@@ -146,4 +152,6 @@ if __name__ == "__main__":
     import dotenv
     dotenv.load_dotenv()
     import asyncio
-    asyncio.run(run_observation(experiment_name='test-experiment-prop'))
+    asyncio.run(run_observation(
+        experiment_name='experiment-22-08-2025-<18-20>',
+    ))
