@@ -5,15 +5,74 @@ sys.path.insert(0, os.path.abspath(
 
 from app.observers.verbose import verbose_response
 from app.observers.one_shot.runner import run_agent
+from app.observers.one_shot.runner_openai import run_agent as run_agent_openai
 from app.observers.reaction_iter import provide_reaction_details
 from app.observers.one_shot.run_params import QUERY, INSTRUCTIONS
 from app.observers.logger import PersistentDataLogger
-from app.observers.model_params import MODEL_PARAMS, MODEL_PROGRESS_PARAMS
+from app.observers.model_params import MODEL_PARAMS, MODEL_PROGRESS_PARAMS, MODEL_LIMITER_MAP
+from app.observers.output_schema import OutputSchema
 import uuid
 import pandas as pd
 import asyncio
 import time
+import json
 
+global INIT_TIME 
+INIT_TIME = time.time()
+
+global CURRENT_ITERATION
+CURRENT_ITERATION = 0
+
+async def agent_run(observation_params: dict, 
+                    limiter_param: dict | None) -> dict:
+    """
+    limiter_param: dict
+        {
+            "limit": int,  # max number of requests
+            "time": int    # max time in seconds
+        } 
+    """
+
+    # handling time rate limit issue for grok endpoint (others can use token based rate limiting)
+    global CURRENT_ITERATION
+    global INIT_TIME
+    if limiter_param:
+        CURRENT_ITERATION += 1
+        
+        time_delta = time.time() - INIT_TIME
+        buffer = 2 # seconds  
+
+        if CURRENT_ITERATION > limiter_param["limit"] and time_delta < limiter_param["time"]:
+            print('[--] Max request limit reached')
+            sleep_time = (INIT_TIME + limiter_param["time"] + buffer) - time_delta
+            print(f'[--] Sleeping for {sleep_time} seconds')
+            time.sleep(sleep_time)
+            print('[--] Resuming after sleep')
+            INIT_TIME = time.time()
+            CURRENT_ITERATION = 1 
+    else:
+        CURRENT_ITERATION = 0
+        INIT_TIME = time.time()
+
+    model_type = observation_params.get("model_type", "")
+    if model_type == "groq":
+        response = await run_agent_openai(**observation_params,
+                                    output_schema=OutputSchema)
+        if response:
+            if response["role"].value == "assistant":
+                if "content" in response:
+                    content = response["content"][0]
+                    return_value = json.loads(content["text"])
+                    return return_value
+        else:
+            raise ValueError("Invalid response from agent.")
+    
+    else:
+        response = await run_agent(**observation_params)
+        data = response.final_output.model_dump()
+        return data
+    
+    return {}
 
 async def run_observation(experiment_name: str,
                           data_range: list[int] | None = None) -> None:
@@ -49,6 +108,7 @@ async def run_observation(experiment_name: str,
         assert API_KEY is not None
         assert MODEL_NAMES is not None
         assert type(MODEL_NAMES) is list
+        init_time = time.time()
         for i, model_name in enumerate(MODEL_NAMES):
             reaction_progress = 1 
             for values in provide_reaction_details(
@@ -74,11 +134,12 @@ async def run_observation(experiment_name: str,
 
                 try:
                     start_time = time.time()
-                    response = await run_agent(**observation_params)
+                    # todo (fetch and assign limiter params) [ test it ]
+                    limiter_param = MODEL_LIMITER_MAP.get(model_name, None)
+                    data = await agent_run(observation_params, limiter_param=limiter_param)
                     end_time = time.time()
                     execution_time = end_time - start_time
 
-                    data = response.final_output.model_dump()
                     reaction_type = data.get("reactions_type", "unknown")
                     reactions_text = data.get("reactions_text", [])
                     reactions_composition_SMILES = data.get(
@@ -99,8 +160,8 @@ async def run_observation(experiment_name: str,
                     }
 
                 except Exception as e:
-                    # print("Error occured for model type >>", model_name)
-                    # print("Error occurred while processing response:", e)
+                    print("Error occured for model type >>", model_name)
+                    print("Error occurred while processing response:", e)
 
                     current_data = {
                         "sl_no": sl_no,
@@ -116,19 +177,6 @@ async def run_observation(experiment_name: str,
                     execution_time =  "Error Execute" 
 
                 dummy_df.loc[len(dummy_df)] = current_data
-                # print a formatted view of the findings
-                # print(
-                #     f"""
-                #         Model Type: {model_type}
-                #         Model Name: {model_name}
-                #         Reaction Type: {reaction_type}
-                #         Reactions Text: {reactions_text}
-                #         Reactions Composition SMILES: {reactions_composition_SMILES}
-                #         Reactions SMILES: {reactions_SMILES}
-                #         Reactions SMARTS: {reactions_SMARTS}
-                #         Reactions SMIRKS: {reactions_SMIRKS}
-                #     """
-                # )
 
                 progress_map = {
                     "model_type_progress": model_type_count,
@@ -154,4 +202,6 @@ if __name__ == "__main__":
     import asyncio
     asyncio.run(run_observation(
         experiment_name='experiment-22-08-2025-<18-20>',
+        # experiment_name='experiment-test',
+        # data_range=[x for x in range(1, 10)]
     ))

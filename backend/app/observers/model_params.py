@@ -1,11 +1,11 @@
+import dotenv
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
+sys.path.insert(0, os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '../../..')))
 
-import dotenv
 dotenv.load_dotenv()
-
 
 
 MODEL_PARAMS = {
@@ -13,9 +13,9 @@ MODEL_PARAMS = {
         "api_key": os.getenv("GROQ_API_KEY"),
         "models": [
             # "groq/moonshotai/kimi-k2-instruct",
-            # "groq/deepseek-r1-distill-llama-70b",
-            "groq/openai/gpt-oss-120b",
-            "groq/openai/gpt-oss-20b",
+            "meta-llama/llama-4-maverick-17b-128e-instruct",
+            # "groq/openai/gpt-oss-120b",
+            # "groq/openai/gpt-oss-20b",
         ]
     },
     # "openai": {
@@ -45,7 +45,19 @@ MODEL_PARAMS = {
 }
 
 
-
 MODEL_PROGRESS_PARAMS = {
-   "max_model_type": len(MODEL_PARAMS),
+    "max_model_type": len(MODEL_PARAMS),
 }
+
+MODEL_LIMITER_MAP = {
+    "groq/openai/gpt-oss-120b": {
+        "limit": 30,
+        "time": 60
+    },
+    "groq/openai/gpt-oss-20b": {
+        "limit": 30,
+        "time": 60 
+    },
+}
+
+

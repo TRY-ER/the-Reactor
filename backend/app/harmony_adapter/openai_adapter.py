@@ -16,9 +16,6 @@ sys.path.insert(0, os.path.abspath(
 from app.harmony_adapter.base import HarmonyAdapterBase
 from app.harmony_adapter.groq_api_request import make_openai_groq_request
 
-ALLOWED_MODELS = ["openai/gpt-oss-120b", 'openai/gpt-oss-20b']
-
-
 class HarmonyOpenAIAdapter(HarmonyAdapterBase):
     def __init__(self, 
                  model_name: str,
@@ -185,7 +182,6 @@ class HarmonyOpenAIAdapter(HarmonyAdapterBase):
     def invoke_stream(self, *args, **kwargs):
         raise NotImplementedError(
             "Streaming is not supported in this adapter.")
-
 
 # if __name__ == "__main__":
 #     import dotenv
