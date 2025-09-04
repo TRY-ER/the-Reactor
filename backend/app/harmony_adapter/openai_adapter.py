@@ -53,26 +53,23 @@ class HarmonyOpenAIAdapter(HarmonyAdapterBase):
                     else:
                         content["reasoning_effort"] = reasoning_effort
                 contents.append(content)
-            messages.append({
-                "role": role,
-                "content": contents
-            })
+            if role == "developer":
+                messages.append({
+                    "role": "system",
+                    "content": str(contents)
+                })
+            else:
+                messages.append({
+                    "role": role,
+                    "content": str(contents)
+                })
         return messages
 
     def parse_responses(self, response):
-        for output in response.output:
-            if isinstance(output, ResponseReasoningItem):
-                if output.content and len(output.content) > 0:
-                    self.add_message_from_dict({
-                        "role": "assistant",
-                        "content": [{
-                            "type": "text",
-                            "text": output.content[0].text
-                        }]
-                    })
-            elif isinstance(output, ResponseOutputMessage):
-                if output.content and len(output.content) > 0:
-                    if isinstance(output.content[0], ResponseOutputText): 
+        if hasattr(response,"output"):
+            for output in response.output:
+                if isinstance(output, ResponseReasoningItem):
+                    if output.content and len(output.content) > 0:
                         self.add_message_from_dict({
                             "role": "assistant",
                             "content": [{
@@ -80,20 +77,39 @@ class HarmonyOpenAIAdapter(HarmonyAdapterBase):
                                 "text": output.content[0].text
                             }]
                         })
-            elif isinstance(output, ResponseFunctionToolCall):
+                elif isinstance(output, ResponseOutputMessage):
+                    if output.content and len(output.content) > 0:
+                        if isinstance(output.content[0], ResponseOutputText): 
+                            self.add_message_from_dict({
+                                "role": "assistant",
+                                "content": [{
+                                    "type": "text",
+                                    "text": output.content[0].text
+                                }]
+                            })
+                elif isinstance(output, ResponseFunctionToolCall):
+                    self.add_message_from_dict({
+                        "role": "assistant",
+                        "content": [{
+                            "type": "text",
+                            "text": output.arguments
+                        }],
+                        "channel": "commentary",
+                        "recipient": f"functions.{output.name}",
+                        "content_type": '<|constrain|> json'
+                    })
+                else:
+                    print("Unknown output type:", type(output))
+                print("output >>", output)
+        elif hasattr(response,"choices"):
+            for choice in response.choices:
                 self.add_message_from_dict({
                     "role": "assistant",
                     "content": [{
                         "type": "text",
-                        "text": output.arguments
-                    }],
-                    "channel": "commentary",
-                    "recipient": f"functions.{output.name}",
-                    "content_type": '<|constrain|> json'
+                        "text": choice.message.content
+                    }]
                 })
-            else:
-                print("Unknown output type:", type(output))
-                print("output >>", output)
 
         return self.conversations.messages[-1].to_dict() if self.conversations else None
 
@@ -117,9 +133,9 @@ class HarmonyOpenAIAdapter(HarmonyAdapterBase):
         return None
 
     def invoke(self, query: str, *args, **kwargs):
-        response = self.client.responses.create(
+        response = self.client.chat.completions.create(
             model=self.model_name,
-            input=[
+            messages=[
                 *self.convert_to_openai_messages(),
                 {
                     "role": "user",
@@ -147,9 +163,9 @@ class HarmonyOpenAIAdapter(HarmonyAdapterBase):
             "channel": "commentary",
         })
 
-        response = self.client.responses.create(
+        response = self.client.chat.completions.create(
             model = self.model_name,
-            input = [
+            messages= [
                 *self.convert_to_openai_messages()
             ],
             tools=self.function_tools,
@@ -169,13 +185,12 @@ class HarmonyOpenAIAdapter(HarmonyAdapterBase):
                     }
                 ]
             })
-
-        response = self.client.responses.parse(
+        response = self.client.chat.completions.parse(
             model=self.model_name,
-            input=[
+            messages=[
                 *self.convert_to_openai_messages(),
             ],
-            text_format=output_schema 
+            response_format=output_schema 
         )
         return self.parse_responses(response)
 

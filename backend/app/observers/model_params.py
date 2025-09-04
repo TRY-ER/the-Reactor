@@ -12,8 +12,7 @@ MODEL_PARAMS = {
     "groq": {
         "api_key": os.getenv("GROQ_API_KEY"),
         "models": [
-            # "groq/moonshotai/kimi-k2-instruct",
-            "meta-llama/llama-4-maverick-17b-128e-instruct",
+            "groq/moonshotai/kimi-k2-instruct",
             # "groq/openai/gpt-oss-120b",
             # "groq/openai/gpt-oss-20b",
         ]

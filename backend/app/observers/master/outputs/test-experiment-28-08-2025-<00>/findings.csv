@@ -1,0 +1,6 @@
+sl_no,model_type,model_name,reaction_type,reactions_text,reactions_composition_SMILES,invalid_SMILE,reactions_SMILES,invalid_reaction_SMILES,reactions_SMARTS,invalid_reaction_SMARTS,reactions_SMIRKS,invalid_reaction_SMIRKS
+1,groq,groq/openai/gpt-oss-120b,Synthesis/Combination Reaction,8 Fe + S8 -> 8 FeS,"['[Fe]', 'S1SSSSSSS1', '[Fe]S']",0.0,['[Fe].[Fe].[Fe].[Fe].[Fe].[Fe].[Fe].[Fe].S1SSSSSSS1>>[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S'],0.0,['[Fe].[S]>>[Fe][S]'],0.0,['[Fe:1].[S:2]>>[Fe:1][S:2]'],0.0
+5,groq,groq/openai/gpt-oss-120b,Combustion Reaction,C8H18(l) + 25/2 O2(g) -> 8 CO2(g) + 9 H2O(l),"['CCCCCCCC', 'O=O', 'O=C=O', 'O']",0.0,['CCCCCCCC.O=O>>O=C=O.O'],0.0,['CCCCCCCC.O=O>>O=C=O.O'],0.0,['C8H18+O2>>CO2+H2O'],0.0
+5,groq,groq/openai/gpt-oss-120b,Combustion Reaction,2 Mg(s) + O2(g) -> 2 MgO(s),"['[Mg]', 'O=O', '[Mg]O']",0.0,['[Mg].[Mg].O=O>>[Mg]O.[Mg]O'],0.0,['[Mg].[O]=[O]>>[Mg][O]'],0.0,['[Mg:1].[O:2]=[O:3]>>[Mg:1]-[O:2].[O:3]'],0.0
+5,groq,groq/openai/gpt-oss-120b,Combustion Reaction,S(s) + O2(g) -> SO2(g),"['S', 'O=O', 'O=S=O']",0.0,['S.O=O>>O=S=O'],0.0,['S.O=O>>S(=O)=O'],0.0,['[S:1].[O:2]=[O:3]>>[O:2]=[S:1]=[O:3]'],0.0
+5,groq,groq/openai/gpt-oss-20b,Combustion Reaction,"[""error >>'C'""]",['error'],,['error'],,['error'],,['error'],

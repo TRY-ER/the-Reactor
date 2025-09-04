@@ -19,17 +19,10 @@ def verbose_response(current_data,
     At the bottom of each box the number of reactions found should be written.
 
     """
-    reaction_data = current_data.get("reactions_SMILES", [])
-    if len(reaction_data) > 0:
-        if reaction_data[0] == "error":
-            reactions_found = 0
-        else:
-            reactions_found = len(reaction_data)
-    else:
-        reactions_found = 0
+    reactions_found = len(current_data)
 
-    model_name = current_data.get("model_name", "unknown")
-    reaction_type = current_data.get("reaction_type", "unknown")
+    model_name = current_data[0].get("model_name", "unknown")
+    reaction_type = current_data[0].get("reaction_type", "unknown")
 
     model_type_index = progress_map.get("model_type_progress", 0)
     max_model_types = params_map.get("max_model_types", 0)

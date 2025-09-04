@@ -12,7 +12,6 @@ ALLOWED_MODELS = [
                   "groq/deepseek-r1-distill-llama-70b",
                   "groq/openai/gpt-oss-120b", 
                   'groq/openai/gpt-oss-20b',
-                  "meta-llama/llama-4-maverick-17b-128e-instruct"
                   ]
 
 async def run_agent(
@@ -50,7 +49,6 @@ async def run_agent(
     response = agent.invoke(query)
 
 
-    conv = agent.decode_conversations()
     if output_schema is not None:
         return agent.invoke_parse(output_schema)
 
