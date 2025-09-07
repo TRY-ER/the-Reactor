@@ -36,6 +36,7 @@ async def run_agent(
     instruction="",
     model_identity: str = "",
     max_retries: int = 3,
+    return_agent: bool = False,
     *args,
     **kwargs
 ):
@@ -175,6 +176,8 @@ async def run_agent(
                 max_retries -= 1
     if response and type(response) == dict:
         response["invalid"] = 0
+    if return_agent:
+        return response, agent
     return response
 
 # test script

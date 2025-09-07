@@ -54,7 +54,12 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect, onToggle, activeMenu: p
   return (
     <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-header">
-        <h2 className="sidebar-title">{!isCollapsed && 'Reactor'}</h2>
+        <div className="sidebar-brand">
+          <img src="/logo.png" alt="Reactor Logo" className="sidebar-logo" />
+          {!isCollapsed && <h2 className="sidebar-title">Reactor</h2>}
+        </div>
+      </div>
+      <div className="sidebar-toggle-container">
         <button className="sidebar-toggle" onClick={toggleSidebar}>
           {isCollapsed ? '→' : '←'}
         </button>

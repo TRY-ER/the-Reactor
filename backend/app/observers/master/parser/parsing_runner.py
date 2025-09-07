@@ -35,6 +35,7 @@ async def run_agent(
     query: str,
     agent_name: str = "parser_agent",
     instruction=INSTRUCTIONS,
+    return_agent= False,
     *args,
     **kwargs
 ):
@@ -108,10 +109,13 @@ async def run_agent(
                             print(
                                 f"Invalid reaction text: {v}")
                             continue
-
+        if return_agent:
+            return new_values, agent
         return new_values
-    return [] 
-                            
+    if return_agent:
+        return [], agent
+    return []
+
 
 
 

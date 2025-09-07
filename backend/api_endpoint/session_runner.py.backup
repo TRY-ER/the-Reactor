@@ -1,0 +1,520 @@
+import asyncio
+import json
+import uuid
+import logging
+from datetime import datetime
+from typing import Dict, Optional, AsyncGenerator
+from sqlalchemy.orm import Session
+from collections import deque
+
+from db import SessionLocal, SessionObj
+from file_system_handler import file_system_handler
+import sys
+import os
+impor        except Exception as e:
+            db.rollback()
+            logger.error(f"Error assigning worker to session: {e}")
+        finally:
+            db.close()
+    
+    async def _update_session_status_by_id(self, session_id: str, status: str):
+        """Update session status in database by session ID"""
+        db: Session = SessionLocal()
+        try:
+            logger.info(f"Updating session {session_id} status to '{status}' via SessionRunner")
+            session = db.query(SessionObj).filter(SessionObj.id == session_id).first()
+            if session:
+                session.state = status
+                session.last_updated = datetime.utcnow()
+                db.commit()
+                logger.info(f"Successfully updated session {session_id} status to '{status}' via SessionRunner")
+            else:
+                logger.warning(f"Session {session_id} not found in database when trying to update status via SessionRunner")
+        except Exception as e:
+            db.rollback()
+            logger.error(f"Error updating session {session_id} status to '{status}' via SessionRunner: {e}")
+            raise
+        finally:
+            db.close()
+    
+    def _cleanup_worker(self, session_id: str, worker_id: str):
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Add the path to access the openai_runner_service
+# Current file is in: backend/api_endpoint/session_runner.py
+# Target import is in: backend/app/observers/master/openai_runner_service.py
+# We need to go up one level to backend/, then into app/observers/master/
+backend_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, backend_root)
+
+try:
+    from app.observers.master.openai_runner_service import run_service_agent
+    logger.info("Successfully imported openai_runner_service")
+except ImportError as e:
+    logger.warning(f"Could not import openai_runner_service: {e}")
+    logger.info("Using mock function for testing")
+    # Mock function for testing
+    async def run_service_agent(**kwargs):
+        yield {"type": "info", "message": "Mock service started"}
+        await asyncio.sleep(1)
+        yield {"type": "data", "message": "Mock result 1"}
+        await asyncio.sleep(1) 
+        yield {"type": "data", "message": "Mock result 2"}
+        yield {"final_csv": [{"mock": "data"}]}
+
+class SessionWorker:
+    """Individual worker that runs a session"""
+    
+    def __init__(self, session_id: str, worker_id: str):
+        self.session_id = session_id
+        self.worker_id = worker_id
+        self.task: Optional[asyncio.Task] = None
+        self.status = "idle"  # idle, running, completed, error
+        self.created_at = datetime.utcnow()
+        
+        # Queue for SSE streaming
+        self.content_queue: asyncio.Queue = asyncio.Queue()
+        self.is_complete = False
+        self.error_state = None
+        self.streaming_clients = set()  # Track active streaming clients
+        
+    async def run(self, **service_params):
+        """Run the service agent and save results to database and queue"""
+        self.status = "running"
+        
+        try:
+            # Clear previous session content before starting new run
+            file_system_handler.clear_session_content(self.session_id)
+            
+            # Update session status in database
+            await self._update_session_status("running")
+            
+            # Run the service agent and save each yield to database and queue
+            async for result in run_service_agent(**service_params):
+                print(f"result received at {time.time()} >>", result)
+                
+                # Save to database (existing functionality)
+                await self._save_result_to_session(result)
+                
+                # Add to queue for streaming
+                await self._add_to_queue(result)
+                
+            self.status = "completed"
+            self.is_complete = True
+            await self._update_session_status("completed")
+            
+            # Send completion signal to queue
+            await self.content_queue.put({"_type": "completion", "status": "completed"})
+            
+        except Exception as e:
+            self.status = "error"
+            self.error_state = str(e)
+            self.is_complete = True
+            
+            error_result = {
+                "type": "error",
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            await self._save_result_to_session(error_result)
+            await self._update_session_status("error")
+            
+            # Send error signal to queue
+            await self.content_queue.put({"_type": "completion", "status": "error", "error": str(e)})
+            raise
+    
+    async def _add_to_queue(self, result):
+        """Add result to the content queue for streaming"""
+        try:
+            # Ensure result is a dictionary
+            if not isinstance(result, dict):
+                result = {
+                    "type": "info", 
+                    "content": str(result),
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            
+            # Add timestamp and worker_id if not present
+            if "timestamp" not in result:
+                result["timestamp"] = datetime.utcnow().isoformat()
+            if "worker_id" not in result:
+                result["worker_id"] = self.worker_id
+            
+            # Put result in queue for streaming
+            await self.content_queue.put(result)
+            
+        except Exception as e:
+            print(f"Error adding result to queue for session {self.session_id}: {e}")
+    
+    async def _save_result_to_session(self, result):
+        """Save a result to the session's content in database"""
+        try:
+            # Parse the result if it's a string from the stream
+            if isinstance(result, str):
+                # Check if it's a stream format like "data:{json}\n\n"
+                if result.startswith("data:") and result.endswith("\n\n"):
+                    # Extract JSON from the stream format
+                    json_str = result[5:-2]  # Remove "data:" prefix and "\n\n" suffix
+                    try:
+                        result = json.loads(json_str)
+                    except json.JSONDecodeError as e:
+                        print(f"Failed to parse stream data: {e}")
+                        # Create a fallback dict
+                        result = {
+                            "type": "error",
+                            "content": f"Failed to parse stream data: {result}",
+                            "timestamp": datetime.utcnow().isoformat()
+                        }
+                else:
+                    # If it's a plain string, wrap it in a dict
+                    result = {
+                        "type": "info",
+                        "content": str(result),
+                        "timestamp": datetime.utcnow().isoformat()
+                    }
+            
+            # Ensure result is a dictionary
+            if not isinstance(result, dict):
+                result = {
+                    "type": "info", 
+                    "content": str(result),
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            
+            # Add timestamp and worker_id to result
+            result["timestamp"] = datetime.utcnow().isoformat()
+            result["worker_id"] = self.worker_id
+            
+            # Use the file system handler to add content
+            file_system_handler.add_content_to_session(self.session_id, result)
+            
+        except Exception as e:
+            print(f"Error saving result to session {self.session_id}: {e}")
+    
+    async def _update_session_status(self, status: str):
+        """Update session status in database"""
+        db: Session = SessionLocal()
+        try:
+            logger.info(f"Updating session {self.session_id} status to '{status}'")
+            session = db.query(SessionObj).filter(SessionObj.id == self.session_id).first()
+            if session:
+                session.state = status
+                session.last_updated = datetime.utcnow()
+                db.commit()
+                logger.info(f"Successfully updated session {self.session_id} status to '{status}'")
+            else:
+                logger.warning(f"Session {self.session_id} not found in database when trying to update status")
+        except Exception as e:
+            db.rollback()
+            logger.error(f"Error updating session {self.session_id} status to '{status}': {e}")
+            logger.error(f"Error type: {type(e).__name__}")
+            logger.error(f"Error details: {str(e)}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            raise  # Re-raise the exception so the caller knows it failed
+        finally:
+            db.close()
+
+    async def stream_content(self, client_id: Optional[str] = None) -> AsyncGenerator[dict, None]:
+        """Stream content from the queue for SSE"""
+        if client_id:
+            self.streaming_clients.add(client_id)
+        
+        try:
+            while True:
+                try:
+                    # Wait for content with a timeout to allow for periodic checks
+                    result = await asyncio.wait_for(self.content_queue.get(), timeout=1.0)
+                    
+                    # Check for completion signal
+                    if result.get("_type") == "completion":
+                        yield result
+                        break
+                    
+                    # Yield the result
+                    yield result
+                    
+                except asyncio.TimeoutError:
+                    # Check if the worker is complete and queue is empty
+                    if self.is_complete and self.content_queue.empty():
+                        yield {"_type": "completion", "status": self.status}
+                        break
+                    # Continue waiting for more content
+                    continue
+                    
+        except Exception as e:
+            yield {
+                "_type": "completion", 
+                "status": "error", 
+                "error": f"Streaming error: {str(e)}"
+            }
+        finally:
+            if client_id:
+                self.streaming_clients.discard(client_id)
+
+
+class SessionRunner:
+    """Manages session workers and their lifecycle"""
+    
+    def __init__(self):
+        self.active_workers: Dict[str, SessionWorker] = {}
+        self.worker_tasks: Dict[str, asyncio.Task] = {}
+    
+    async def start_session_worker(
+        self, 
+        session_id: str, 
+        model_type: str,
+        model_name: str,
+        model_key: str,
+        agent_name: str = "master_openai_oss_agent",
+        query: Optional[str] = None  # Optional - will use session's query if not provided
+    ) -> str:
+        """Start a new worker for a session"""
+        
+        # Check if session exists and get query
+        db: Session = SessionLocal()
+        try:
+            session = db.query(SessionObj).filter(SessionObj.id == session_id).first()
+            if not session:
+                raise ValueError(f"Session with id {session_id} not found")
+            
+            # Use provided query or session's stored query
+            if query is not None:
+                # Update session with new query
+                session.query = query
+                db.commit()
+                final_query = query
+            else:
+                # Use existing session query
+                final_query = session.query or ""
+                
+            if not final_query.strip():
+                raise ValueError("No query provided and session has no stored query")
+                
+        finally:
+            db.close()
+        
+        # Check if worker is already running for this session
+        if session_id in self.active_workers:
+            existing_worker = self.active_workers[session_id]
+            if existing_worker.status == "running":
+                raise ValueError(f"Worker already running for session {session_id}")
+        
+        # Create new worker
+        worker_id = str(uuid.uuid4())
+        worker = SessionWorker(session_id, worker_id)
+        
+        # Prepare service parameters
+        service_params = {
+            "model_type": model_type,
+            "model_name": model_name,
+            "model_key": model_key,
+            "agent_name": agent_name,
+            "query": final_query
+        }
+        
+        # Update session with worker_id in database
+        await self._assign_worker_to_session(session_id, worker_id)
+        
+        # Start the worker task
+        task = asyncio.create_task(worker.run(**service_params))
+        worker.task = task
+        
+        # Store worker and task
+        self.active_workers[session_id] = worker
+        self.worker_tasks[worker_id] = task
+        
+        # Add cleanup callback
+        task.add_done_callback(lambda t: self._cleanup_worker(session_id, worker_id))
+        
+        return worker_id
+    
+    async def _assign_worker_to_session(self, session_id: str, worker_id: str):
+        """Assign worker_id to session in database"""
+        db: Session = SessionLocal()
+        try:
+            session = db.query(SessionObj).filter(SessionObj.id == session_id).first()
+            if session:
+                session.worker_id = worker_id
+                session.state = "assigned"
+                session.last_updated = datetime.utcnow()
+                db.commit()
+        except Exception as e:
+            db.rollback()
+            print(f"Error assigning worker to session: {e}")
+        finally:
+            db.close()
+    
+    def _cleanup_worker(self, session_id: str, worker_id: str):
+        """Clean up completed worker"""
+        try:
+            logger.info(f"Cleaning up worker {worker_id} for session {session_id}")
+            
+            if session_id in self.active_workers:
+                del self.active_workers[session_id]
+                logger.info(f"Removed worker for session {session_id} from active_workers")
+            else:
+                logger.warning(f"Session {session_id} not found in active_workers during cleanup")
+            
+            if worker_id in self.worker_tasks:
+                del self.worker_tasks[worker_id]
+                logger.info(f"Removed task for worker {worker_id} from worker_tasks")
+            else:
+                logger.warning(f"Worker {worker_id} not found in worker_tasks during cleanup")
+                
+            logger.info(f"Cleanup completed for worker {worker_id}, session {session_id}")
+            
+        except Exception as e:
+            logger.error(f"Error during worker cleanup for session {session_id}, worker {worker_id}: {e}")
+            logger.error(f"Error type: {type(e).__name__}")
+            logger.error(f"Error details: {str(e)}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            # Don't re-raise here since this is called from a callback
+    
+    def get_worker_status(self, session_id: str) -> Optional[dict]:
+        """Get status of worker for a session"""
+        if session_id in self.active_workers:
+            worker = self.active_workers[session_id]
+            return {
+                "session_id": session_id,
+                "worker_id": worker.worker_id,
+                "status": worker.status,
+                "created_at": worker.created_at.isoformat()
+            }
+        return None
+    
+    def get_all_workers_status(self) -> Dict[str, dict]:
+        """Get status of all active workers"""
+        return {
+            session_id: {
+                "worker_id": worker.worker_id,
+                "status": worker.status,
+                "created_at": worker.created_at.isoformat()
+            }
+            for session_id, worker in self.active_workers.items()
+        }
+    
+    async def stop_worker(self, session_id: str) -> bool:
+        """Stop a worker for a session"""
+        try:
+            logger.info(f"Attempting to stop worker for session: {session_id}")
+            
+            # First check if we have an active worker
+            if session_id in self.active_workers:
+                worker = self.active_workers[session_id]
+                logger.info(f"Found active worker {worker.worker_id} for session {session_id}, status: {worker.status}")
+                
+                # Check if the task exists and is not done
+                if worker.task and not worker.task.done():
+                    logger.info(f"Cancelling task for worker {worker.worker_id}")
+                    worker.task.cancel()
+                    try:
+                        await worker.task
+                        logger.info(f"Task cancelled successfully for worker {worker.worker_id}")
+                    except asyncio.CancelledError:
+                        logger.info(f"Task cancellation confirmed for worker {worker.worker_id}")
+                        pass
+                    except Exception as e:
+                        logger.error(f"Error during task cancellation for worker {worker.worker_id}: {e}")
+                        raise
+                    
+                    # Update session status
+                    try:
+                        await worker._update_session_status("cancelled")
+                        logger.info(f"Session status updated to 'cancelled' for session {session_id}")
+                    except Exception as e:
+                        logger.error(f"Error updating session status to 'cancelled' for session {session_id}: {e}")
+                        raise
+                    
+                    return True
+                else:
+                    logger.warning(f"Worker {worker.worker_id} for session {session_id} has no task or task is already done")
+                    # Task is done but worker still exists, clean it up manually
+                    try:
+                        await worker._update_session_status("completed")
+                        self._cleanup_worker(session_id, worker.worker_id)
+                        logger.info(f"Cleaned up completed worker for session {session_id}")
+                    except Exception as e:
+                        logger.error(f"Error cleaning up completed worker for session {session_id}: {e}")
+                    return True
+            else:
+                # Check if there's a worker task by looking at all worker_tasks
+                logger.info(f"No active worker found for session {session_id}, checking worker_tasks...")
+                
+                # Look for any task associated with this session in worker_tasks
+                session_worker_id = None
+                for worker_id, task in self.worker_tasks.items():
+                    # We need to find which worker belongs to this session
+                    # This is a bit tricky since we only have the session_id
+                    # Let's check the database for the worker_id
+                    db: Session = SessionLocal()
+                    try:
+                        db_session = db.query(SessionObj).filter(SessionObj.id == session_id).first()
+                        if db_session and str(db_session.worker_id) == worker_id:
+                            session_worker_id = worker_id
+                            logger.info(f"Found worker {worker_id} for session {session_id} in worker_tasks")
+                            
+                            if not task.done():
+                                logger.info(f"Cancelling orphaned task for worker {worker_id}")
+                                task.cancel()
+                                try:
+                                    await task
+                                except asyncio.CancelledError:
+                                    pass
+                                
+                                # Update session status
+                                await self._update_session_status_by_id(session_id, "cancelled")
+                                
+                                # Clean up the task
+                                if worker_id in self.worker_tasks:
+                                    del self.worker_tasks[worker_id]
+                                
+                                logger.info(f"Cancelled orphaned task for session {session_id}")
+                                return True
+                            break
+                    finally:
+                        db.close()
+                
+                if session_worker_id is None:
+                    logger.warning(f"No active or orphaned worker found for session {session_id}")
+                    return False
+                else:
+                    logger.info(f"Worker {session_worker_id} for session {session_id} was already completed")
+                    return True
+                
+        except Exception as e:
+            logger.error(f"Unexpected error while stopping worker for session {session_id}: {e}")
+            logger.error(f"Error type: {type(e).__name__}")
+            logger.error(f"Error details: {str(e)}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            raise  # Re-raise to let the API endpoint handle it
+
+    def get_worker_for_streaming(self, session_id: str) -> Optional[SessionWorker]:
+        """Get a worker for streaming content"""
+        return self.active_workers.get(session_id)
+
+    async def stream_session_content(self, session_id: str, client_id: Optional[str] = None) -> AsyncGenerator[dict, None]:
+        """Stream content for a specific session"""
+        worker = self.get_worker_for_streaming(session_id)
+        if not worker:
+            # If no active worker, try to get existing content from file system
+            try:
+                existing_content = file_system_handler.get_session_content(session_id)
+                for content_item in existing_content:
+                    yield content_item
+                yield {"_type": "completion", "status": "completed", "message": "Historical content retrieved"}
+            except Exception as e:
+                yield {"_type": "completion", "status": "error", "error": f"No active worker and failed to get historical content: {str(e)}"}
+            return
+        
+        # Stream from active worker
+        async for item in worker.stream_content(client_id):
+            yield item
+
+
+# Global session runner instance
+session_runner = SessionRunner()

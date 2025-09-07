@@ -1,0 +1,123 @@
+/* CustomDropdown.css */
+.custom-dropdown-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-dropdown-label {
+  color: #b5eecb;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.custom-dropdown {
+  position: relative;
+  min-width: 200px;
+}
+
+.dropdown-selected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.dropdown-selected:hover {
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #ffffff;
+}
+
+.dropdown-selected.open {
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #ffffff;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dropdown-selected.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(181, 238, 203, 0.3);
+}
+
+.dropdown-selected.disabled:hover {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(181, 238, 203, 0.3);
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.dropdown-options {
+  position: fixed;
+  background: #1a1a1a;
+  border: 1px solid #ffffff;
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  z-index: 9999;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  max-height: 200px;
+  overflow-y: auto;
+  min-width: 200px;
+}
+
+.dropdown-option {
+  padding: 12px 16px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.dropdown-option:hover {
+  background: rgba(0, 255, 0, 0.2);
+  color: #ffffff;
+}
+
+.dropdown-option.selected {
+  background: var(--primary-color);
+  color: #000000;
+  font-weight: 600;
+}
+
+/* Scrollbar styling for options */
+.dropdown-options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-options::-webkit-scrollbar-track {
+  background: rgba(45, 90, 45, 0.1);
+}
+
+.dropdown-options::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 3px;
+}
+
+.dropdown-options::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}

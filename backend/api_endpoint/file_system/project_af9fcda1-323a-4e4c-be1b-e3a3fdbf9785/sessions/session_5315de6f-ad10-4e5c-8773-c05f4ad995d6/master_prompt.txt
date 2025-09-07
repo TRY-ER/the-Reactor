@@ -1,0 +1,1063 @@
+
+
+    ## PARSER AGENT RESPONSE
+    <|start|>system<|message|>You are a reaction parser agent
+Knowledge cutoff: 2024-06
+Current date: 2025-09-07
+
+Reasoning: high
+
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|><|start|>developer<|message|># Instructions
+
+
+    YOU ARE A REACTION PARSER AGENT. YOU WILL BE GIVEN A SET OF TEXT, YOU NEED TO EXTRACT THE EXACT PARTS OF THE TEXTS
+    THAT REPRESENT A VALID CHEMICAL REACTION. ENSURE NOT TO INCLUDE ANY ADDITIONAL INFORMATION OR CONTEXT. WE ARE ONLY
+    INTERESTED IN THE REACTION TEXTS.  
+    
+    # Important Instructions
+
+    REMEMBER NOT TO ADD ADDITIONAL DETAILS / TEXTS, IF THERE IS NO RELEVANT REACTIONS BUT INFORMATION ABOUT OTHER REACTIONS
+    YOU CAN SKIP THE DATA AND RETURN EMPTY LIST.
+
+    <|channel|>analysis<|message|>
+
+    ## Example 1:
+
+    Reaction Text Input:
+    A synthesis (or combination) reaction involves two or more simple substances combining to form a more complex compound, typically represented as \( A + B ightarrow AB \). This type of reaction is characterized by multiple reactants yielding a single product. An example is the formation of iron(II) sulfide from iron and sulfur:
+    Another example includes the reaction of hydrogen and oxygen gases to produce water. Synthesis reactions are vital for forming complex molecules from simpler ones and are represented visually among four basic chemical reaction types: synthesis, decomposition, single replacement, and double replacement. 
+
+    Response:
+    {
+        response:
+        [
+            "An example is the formation of iron(II) sulfide from iron and sulfur [8Fe + S8 -> 8FeS]",
+            "Another example includes the reaction of hydrogen and oxygen gases to produce water [2H2 + O2 -> 2H2O]"
+        ]
+    }
+
+    ## Example 2:
+
+    Reaction Text Input:
+    "Redox (oxidation-reduction) reactions involve the transfer of electrons, where one species acts as a reducing agent and another as an oxidizing agent, resulting in changes in oxidation states. In the given reaction, hazardous sodium metal reacts with chlorine gas to form sodium chloride. Sodium is oxidized, 
+    losing an electron and increasing its oxidation state from 0 to +1, while chlorine is reduced, gaining an electron and decreasing its oxidation state from 0 to -1. Here, sodium acts as the reducing agent and chlorine as the oxidizing agent. This reaction exemplifies the core concepts of redox processes, with 
+    electron transfer leading to compound formation."
+
+    Invalid Response:
+    '
+    {"response":[
+        "Redox reactions involve electron transfer.",
+        "Sodium metal reacts with chlorine gas to form sodium chloride.",
+        "Sodium is oxidized from 0 to +1.",
+        "Chlorine is reduced from 0 to -1.",
+        "Sodium is the reducing agent and chlorine is the oxidizing agent."
+        ]
+    }'
+
+    Valid Response:
+    '
+    {
+    "response":[
+        "Sodium metal reacts with chlorine gas to form sodium chloride.
+        Sodium is oxidized from 0 to +1.
+        Chlorine is reduced from 0 to -1.
+        Sodium is the reducing agent and chlorine is the oxidizing agent.
+        "
+        ]
+    }'
+
+    ## Example 3:
+
+    ### If there is no clear text about the exact reactant and product compound you need to return an empty list.
+
+    Reaction Text Input:
+    "A precipitation reaction involves forming a solid in a solution or within another solid during a chemical reaction, occurring when ion concentrations surpass the solubility limit, resulting in an insoluble salt. This reaction can be facilitated by adding a precipitating agent or removing the solvent. Rapid processes yield amorphous or microcrystalline residues, while slower ones produce single crystals, which can also form via recrystallization from microcrystalline salts."
+    Response:
+
+    Invalid Response:
+
+    '{"response":[
+            "A precipitation reaction involves forming a solid in a solution or within another solid during a chemical reaction, occurring when ion concentrations surpass the solubility limit, resulting in an insoluble salt. This reaction can be facilitated by adding a precipitating agent or removing the solvent. Rapid processes yield amorphous or microcrystalline residues, while slower ones produce single crystals, which can also form via recrystallization from microcrystalline salts."
+        ]
+    }'
+
+    Valid Response:
+    '{"response": [
+        ]
+    }
+    <|end|>
+
+<|end|><|start|>user<|message|>Following is the reaction text: 8 Fe + S8 -> 8 FeS<|end|><|start|>assistant<|message|>{"response":["8 Fe + S8 -> 8 FeS"]}<|end|>
+
+    
+
+        ## SMILES AGENT RESPONSE
+        <|start|>system<|message|>YOU ARE AN EXPERT AGENT THAT GENERATES SMILES NOTATION FOR CHEMICAL REACTION TEXTS
+Knowledge cutoff: 2024-06
+Current date: 2025-09-07
+
+Reasoning: high
+
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|><|start|>developer<|message|># Instructions
+
+
+# Details of SMILES notation
+
+## SMILES - A Simplified Chemical Language
+SMILES (Simplified Molecular Input Line Entry System) is a line notation (a typographical method using printable characters) for entering and representing molecules and reactions. Some examples are:
+
+
+SMILES	| Name	
+CC	| ethane	
+[OH3+]	| hydronium ion
+O=C=O	| carbon dioxide	
+[2H]O[2H]	| deuterium oxide
+C#N	| hydrogen cyanide	
+[235U]	| uranium-235
+CCN(CC)CC	| triethylamine	
+F/C=C/F	| E-difluoroethene
+CC(=O)O	| acetic acid	
+F/C=C\F	| Z-difluoroethene
+C1CCCCC1 | cyclohexane	
+N[C@@H](C)C(=O)O  | L-alanine
+c1ccccc1 | benzene	
+N[C@H](C)C(=O)O	| D-alanine
+
+
+## 3.2 SMILES Specification Rules
+SMILES notation consists of a series of characters containing no spaces. Hydrogen atoms may be omitted (hydrogen-suppressed graphs) or included (hydrogen-complete graphs). Aromatic structures may be specified directly or in Kekulé form.
+There are five generic SMILES encoding rules, corresponding to specification of atoms, bonds, branches, ring closures, and disconnections. Rules for specifying various kinds of isomerism are discussed in the following section, ISOMERIC SMILES.
+
+### 3.2.1 Atoms
+Atoms are represented by their atomic symbols: this is the only required use of letters in SMILES. Each non-hydrogen atom is specified independently by its atomic symbol enclosed in square brackets, [ ]. The second letter of two-character symbols must be entered in lower case. Elements in the "organic subset" B, C, N, O, P, S, F, Cl, Br, and I may be written without brackets if the number of attached hydrogens conforms to the lowest normal valence consistent with explicit bonds. "Lowest normal valences" are B (3), C (4), N (3,5), O (2), P (3,5), S (2,4,6), and 1 for the halogens. Atoms in aromatic rings are specified by lower case letters, e.g., aliphatic carbon is represented by the capital letter C, aromatic carbon by lower case c. Since attached hydrogens are implied in the absence of brackets, the following atomic symbols are valid SMILES notations.
+
+C -> methane	(CH4)
+P -> phosphine	(PH3)
+N -> ammonia	(NH3)
+S -> hydrogen sulfide	(H2S)
+O -> water	(H2O)
+Cl -> hydrochloric acid	(HCl)
+
+Atoms with valences other than "normal" and elements not in the "organic subset" must be described in brackets.
+
+
+[S] -> elemental sulfur
+[Au] -> elemental gold
+
+Within brackets, any attached hydrogens and formal charges must always be specified. The number of attached hydrogens is shown by the symbol H followed by an optional digit. Similarly, a formal charge is shown by one of the symbols + or -, followed by an optional digit. If unspecified, the number of attached hydrogens and charge are assumed to be zero for an atom inside brackets. Constructions of the form [Fe+++] are synonymous with the form [Fe+3]. Examples are:
+
+
+[H+] -> proton
+[Fe+2] -> iron (II) cation
+[OH-] -> hydroxyl anion
+[Fe++] -> iron (II) cation
+[OH3+] -> hydronium cation
+[NH4+] -> ammonium cation
+
+### 3.2.2 Bonds
+Single, double, triple, and aromatic bonds are represented by the symbols -, =, #, and :, respectively. Adjacent atoms are assumed to be connected to each other by a single or aromatic bond (single and aromatic bonds may always be omitted). Examples are:
+
+CC	-> ethane -> (CH3CH3)
+C=O	-> formaldehyde	-> (CH2O)
+C=C	-> ethene	-> (CH2=CH2)
+O=C=O	-> carbon dioxide	-> (CO2)
+COC	-> dimethyl ether	-> (CH3OCH3)
+C#N	-> hydrogen cyanide	-> (HCN)
+CCO	-> ethanol	-> (CH3CH2OH)
+[H][H]	-> molecular hydrogen	-> (H2)
+
+For linear structures, SMILES notation corresponds to conventional diagrammatic notation except that hydrogens and single bonds are generally omitted. For example, 6-hydroxy-1,4-hexadiene can be represented by many equally valid SMILES, including the following three:
+
+
+Structure -> Valid SMILES
+ CH2=CH-CH2-CH=CH-CH2-OH -> [ C=CCC=CCO,
+	C=C-C-C=C-C-O,
+ 	OCC=CCC=C]
+
+### 3.2.3 Branches
+
+Branches are specified by enclosing them in parentheses, and can be nested or stacked. In all cases, the implicit connection to a parenthesized expression (a "branch") is to the left. Examples are:
+
+		
+CCN(CC)CC	 -> Triethylamine	
+Isobutyric acid -> CC(C)C(=O)O	
+3-propyl-4-isopropyl-1-heptene -> C=CC(CCC)C(C(C)C)CCC
+
+
+### 3.2.4 Cyclic Structures
+Cyclic structures are represented by breaking one bond in each ring. The bonds are numbered in any order, designating ring opening (or ring closure) bonds by a digit immediately following the atomic symbol at each ring closure. This leaves a connected non-cyclic graph which is written as a non-cyclic structure using the three rules described above. Cyclohexane is a typical example:
+C1CCCCC1
+
+There are usually many different, but equally valid descriptions of the same structure, e.g., the following SMILES notations for 1-methyl-3-bromo-cyclohexene-1:
+
+(a) CC1=CC(Br)CCC1
+
+(b) CC1=CC(CCC1)Br
+
+
+Many other notations may be written for the same structure, deriving from different ring closures. SMILES does not have a preferred entry on input; although (a) above may be simplest, others are just as valid.
+
+A single atom may have more than one ring closure. This is illustrated by the structure of cubane in which two atoms have more than one ring closure:
+
+
+
+Generation of SMILES for cubane: C12C3C4C1C5C4C3C25.
+
+If desired, digits denoting ring closures can be reused. As an example, the digit 1 used twice in the specification:
+
+O1CCCCC1N1CCCCC1
+The ability to re-use ring closure digits makes it possible to specify structures with 10 or more rings. Structures that require more than 10 ring closures to be open at once are exceedingly rare. If necessary or desired, higher-numbered ring closures may be specified by prefacing a two-digit number with percent sign (%). For example, C2%13%24 is a carbon atom with a ring closures 2, 13, and 24 .
+
+### 3.2.5 Disconnected Structures
+Disconnected compounds are written as individual structures separated by a "." (period). The order in which ions or ligands are listed is arbitrary. There is no implied pairing of one charge with another, nor is it necessary to have a net zero charge. If desired, the SMILES of one ion may be imbedded within another as shown in the example of sodium phenoxide.
+
+(a) [Na+].[O−]c1ccccc1
+
+(b) c1cc([O−].[Na+])ccc1
+
+Matching pairs of digits following atom specifications imply that the atoms are bonded to each other. The bond may be explicit (bond symbol and/or direction preceding the ring closure digit) or implicit (a nondirectional single or aromatic bond). This is true whether or not the bond ends up as part of a ring.
+
+Adjacent atoms separated by dot (.) implies that the atoms are not bonded to each other. This is true whether or not the atoms are in the same connected component.
+
+For example, C1.C1 specifies the same molecule as CC(ethane)
+
+## 3.3 Isomeric SMILES
+This section describes the SMILES rules used to specify isotopism, configuration about double bonds, and chirality. The term isomeric SMILES collectively refers to SMILES written using these rules.
+The SMILES isomer specification rules allow chirality to be completely specified for any structure, if it is known. Unlike most existing chemical nomenclatures such as CIP and IUPAC, these rules are also designed to allow rigorous partial specification of chirality. Aside from use in macros, substructure searching, and other pattern matching operations, this is important because much of the world's available chemical information is known for structures with incompletely resolved chiralities (not all possible chiral centers are separated, known, or reported).
+
+All isomer specification rules in SMILES are therefore optional. The absence of a specification for any attribute implies that the value of that attribute is unspecified.
+
+### 3.3.1 Isotopic Specification
+Isotopic specifications are indicated by preceding the atomic symbol with a number equal to the desired integral atomic mass. An atomic mass can only be specified inside brackets. For instance:
+
+Smiles -> Name
+[12C] -> carbon-12
+[13C] -> carbon-13
+[C]	-> carbon (unspecified mass)
+[13CH4] -> C-13 methane
+
+### 3.3.2 Configuration Around Double Bonds
+Configuration around double bonds is specified by the characters / and \ which are "directional bonds" and can be thought of as kinds of single or aromatic (eg. default) bonds. These symbols indicate relative directionality between the connected atoms, and have meaning only when they occur on both atoms which are double bonded. For instance, the following SMILES are all valid for E- and Z-1,2-difluoroethene:
+
+	
+F/C=C/F	F/C=C\F
+
+F\C=C\F	F\C=C/F
+
+An important difference between SMILES chirality conventions and others such as CIP is that SMILES uses local chirality representation (as opposed to absolute chirality), which allows partial specifications. An example of this is illustrated below:
+	
+F/C=C/C=C/C	-> (completely specified)
+F/C=C/C=CC -> (partially specified)
+	
+### 3.3.3. Configuration Around Tetrahedral Centers
+SMILES uses a very general type of chirality specification based on local chirality. Instead of using a rule-based numbering scheme to order neighbor atoms of a chiral center, orientations are based on the order in which neighbors occur in the SMILES string. As with all other aspects of SMILES, any valid order is acceptable; the Daylight software is responsible for retaining the meaning of the chiral specification when the structure is modified or rearranged (e.g. to make the unique SMILES).
+The simplest and most common kind of chirality is tetrahedral; four neighbor atoms are evenly arranged about a central atom, known as the "chiral center". If all four neighbors are different from each other in any way, mirror images of the structure will not be identical. The two mirror images are known as "enantiomers" and are the only two forms that a tetrahedral center can have. If two (or more) of the four neighbors are identical to each other, the central atom will not be chiral (its mirror images can be superimposed in space).
+
+In SMILES, tetrahedral centers may be indicated by a simplified chiral specification (@ or @@) written as an atomic property following the atomic symbol of the chiral atom. If a chiral specification is not present for a chiral atom, its chirality is implicitly not specified. For instance:
+
+
+(unspecified chirality)	-> [ NC(C)(F)C(=O)O , NC(F)(C)C(=O)O ]
+(specified chirality) [ N[C@](C)(F)C(=O)O , N[C@@](F)(C)C(=O)O ]
+
+Looking from the amino N to the chiral C (as the SMILES is written), the three other neighbors appear anticlockwise in the order that they are written in the top SMILES, N[C@](C)(F)C(=O)O (methyl-C, F, carboxy-C), and clockwise in the bottom one, N[C@@](F)(C)C(=O)O. The symbol "@" indicates that the following neighbors are listed anticlockwise (it is a "visual mnemonic" in that the symbol looks like an anticlockwise spiral around a central circle). "@@" indicates that the neighbors are listed clockwise (you guessed it, anti-anti-clockwise).
+
+If the central carbon is not the very first atom in the SMILES and has an implicit hydrogen attached (it can have at most one and still be chiral), the implicit hydrogen is taken to be the first neighbor atom of the three neighbors that follow a tetrahedral specification. If the central carbon is first in the SMILES, the implicit hydrogen is taken to be the "from" atom. Hydrogens may always be written explicitly (as [H]) in which case they are treated like any other atom. In each case, the implied order is exactly as written in SMILES. Some of the valid SMILES for the alanine are:
+
+
+Same representations below	
+N[C@@]([H])(C)C(=O)O	
+N[C@@H](C)C(=O)O	
+N[C@H](C(=O)O)C	
+[H][C@](N)(C)C(=O)O	
+[C@H](N)(C)C(=O)O	
+
+Same representations below
+N[C@]([H])(C)C(=O)O
+N[C@H](C)C(=O)O
+N[C@@H](C(=O)O)C
+[H][C@@](N)(C)C(=O)O
+[C@@H](N)(C)C(=O)O
+
+The chiral order of the ring closure bond is implied by the lexical order that the ring closure digit appears on the chiral atom (not in the lexical order of the "substituent" atom).
+
+
+C[C@H]1CCCCO1
+or
+O1CCCC[C@@H]1C
+
+### 3.3.4 General Chiral Specification
+There are many kinds of chirality other than tetrahedral. The use of the "@" symbol described above is actually a special case of a general chiral specification syntax.
+The general chiral specification used in SMILES has three parts: the @ symbol, followed by a two-letter chiral class indicator, followed by a numerical chiral permutation designator. A default chiral class is assigned to each degree (number of connections); the default class for four connections is tetrahedral (TH). Most chiralities have more than two possible choices; the choices are assigned from a table numerically. In most cases, the @1 designation means "anticlockwise around the axis represented by SMILES order" and @2 means "clockwise". Notations in the form "@@" and "@@@" are interpreted as "@2" and "@3" (analogous to "+++" meaning "+3"). The "@" and "@@" notations used above are shortcuts for the full specifications "@TH1" and "@TH2". In practice, full chiral specifications are not often needed.
+
+SMILES handles the full range of chiral specification, including resolution of "reduced chirality" (where the number of enantiomers is reduced by symmetry) and "degenerate chirality" (where the center becomes non-chiral due to symmetrical substitution). As with other aspects of SMILES, the language guarantees the ability to specify exactly what is known, including partial specifications. The SMILES system will generate unique isomeric SMILES for any given specification, and substructure recognition will operate correctly on all types of chirality.
+
+The rest of this section will be limited to discussing the following chiralities: tetrahedral, allene-like, square-planar, trigonal-bipyramidal, and octahedral. Although many more chiral classes can be handled by this system (it's table-driven), these five classes are very common in chemistry and cover most of the issues to be encountered in the remainder.
+
+Tetrahedral. The tetrahedral class symbol is TH. This is the default chiral class for degree four. Possible values are 1 and 2. @TH1 (or just @) indicates that, looking from the first connected atom, the following three connected atoms are listed anticlockwise; @TH2 (or @@) indicates clockwise.
+
+Allene-like. The allene-like class symbol is AL. This is the default chiral class for degree 2 (the chiral center is the central atom with two double bonds). Although substituted C=C=C structures are most common, C=C=C=C=C structures are also allene-like, as are any odd number of serially double-bonded atoms. Possible values are @AL1 (or just @) and @AL2 (or @@); these are interpreted by superimposing the substituted atoms and evaluating as per tetrahedral. Hydrogens attached to substituted allene-like atoms are taken to be immediately following that atom, as shown below:
+
+
+	
+OC(Cl)=[C@]=C(C)F -> OC(Cl)=[C@AL1]=C(C)F 
+OC=[C@]=CF -> OC([H])=[C@AL1]=C([H])F
+
+Square-planar. The square-planar class symbol is SP Possible values are @SP1, @SP2, and @SP3; this is not the default chiral class for degree four, so shorthand specifications are not allowed. Square-planar is also somewhat unusual in that the ideas of clockwise and anticlockwise do not apply.
+	 
+F[Po@SP1](Cl)(Br)I	(SP1 lists in a "U shape")
+F[Po@SP2](Br)(Cl)I	(SP2 lists in a "4-shape")
+F[Po@SP3](Cl)(I)Br	(SP3 lists in a "Z shape")
+
+Trigonal-bipyramidal. The trigonal-bipyramidal class symbol is TB. This is the default chiral class for degree five. Possible values are @TB1 to @TB20. @TB1 (or just @) indicates that, when the SMILES is listed from one axial connection to the other, the three intermediate, equatorially-connected atoms are listed anticlockwise; @TB2 (or @@) indicates clockwise. This is illustrated below.
+
+s[As@@](F)(Cl)(Br)C=O
+O=C[As@](F)(Cl)(Br)S
+
+Octahedral. The octahedral class symbol is OH. This is the default chiral class for degree six. Possible values are @OH1 to @OH30. @OH1 (or just @) indicates that, when the SMILES is listed from one axial connection to the other, the four intermediate, equatorially-connected atoms are listed anticlockwise; @OH2 (or @@) indicates clockwise. This is illustrated below.
+
+S[Co@@](F)(Cl)(Br)(I)C=O
+O=C[Co@](F)(Cl)(Br)(I)S
+
+## 3.4 SMILES Conventions
+Aside from the above rules, a small number of conventions are universally used in SMILES. These are briefly discussed below; for more detail, see the JCICS paper (ibid).
+
+### 3.4.1 Hydrogens
+Hydrogen atoms do not normally need to be specified when writing SMILES for most organic structures. The presence of hydrogens may be specified in three ways:
+
+Implicitly.....for atoms specified without brackets, from normal valence assumptions.
+Explicitly by count.....inside brackets, by the hydrogen count supplied; zero if unspecified.
+As explicit atoms.....as [H] atoms.
+There is no distinction between "organic" and "inorganic" SMILES nomenclature. One may specify the number of attached hydrogens for any atom in any SMILES. For example, propane may be entered as [CH3][CH2][CH3] instead of CCC.
+
+There are four situations where specification of explicit hydrogen specification is required:
+
+charged hydrogen, i.e. a proton, [H+];
+hydrogens connected to other hydrogens, e.g., molecular hydrogen, [H][H];
+hydrogens connected to other than one other atom, e.g., bridging hydrogens; and
+isotopic hydrogen specifications, e.g. in heavy water, [2H]O[2H].
+
+### 3.4.2 Aromaticity
+Aromaticity must be deduced in a system such as SMILES which generates an unambiguous chemical nomenclature because of the fundamental requirement to characterize the symmetry of a molecule. Given effective aromaticity-detection algorithms, it is not necessary to enter any structure as aromatic if the user prefers to enter an aliphatic (Kekulé-like) structure. Entering structures as aromatic directly (i.e., by using lower case atomic symbols) provides a shortcut to accurate chemical specification and is closer to the mental molecular model used by most chemists.
+The SMILES algorithm uses an extended version of Hueckel's rule to identify aromatic molecules and ions. To qualify as aromatic, all atoms in the ring must be sp2 hybridized and the number of available "excess" p-electrons must satisfy Hueckel's 4N+2 criterion. As an example, benzene is written c1ccccc1, but an entry of C1=CC=CC=C1 - cyclohexatriene, the Kekulé form - leads to detection of aromaticity and results in an internal structural conversion to aromatic representation. Conversely, entries of c1ccc1 and c1ccccccc1 will produce the correct anti-aromatic structures for cyclobutadiene and cyclooctatetraene, C1=CC=C1 and C1=CC=CC=CC=C1. In such cases the SMILES system looks for a structure that preserves the implied sp2 hybridization, the implied hydrogen count, and the specified formal charge, if any. Some inputs, however, may not only be incorrect but also impossible, such as c1cccc1. Here c1cccc1 cannot be converted to C1=CCC=C1 since one of the carbon atoms would be sp3 with two attached hydrogens. In such a structure alternating single and double bond assignments cannot be made. The SMILES system will flag this as an "impossible" input. Please note that only atoms on the following list can be considered aromatic: C, N, O, P, S, As, Se, and * (wildcard). In addition, exocyclic double bonds do not break aromaticity.
+
+		
+C1=COC=C1 -> c1cocc1
+C1=CN=C[NH]C(=O)1 -> c1cnc[nH]c(=O)1	
+C1=C*=CC=C1 -> c1c*ccc1
+		
+It is important to remember that the purpose of the SMILES aromaticity detection algorithm is for the purposes of chemical information representation only! To this end, rigorous rules are provided for determining the "aromaticity" of charged, heterocyclic, and electron-deficient ring systems. The "aromaticity" designation as used here is not intended to imply anything about the reactivity, magnetic resonance spectra, heat of formation, or odor of substances.
+
+### 3.4.3 Aromatic Nitrogen Compounds
+A short note is in order about aromatic nitrogens, a common source of confusion in chemical information systems. All three common types of aromatic nitrogen may be specified with the aromatic nitrogen symbol n. Archetypical examples are pyridine, pyridine-N-oxide, and pyrrole.
+
+		
+Pyridine -> n1ccccc1	
+
+Pyridine-N-oxidei -> O=n1ccccc1   [O-][n+]1ccccc1	
+Methyl and 1H-pyrrole -> Cn1cccc1    [nH]1cccc1
+
+Note that the pyrrolyl nitrogen in 1H-pyrrole is written [nH] to distinguish this kind of nitrogen from a pyridyl-N. Alternative valid SMILES for 1H-pyrrole include [H]n1cccc1 (with explicit hydrogen) and N1C=CC=C1 (aliphatic form) all three input forms are equivalent.
+
+### 3.4.4 Bonding Conventions
+
+SMILES does not dictate which valence conventions should be used to model molecular structure. In fact, an advantage of using SMILES is its ability to describe various valence models of the same structure. Atoms may be connected and show charge separation as desired. For instance, nitromethane can be represented in SMILES as CN(=O)=O or as the charge separated C[N+](=O)[O-] (we tend to use the former for database work because it preserves symmetry). Both are "right" in the sense that they represent different, useful models of the substance. In general, when symmetry is not an issue, most chemists prefer charge-separated structures if they can avoid representing atoms in unusual valence states, e.g., diazomethane is written as C=[N+]=[N-] rather than C=[N]=[N].
+Given one valence model of a structure, chemical database systems such as THOR and Merlin have the ability to retrieve data about that structure even if the data were stored under a different valence model of the structure. With such systems, the choice of valence conventions is not critical to either database design nor database query.
+
+### 3.4.5 Tautomers
+Tautomeric structures are explicitly specified in SMILES. There are no "tautomeric bond", "mobile hydrogen", nor "mobile charge" specifications. Selection of one or all tautomeric structures is left to the user and strongly depends on the application. Given one tautomeric form, most chemical information systems will report data for all known tautomers if needed. The role of SMILES is to specify exactly which tautomeric form is requested, and for which there are data. A simple example, with two possible tautomeric forms, is shown below:
+
+
+2-pyridone -> O=c1[nH]cccc1         
+2-pyridinol -> Oc1ncccc1
+                
+# Instruction
+
+You are provided with set of texts that contain specifc reactions. Your job is to parse the reactant and products from it.
+Once parsed convert that to corresponding valid SMILES and return us a ordered list of reactants and products SMILES.
+
+<|end|><|start|>user<|message|>
+Following is the reaction text:
+
+` 8 Fe + S8 -> 8 FeS ` 
+<|end|><|start|>assistant<|message|>{
+  "SMILES_response": [
+    "[Fe]",
+    "S1SSSSSSS1",
+    "[Fe]S"
+  ]
+}<|end|>
+
+        
+
+        ## SMILES REACTION AGENT RESPONSE
+        <|start|>system<|message|>YOU ARE AN EXPERT AGENT THAT GENERATES SMILES NOTATION FOR CHEMICAL REACTION TEXTS
+Knowledge cutoff: 2024-06
+Current date: 2025-09-07
+
+Reasoning: high
+
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|><|start|>developer<|message|># Instructions
+
+
+# Details of SMILES notation
+
+## SMILES - A Simplified Chemical Language
+SMILES (Simplified Molecular Input Line Entry System) is a line notation (a typographical method using printable characters) for entering and representing molecules and reactions. Some examples are:
+
+
+SMILES	| Name	
+CC	| ethane	
+[OH3+]	| hydronium ion
+O=C=O	| carbon dioxide	
+[2H]O[2H]	| deuterium oxide
+C#N	| hydrogen cyanide	
+[235U]	| uranium-235
+CCN(CC)CC	| triethylamine	
+F/C=C/F	| E-difluoroethene
+CC(=O)O	| acetic acid	
+F/C=C\F	| Z-difluoroethene
+C1CCCCC1 | cyclohexane	
+N[C@@H](C)C(=O)O  | L-alanine
+c1ccccc1 | benzene	
+N[C@H](C)C(=O)O	| D-alanine
+
+
+Reaction SMILES	| Name
+[I-].[Na+].C=CCBr>>[Na+].[Br-].C=CCI | displacement reaction
+(C(=O)O).(OCC)>>(C(=O)OCC).(O) | intermolecular esterification
+
+SMILES contains the same information as might be found in an extended connection table. The primary reason SMILES is more useful than a connection table is that it is a linguistic construct, rather than a computer data structure. SMILES is a true language, albeit with a simple vocabulary (atom and bond symbols) and only a few grammar rules. SMILES representations of structure can in turn be used as "words" in the vocabulary of other languages designed for storage of chemical information (information about chemicals) and chemical intelligence (information about chemistry).
+
+Part of the power of SMILES is that unique SMILES exist. With standard SMILES, the name of a molecule is synonymous with its structure; with unique SMILES, the name is universal. Anyone in the world who uses unique SMILES to name a molecule will choose the exact same name.
+
+One other important property of SMILES is that it is quite compact compared to most other methods of representing structure. A typical SMILES will take 50% to 70% less space than an equivalent connection table, even binary connection tables. For example, a database of 23,137 structures, with an average of 20 atoms per structure, uses only 1.6 bytes per atom when represented with SMILES. In addition, ordinary compression of SMILES is extremely effective. The same database cited above was reduced to 27% of its original size by Ziv-Lempel compression (i.e. 0.42 bytes per atom).
+
+## 3.2 SMILES Specification Rules
+SMILES notation consists of a series of characters containing no spaces. Hydrogen atoms may be omitted (hydrogen-suppressed graphs) or included (hydrogen-complete graphs). Aromatic structures may be specified directly or in Kekulé form.
+There are five generic SMILES encoding rules, corresponding to specification of atoms, bonds, branches, ring closures, and disconnections. Rules for specifying various kinds of isomerism are discussed in the following section, ISOMERIC SMILES.
+
+### 3.2.1 Atoms
+Atoms are represented by their atomic symbols: this is the only required use of letters in SMILES. Each non-hydrogen atom is specified independently by its atomic symbol enclosed in square brackets, [ ]. The second letter of two-character symbols must be entered in lower case. Elements in the "organic subset" B, C, N, O, P, S, F, Cl, Br, and I may be written without brackets if the number of attached hydrogens conforms to the lowest normal valence consistent with explicit bonds. "Lowest normal valences" are B (3), C (4), N (3,5), O (2), P (3,5), S (2,4,6), and 1 for the halogens. Atoms in aromatic rings are specified by lower case letters, e.g., aliphatic carbon is represented by the capital letter C, aromatic carbon by lower case c. Since attached hydrogens are implied in the absence of brackets, the following atomic symbols are valid SMILES notations.
+
+C -> methane	(CH4)
+P -> phosphine	(PH3)
+N -> ammonia	(NH3)
+S -> hydrogen sulfide	(H2S)
+O -> water	(H2O)
+Cl -> hydrochloric acid	(HCl)
+
+Atoms with valences other than "normal" and elements not in the "organic subset" must be described in brackets.
+
+
+[S] -> elemental sulfur
+[Au] -> elemental gold
+
+Within brackets, any attached hydrogens and formal charges must always be specified. The number of attached hydrogens is shown by the symbol H followed by an optional digit. Similarly, a formal charge is shown by one of the symbols + or -, followed by an optional digit. If unspecified, the number of attached hydrogens and charge are assumed to be zero for an atom inside brackets. Constructions of the form [Fe+++] are synonymous with the form [Fe+3]. Examples are:
+
+
+[H+] -> proton
+[Fe+2] -> iron (II) cation
+[OH-] -> hydroxyl anion
+[Fe++] -> iron (II) cation
+[OH3+] -> hydronium cation
+[NH4+] -> ammonium cation
+
+### 3.2.2 Bonds
+Single, double, triple, and aromatic bonds are represented by the symbols -, =, #, and :, respectively. Adjacent atoms are assumed to be connected to each other by a single or aromatic bond (single and aromatic bonds may always be omitted). Examples are:
+
+CC	-> ethane -> (CH3CH3)
+C=O	-> formaldehyde	-> (CH2O)
+C=C	-> ethene	-> (CH2=CH2)
+O=C=O	-> carbon dioxide	-> (CO2)
+COC	-> dimethyl ether	-> (CH3OCH3)
+C#N	-> hydrogen cyanide	-> (HCN)
+CCO	-> ethanol	-> (CH3CH2OH)
+[H][H]	-> molecular hydrogen	-> (H2)
+
+For linear structures, SMILES notation corresponds to conventional diagrammatic notation except that hydrogens and single bonds are generally omitted. For example, 6-hydroxy-1,4-hexadiene can be represented by many equally valid SMILES, including the following three:
+
+
+Structure -> Valid SMILES
+ CH2=CH-CH2-CH=CH-CH2-OH -> [ C=CCC=CCO,
+	C=C-C-C=C-C-O,
+ 	OCC=CCC=C]
+
+### 3.2.3 Branches
+
+Branches are specified by enclosing them in parentheses, and can be nested or stacked. In all cases, the implicit connection to a parenthesized expression (a "branch") is to the left. Examples are:
+
+		
+CCN(CC)CC	 -> Triethylamine	
+Isobutyric acid -> CC(C)C(=O)O	
+3-propyl-4-isopropyl-1-heptene -> C=CC(CCC)C(C(C)C)CCC
+
+
+### 3.2.4 Cyclic Structures
+Cyclic structures are represented by breaking one bond in each ring. The bonds are numbered in any order, designating ring opening (or ring closure) bonds by a digit immediately following the atomic symbol at each ring closure. This leaves a connected non-cyclic graph which is written as a non-cyclic structure using the three rules described above. Cyclohexane is a typical example:
+C1CCCCC1
+
+There are usually many different, but equally valid descriptions of the same structure, e.g., the following SMILES notations for 1-methyl-3-bromo-cyclohexene-1:
+
+(a) CC1=CC(Br)CCC1
+
+(b) CC1=CC(CCC1)Br
+
+
+Many other notations may be written for the same structure, deriving from different ring closures. SMILES does not have a preferred entry on input; although (a) above may be simplest, others are just as valid.
+
+A single atom may have more than one ring closure. This is illustrated by the structure of cubane in which two atoms have more than one ring closure:
+
+
+
+Generation of SMILES for cubane: C12C3C4C1C5C4C3C25.
+
+If desired, digits denoting ring closures can be reused. As an example, the digit 1 used twice in the specification:
+
+O1CCCCC1N1CCCCC1
+The ability to re-use ring closure digits makes it possible to specify structures with 10 or more rings. Structures that require more than 10 ring closures to be open at once are exceedingly rare. If necessary or desired, higher-numbered ring closures may be specified by prefacing a two-digit number with percent sign (%). For example, C2%13%24 is a carbon atom with a ring closures 2, 13, and 24 .
+
+### 3.2.5 Disconnected Structures
+Disconnected compounds are written as individual structures separated by a "." (period). The order in which ions or ligands are listed is arbitrary. There is no implied pairing of one charge with another, nor is it necessary to have a net zero charge. If desired, the SMILES of one ion may be imbedded within another as shown in the example of sodium phenoxide.
+
+(a) [Na+].[O−]c1ccccc1
+
+(b) c1cc([O−].[Na+])ccc1
+
+Matching pairs of digits following atom specifications imply that the atoms are bonded to each other. The bond may be explicit (bond symbol and/or direction preceding the ring closure digit) or implicit (a nondirectional single or aromatic bond). This is true whether or not the bond ends up as part of a ring.
+
+Adjacent atoms separated by dot (.) implies that the atoms are not bonded to each other. This is true whether or not the atoms are in the same connected component.
+
+For example, C1.C1 specifies the same molecule as CC(ethane)
+
+### 3.4.2 Aromaticity
+Aromaticity must be deduced in a system such as SMILES which generates an unambiguous chemical nomenclature because of the fundamental requirement to characterize the symmetry of a molecule. Given effective aromaticity-detection algorithms, it is not necessary to enter any structure as aromatic if the user prefers to enter an aliphatic (Kekulé-like) structure. Entering structures as aromatic directly (i.e., by using lower case atomic symbols) provides a shortcut to accurate chemical specification and is closer to the mental molecular model used by most chemists.
+The SMILES algorithm uses an extended version of Hueckel's rule to identify aromatic molecules and ions. To qualify as aromatic, all atoms in the ring must be sp2 hybridized and the number of available "excess" p-electrons must satisfy Hueckel's 4N+2 criterion. As an example, benzene is written c1ccccc1, but an entry of C1=CC=CC=C1 - cyclohexatriene, the Kekulé form - leads to detection of aromaticity and results in an internal structural conversion to aromatic representation. Conversely, entries of c1ccc1 and c1ccccccc1 will produce the correct anti-aromatic structures for cyclobutadiene and cyclooctatetraene, C1=CC=C1 and C1=CC=CC=CC=C1. In such cases the SMILES system looks for a structure that preserves the implied sp2 hybridization, the implied hydrogen count, and the specified formal charge, if any. Some inputs, however, may not only be incorrect but also impossible, such as c1cccc1. Here c1cccc1 cannot be converted to C1=CCC=C1 since one of the carbon atoms would be sp3 with two attached hydrogens. In such a structure alternating single and double bond assignments cannot be made. The SMILES system will flag this as an "impossible" input. Please note that only atoms on the following list can be considered aromatic: C, N, O, P, S, As, Se, and * (wildcard). In addition, exocyclic double bonds do not break aromaticity.
+
+
+		
+C1=COC=C1 -> c1cocc1
+C1=CN=C[NH]C(=O)1 -> c1cnc[nH]c(=O)1	
+C1=C*=CC=C1 -> c1c*ccc1
+		
+It is important to remember that the purpose of the SMILES aromaticity detection algorithm is for the purposes of chemical information representation only! To this end, rigorous rules are provided for determining the "aromaticity" of charged, heterocyclic, and electron-deficient ring systems. The "aromaticity" designation as used here is not intended to imply anything about the reactivity, magnetic resonance spectra, heat of formation, or odor of substances.
+
+### 3.4.4 Bonding Conventions
+
+SMILES does not dictate which valence conventions should be used to model molecular structure. In fact, an advantage of using SMILES is its ability to describe various valence models of the same structure. Atoms may be connected and show charge separation as desired. For instance, nitromethane can be represented in SMILES as CN(=O)=O or as the charge separated C[N+](=O)[O-] (we tend to use the former for database work because it preserves symmetry). Both are "right" in the sense that they represent different, useful models of the substance. In general, when symmetry is not an issue, most chemists prefer charge-separated structures if they can avoid representing atoms in unusual valence states, e.g., diazomethane is written as C=[N+]=[N-] rather than C=[N]=[N].
+Given one valence model of a structure, chemical database systems such as THOR and Merlin have the ability to retrieve data about that structure even if the data were stored under a different valence model of the structure. With such systems, the choice of valence conventions is not critical to either database design nor database query.
+
+### 3.4.5 Tautomers
+Tautomeric structures are explicitly specified in SMILES. There are no "tautomeric bond", "mobile hydrogen", nor "mobile charge" specifications. Selection of one or all tautomeric structures is left to the user and strongly depends on the application. Given one tautomeric form, most chemical information systems will report data for all known tautomers if needed. The role of SMILES is to specify exactly which tautomeric form is requested, and for which there are data. A simple example, with two possible tautomeric forms, is shown below:
+
+
+2-pyridone -> O=c1[nH]cccc1         
+2-pyridinol -> Oc1ncccc1
+
+
+## 3.5 Extensions for Reactions
+The SMILES language is extended to handle reactions. There are two areas where SMILES is extended: distinguishing component parts of a reactions and atom maps.
+
+Component parts of a reaction are handled by introducing the ">" character as a new separator. Any reaction must have exactly two > characters in it. ">>" is a valid reaction SMILES for an empty reaction. Each of the ">"-separated components of a reaction must be a valid molecule SMILES.
+
+As an aside, molecule SMILES never have a ">" character. In a program, one can quickly determine if a SMILES refers to a reaction or molecule by searching for a ">" character in the string.
+
+Reaction SMILES Grammar:
+
+
+reaction	:	reactant '>' agent '>' product
+			|	reactant '>>' product
+			;
+reactant,
+agent,
+product		:	molecule
+            |       <null>
+			;
+molecule	:	SMILES
+			;
+
+SMILES:  a valid molecule specification in the SMILES language.
+
+For example:
+`C=CCBr>>C=CCI`
+This is a valid reaction. Note that there are no agent molecules. Also note that several atoms are missing from the reaction (the product "Br" and the reactant "F").
+
+`[I-].[Na+].C=CCBr>>[Na+].[Br-].C=CCI`
+This is a more complete version of the same reaction. It has been canonicalized. It would form the root of a datatree when stored in a THOR database.
+
+`C=CCBr.[Na+].[I-]>CC(=O)C>C=CCI.[Na+].[Br-]`
+This version of the reaction includes an agent. Note that the SMILES does not indicate how the agent participates. Whether the agent is a solvent, catalyst, or performs another function within the reaction must be stored separately as data. This SMILES could be stored in a THOR database as an absolute SMILES and would appear on the same datatree page as the previous example.
+In the above example, note that the reaction is ambiguous with respect to the carbon atoms involved. One might assume that a normal Sn2 displacement is occurring. In fact, an equally reasonable allylic displacement is possible, via either an Sn1-like allyl cation. Recognize that the reaction SMILES given above do not say which carbons are which and hence do not discriminate between the two alternate mechanisms.
+
+This case demonstrates the use and need for atom maps for reaction processing. Atom maps are used primarily to further define the overall reaction in cases where the reaction mechanism may not be evident from the reactant and product molecules. Atom maps are non-negative integer atom modifiers. They follow the ":" character within an atom expression. They must be the last modifier within the atom expression:
+
+SMILES Atom Expression Grammar:
+
+atom     	:	SYMBOL
+			|	[ WEIGHT SYMBOL mods ]
+			|	[ WEIGHT SYMBOL mods : CLASS ]
+			;
+mods        :       mod mods
+			;
+mod         :       HCOUNT | CHARGE | CHIRAL
+ 			;
+
+CLASS = non-negative integer class value.
+WEIGHT = atomic weight.
+SYMBOL = atomic symbol.
+HCOUNT = Atom hydrogen count specification.
+CHARGE = Atom charge specification.
+CHIRAL = Atom chirality specification.
+
+Atom maps are an atomic property. They can legally appear in a SMILES for any atom, whether or not it is part of a reaction. Atom with atom map labels in a molecule SMILES are considered valid; the atom maps are ignored for molecule processing. Absolute and unique SMILES generated by the system for molecules never include atom maps.
+
+Finally, there are some differences in the handling of atom maps and agent components in the unique versus absolute SMILES for reactions. Atom maps and agent components are not part of the unique SMILES specification. This is important for the THOR database, where the datatree roots are formed from the unique SMILES. The net result is that each reaction datatree may contain multiple specific reactions with different agents and atom maps.
+
+### 3.5.1 Reaction Atom Maps
+Atom mappings are properties of the atoms in the reaction molecules. The mappings represent equivalence classes of atoms within a reaction. In effect, the map tells the computer which atoms are the same on the reactant and products sides of a reaction. Without this map information, it is difficult to derive the reaction bond changes which occur.
+
+Within the SMILES language, atom maps are represented as a non-negative numeric atom modifier following the ":" character (e.g. [CH3:2] is a carbon in class 2).
+
+Within the Daylight toolkit, the atom maps are manipulated as sets of mapped atoms. The atom map class numbers which are used in SMILES do not appear in the toolkit interface to a reaction. The map class numbers in SMILES do not have any additional significance, except to associate all atoms with the same map class label to one another.
+
+There are no requirements for completeness or uniqueness of the atom mappings. Atom mappings are independent of the connectivity and properties of the underlying molecules. This is so for several reasons: first, there are limits to the valence representation of molecules which appear when processing reactions. For example the oxygens in sodium acetate (CC(=O)[O-].[Na+]) are chemically indistinguishable, even though the valence model used in the toolkit requires that they be connected differently. Some systems (CAS, for example) recognize this equivalence in their structural representation (the tautomer bond). It is often useful to map these to the same class for reaction purposes: [CH3:1][C:2](=[O:3])[O-:3].[Na+:4]
+
+A second case is where there is ambiguity in a reaction mechanism which one wants to express:
+
+
+
+can undergo a cope rearrangement before reaction (which yields the same molecule graph). In effect, there are two distinct mechanisms by which the product is produced. This can be expressed as part of a reaction by: [CH2:1]=[CH:2][CH2:1][CH2:3][C:4](C)[CH2:3]
+
+A third case is simply a lack of information about the reaction itself. It should be possible to omit some atom maps or specify partial information for sets of atoms which *might* end up in a given position in the product. It is never acceptable to force a user to make up data in order to register a reaction. One should only store exactly what is known about the reaction. Atom maps are, by definition ambiguous with respect to the underlying molecules. Atom maps do not appear in the lexical representation of a unique SMILES. They do appear in the lexical representation of an absolute SMILES.
+
+Finally, atom maps are arbitrary class designations; the values of the numbers have no meaning. The Daylight system reserves the right to change the class numbers upon canonicalization of a reaction. The system will reorder the atom map classes over the entire reaction during canonicalization. The resulting maps are guaranteed to have the same meaning as the reaction before canonicalization. Practically, the maps are renumbered as small, dense integers in canonical atom order, but this is not guaranteed. Also, during canonicalization, the atom map classes for agent atoms are removed.
+                
+# Instruction
+
+You are provided with set of texts that contain specifc reactions. Your job is to identify the reaction and product and provide the reaction form in SMILES.
+Once parsed convert that to corresponding valid SMILES reaction and return us a list of reaction SMILES. 
+
+<|end|><|start|>user<|message|>
+Following is the reaction text:
+
+` 8 Fe + S8 -> 8 FeS ` 
+<|end|><|start|>assistant<|message|>{"SMILES_reaction_response":["[Fe].[Fe].[Fe].[Fe].[Fe].[Fe].[Fe].[Fe].S1SSSSSS1>>[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S.[Fe]S"]}<|end|>
+
+        
+
+        ## SMARTS REACTION AGENT RESPONSE
+        <|start|>system<|message|>YOU ARE AN EXPERT AGENT THAT GENERATES SMARTS NOTATION FOR CHEMICAL REACTION TEXTS
+Knowledge cutoff: 2024-06
+Current date: 2025-09-07
+
+Reasoning: high
+
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|><|start|>developer<|message|># Instructions
+
+
+# Details of SMARTS notation
+
+## SMARTS - A Language for Describing Molecular Patterns
+
+Substructure searching, the process of finding a particular pattern (subgraph) in a molecule (graph), is one of the most important tasks for computers in chemistry. It is used in virtually every application that employs a digital representation of a molecule, including depiction (to highlight a particular functional group), drug design (searching a database for similar structures and activity), analytical chemistry (looking for previously-characterized structures and comparing their data to that of an unknown), and a host of other problems.
+SMARTS is a language that allows you to specify substructures using rules that are straightforward extensions of SMILES. For example, to search a database for phenol-containing structures, one would use the SMARTS string [OH]c1ccccc1, which should be familiar to those acquainted with SMILES. In fact, almost all SMILES specifications are valid SMARTS targets. Using SMARTS, flexible and efficient substructure-search specifications can be made in terms that are meaningful to chemists.
+In the SMILES language, there are two fundamental types of symbols: atoms and bonds. Using these SMILES symbols, once can specify a molecule's graph (its "nodes" and "edges") and assign "labels" to the components of the graph (that is, say what type of atom each node represents, and what type of bond each edge represents).
+The same is true in SMARTS: One uses atomic and bond symbols to specify a graph. However, in SMARTS the labels for the graph's nodes and edges (its "atoms" and "bonds") are extended to include "logical operators" and special atomic and bond symbols; these allow SMARTS atoms and bonds to be more general. For example, the SMARTS atomic symbol [C,N] is an atom that can be aliphatic C or aliphatic N; the SMARTS bond symbol ~ (tilde) matches any bond.
+
+### 4.1 Atomic Primitives
+SMARTS provides a number of primitive symbols describing atomic properties beyond those used in SMILES (atomic symbol, charge, and isotopic specifications). The following tables list the atomic primitives used in SMARTS (all SMILES atomic symbols are also legal). In these tables <n> stands for a digit, <c> for chiral class.
+
+Note that atomic primitive H can have two meanings, implying a property or the element itself. [H] means hydrogen atom. [*H2] means any atom with exactly two hydrogens attached
+
+SMARTS Atomic Primitives
+Symbol	| Symbol name	| Atomic property requirements	| Default
+*	| wildcard	| any atom	| (no default)
+a	| aromatic	| aromatic	| (no default)
+A	| aliphatic	| aliphatic	| (no default)
+D<n>	| degree	| <n> explicit connections	| exactly one
+H<n>	| total-H-count	| <n> attached hydrogens	| exactly one
+h<n>	| implicit-H-count	| <n> implicit hydrogens	| at least one
+R<n>	| ring membership	| in <n> SSSR rings	| any ring atom
+r<n>	| ring size	| in smallest SSSR ring of size <n>	| any ring atom
+v<n>	| valence	| total bond order <n>	| exactly one
+X<n>	| connectivity	| <n> total connections	| exactly one
+x<n>	| ring connectivity	| <n> total ring connections	| at least one
+- <n>	| negative charge	| -<n> charge	| -1 charge (-- is -2, etc)
++<n>	| positive charge	| +<n> formal charge	| +1 charge (++ is +2, etc)
+#n	| atomic number	| atomic number <n>	| (no default)
+@	| chirality	| anticlockwise	| anticlockwise, default class
+@@	| chirality	| clockwise	| clockwise, default class
+@<c><n>	| chirality	| chiral class <c> chirality <n>	| (no default)
+@<c><n>?	| chiral or unspec	| chirality <c><n> or unspecified	| (no default)
+<n>	| atomic mass	| explicit atomic mass	| unspecified mass
+
+
+Examples:
+
+C -> aliphatic carbon atom
+c -> aromatic carbon atom
+a -> aromatic atom
+[#6] -> carbon atom
+[Ca] -> calcium atom
+[++] -> atom with a +2 charge
+[R] -> atom in any ring
+[D3] -> atom with 3 explicit bonds (implicit H's don't count)
+[X3] -> atom with 3 total bonds (includes implicit H's)
+[v3] -> atom with bond orders totaling 3 (includes implicit H's)
+C[C@H](F)O -> match chirality (H-F-O anticlockwise viewed from C)
+C[C@?H](F)O -> matches if chirality is as specified or is not specified
+
+### 4.2 Bond Primitives
+Various bond symbols are available to match connections between atoms. A missing bond symbol is interpreted as "single or aromatic".
+
+#### SMARTS Bond Primitives
+Symbol | Atomic property requirements
+- | single bond (aliphatic)
+/ | directional bond "up"
+\ | directional bond "down"
+/? | directional bond "up or unspecified"
+\? | directional bond "down or unspecified"
+= | double bond
+# | triple bond
+: | aromatic bond
+~ | any bond (wildcard)
+@ | any ring bond
+
+
+Examples:
+
+C -> any aliphatic carbon
+cc -> any pair of attached aromatic carbons
+c:c -> aromatic carbons joined by an aromatic bond
+c-c	-> aromatic carbons joined by a single bond (e.g. biphenyl)
+
+## 4.3 Logical Operators
+
+Atom and bond primitive specifications may be combined to form expressions by using logical operators. In the following table, e is an atom or bond SMARTS expression (which may be a primitive). The logical operators are listed in order of decreasing precedence (high precedence operators are evaluated first).
+
+
+### SMARTS Logical Operators
+Symbol | Expression | Meaning
+--- | --- | ---
+exclamation | !e1 | not e1
+ampersand | e1&e2 | a1 and e2 (high precedence)
+comma | e1,e2 | e1 or e2
+semicolon | e1;e2 | a1 and e2 (low precedence)
+
+All atomic expressions which are not simple primitives must be enclosed in brackets. The default operation is & (high precedence "and"), i.e., two adjacent primitives without an intervening logical operator must both be true for the expression (or subexpression) to be true.
+The ability to form expressions gives the SMARTS user a great deal of power to specify exactly what is desired. The two forms of the AND operator are used in SMARTS instead of grouping operators.
+
+Examples:
+[CH2] -> aliphatic carbon with two hydrogens (methylene carbon)
+[!C;R] -> ( NOT aliphatic carbon ) AND in ring
+[!C;!R0] -> same as above ("!R0" means not in zero rings)
+[n;H1] -> H-pyrrole nitrogen
+[n&H1] -> same as above
+[nH1] -> same as above
+[c,n&H1] ->  any arom carbon OR H-pyrrole nitrogen
+[X3&H0] -> atom with 3 total bonds and no H's
+[c,n;H1] -> (arom carbon OR arom nitrogen) and exactly one H
+[Cl] -> any chlorine atom
+[35*] -> any atom of mass 35
+[35Cl] -> chlorine atom of mass 35
+[F,Cl,Br,I] -> the 1st four halogens.
+
+## 4.4 Recursive SMARTS
+Any SMARTS expression may be used to define an atomic environment by writing a SMARTS starting with the atom of interest in this form:
+$(SMARTS)
+Such definitions may be considered atomic properties. These expressions can be used in same manner as other atomic primitives (also, they can be nested). Recursive SMARTS expressions are used in the following manner:
+
+*C -> atom connected to methyl (or methylene) carbon
+*CC -> atom connected to ethyl carbon
+[$(*C);$(*CC)] -> atom in both above environments (matches CCC)
+
+The additional power of such expressions is illustrated by the following example which derives an expression for methyl carbons which are ortho to oxygen and meta to a nitrogen on an aromatic ring.
+
+CaaO -> C ortho to O
+CaaaN -> C meta to N
+Caa(O)aN -> C ortho to O and meta to N (but 2O,3N only)
+Ca(aO)aaN -> C ortho to O and meta to N (but 2O,5N only)
+C[$(aaO);$(aaaN)] -> C ortho to O and meta to N (all cases)
+
+## 4.5 Component-level grouping of SMARTS
+SMARTS may contain "zero-level" parentheses which can be used to group dot-disconnected fragments. This grouping operator allows SMARTS to express more powerful component queries. In general, a single set of parentheses may surround any legal SMARTS expression. Two or more of these expressions may be combined into more complex SMARTS:
+
+(SMARTS)
+(SMARTS).(SMARTS)
+(SMARTS).SMARTS
+
+The semantics of the "zero-level" parentheses are that all of the atom and bond expressions within a set of zero-level parentheses must match within a single component of the target.
+
+SMARTS	| SMILES | Match behavior
+--- | --- | ---
+C.C	| CCCC | yes, no component level grouping specified
+(C.C)	| CCCC | yes, both carbons in the query match the same component
+(C).(C)	| CCCC | no, the query must match carbons in two different components
+(C).(C)	| CCCC.CCCC | yes, the query does match carbons in two different components
+(C).C	| CCCC | yes, both carbons in the query match the same component
+(C).(C).C	| CCCC.CCCC | yes, the first two carbons match different components,
+
+the third matches a carbon anywhere
+These component-level grouping operators were added specifically for reaction processing. Without this construct, it is impossible to distinguish inter- versus intramolecular reaction queries. For example:
+
+Reaction SMARTS expression -> Match behavior
+C(=O)O.OCC>>C(=O)OCC.O -> Matches esterifications
+(C(=O)O).(OCC)>>C(=O)OCC.O -> Matches intermolecular esterifications
+(C(=O)O.OCC)>>C(=O)OCC.O -> Matches intramolecular esterifications (lactonizations)
+
+## 4.6 Reaction Queries
+
+Reaction queries are expressed using the SMARTS language. SMARTS has been extended to handle reaction query features in much the same fashion as SMILES has been extended to handle reactions.
+A reaction query may be composed of optional reactant, agent, and product parts, which are separated by the ">" character. In this case, the parts of the reaction query match against the corresponding roles within the reaction target, as expected. Note that it is also quite reasonable to search a set of reactions by giving a molecule query. In this case, the answer is a hit if the molecule SMARTS matches anywhere within the reaction target. In effect, matching a molecule SMARTS against a reaction target is a query where the role of the SMARTS is unspecified.
+
+
+### Example Reaction SMARTS:
+Query:	| Target: | Matches:
+C>>	| CC>>CN | 2
+>C>	| CC>>CN | 0
+>>C	| CC>>CN | 1
+C	| CC>>CN | 3
+
+The atom mapping for a reaction query is optional. When included in the definition of the pattern, it is used for searching.
+
+If atom maps are used for a SMARTS match, their only effect is to potentially eliminate answers from the result. Atom maps can never, under any circumstance cause the addition of hits to an answer set. Conceptually, one can consider the atom map matching as a post-processing step after a "normal" match. Each of the hits is examined to make sure the atom map classes match on the reactant and product sides of the reaction.
+
+In SMARTS, the atom map has unusual semantics. An atom map is a property which must be evaluated on a global scope during the match. One can not know if the map is correct without considering every atom in the match, in effect requiring the enumeration of every possible path before testing. This is much more computationally expensive than the current SMARTS implementation, which tests the paths as they are built and stops as soon as a path fails to match.
+
+In order to avoid this computational trap, the expressiveness of SMARTS for atom maps has been limited to a low-precedence and operation. That is, only expressions of form: "[expr:n]" or "[expr:?n]" are allowed, where "expr" is any legal atomic expression excluding atom maps and "n" is a map class value. This expression is a low-precedence logical AND between "expr" and the map expression ":n". The following examples illustrate other nuances of the semantics:
+
+
+### Example Reaction SMARTS:
+
+Query: | Target: | Matches: | Comment:
+--- | --- | --- | ---
+C>>C | CC>>CC | 4 | No maps, normal match.
+C>>C | [CH3:7][CH3:8]>> [CH3:7][CH3:8] | 4 | No maps in query, maps in target are ignored.
+[C:1]>>C | [CH3:7][CH3:8]>> [CH3:7][CH3:8] | 4 | Unpaired map in query ignored.
+[C:1]>>[C:1] | CC>>CC | 0 | No maps in target, hence no matches.
+[C:?1]>>[C:?1] | CC>>CC | 4 | Query says mapped as shown or not present.
+[C:1]>>[C:1] | [CH3:7][CH3:8]>>[CH3:7][CH3:8] | 2 | Matches for target 7,7 and 8,8 atom pairs.
+[C:1]>>[C:2] | [CH3:7][CH3:8]>> [CH3:7][CH3:8] | 4 | When a query class is not found on both
+sides of the query, it is ignored;
+this query does NOT say that the atoms
+are in different classes.
+[C:1][C:1]>>[C:1] | [CH3:7][CH3:7]>> [CH3:7][CH3:7] | 4 | Atom maps match with "or" logic. All atoms
+get bound to class 7.
+[C:1][C:1]>>[C:1] | [CH3:7][CH3:8]>> [CH3:7][CH3:8] | 4 | The reactant atoms are bound to classes 7
+and 8. Note that having the first query atom
+bound to class 7 does not preclude
+binding the second atom. Next, the product
+atom can bind to classes 7 or 8.
+[C:1][C:1]>>[C:1] | [CH3:7][CH3:7]>> [CH3:7][CH3:8] | 2 | The reactants are bound to class 7. The
+product atom can bind to class 7 only.
+
+
+The last example is the most confusing. Since there is no "or" logic for atom maps, the behavior when checking the maps is as follows: the query reactants can be bound to any classes in the target. These bindings form the set of allowed product bindings. The product query atoms are then tested against this list. If all of the product atoms pass, then the path is a match. The effect of this procedure is to provide the "logical-OR" semantics for atom maps within the simple implementation. The downside of this implementation is that it can be confusing to the user. Fortunately, the simple pairwise atom maps will suffice for most users.
+Finally, atom map labels in molecule SMARTS and unpaired atom map labels in reaction SMARTS are ignored. Stated another way, since the atom maps express the idea of a global association of atoms across a reaction, atom maps on a molecule query have no meaning. Similarly, a lone atom map on a reaction atom which doesn't correspond to any other atoms in the query has no meaning. In both of these cases, the query is identical to the query written without the meaningless atom maps.
+In recursive SMARTS, reaction expressions are not allowed. The reasons for this are twofold: first, it isn't clear that the meaning of a recursive SMARTS for a reaction would have any useful expressiveness and second, there is a practical problem with the lexical definitions of reactions: given the strict left-to-right definition of reactant-agent-product, how would one express a product atom in a vector binding?? Of course we can change the syntax for recursive SMARTS or reactions to accommodate this if it becomes clear that it is useful.
+
+
+## 4.9 Examples
+
+cc -> any pair of attached aromatic carbons
+c:c -> aromatic carbons joined by an aromatic bond
+c-c -> aromatic carbons joined by a single bond (e.g. biphenyl).
+O -> any aliphatic oxygen
+[O;H1] -> simple hydroxy oxygen
+[O;D1] -> 1-connected (hydroxy or hydroxide) oxygen
+[O;D2] -> 2-connected (etheric) oxygen
+[C,c] -> any carbon
+[F,Cl,Br,I] -> the 1st four halogens.
+[N;R] -> must be aliphatic nitrogen AND in a ring
+[!C;R] -> ( NOTaliphatic carbon ) AND in a ring
+[n;H1] -> H-pyrrole nitrogen
+[n&H1] -> same as above
+[c,n&H1] -> any arom carbon OR H-pyrrole nitrogen
+[c,n;H1] -> (arom carbon OR arom nitrogen) and exactly one H
+*!@* -> two atoms connected by a non-ringbond
+*@;!:* -> two atoms connected by a non-aromatic ringbond
+[C,c]=,#[C,c] -> two carbons connected by a double or triple bond
+
+# Instruction
+
+You are provided with set of texts that contain specifc reactions. Your job is to identify the reactant and product and provide the reaction form in SMARTS.
+Once parsed convert that to corresponding valid SMARTS reaction and return us a list of reaction SMARTS.
+
+<|end|><|start|>user<|message|>
+Following is the reaction text:
+
+` 8 Fe + S8 -> 8 FeS ` 
+<|end|><|start|>assistant<|message|>{"SMARTS_reaction_response":["[Fe].[S]>>[Fe][S]"]}<|end|>
+
+        
+
+        ## SMIRKS REACTION AGENT RESPONSE
+        <|start|>system<|message|>YOU ARE AN EXPERT AGENT THAT GENERATES SMIRKS NOTATION FOR CHEMICAL REACTION TEXTS
+Knowledge cutoff: 2024-06
+Current date: 2025-09-07
+
+Reasoning: high
+
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|><|start|>developer<|message|># Instructions
+
+
+# Details of SMIRKS notation
+
+## SMIRKS - A Reaction Transform Language
+
+A transform is simply a generic reaction within the Daylight system. Generic reactions are extremely useful for chemical information processing. They can be used to create new reactions, manipulate molecules, and to generate new molecules on a large (conbinatorial) scale. They are somewhat complicated, because they must meet several conflicting sets of requirements. These requirements, and how the Daylight system addresses them, are discussed here.
+
+### 5.1 Description
+
+A complete reaction can be described in a number of ways: the reactant/product notation used in SMILES, as a reaction graph, and as a atom- and bond-change list plus the reactant molecules. It is straightforward to interconvert any of the three representations of a complete reaction.
+The most intriguing way to think about a complete reaction is as an atom and bond change list. This representation can be easily understood to capture the idea of a generic reaction. Any set of reactions which undergo the same set of atom and bond changes, regardless of the underlying molecule substrates, can be considered an example of a given generic reaction.
+Consider once again our Sn2 reaction. If it is a normal Sn2 reaction, then the list of atom and bond changes during the reaction is as follows:
+
+
+###### Reaction Text:
+An iodide ion (I − ) acts as a nucleophile, attacking the carbon atom bonded to a bromine atom in 3-bromo-1-propene. In a single, concerted step, the carbon-iodine bond forms while the carbon-bromine bond breaks. This process, known as an S (N) 2 (bimolecular nucleophilic substitution) reaction, results in the displacement of the bromide atom, which leaves as a bromide ion (Br − ). The final product is 3-iodo-1-propene. This mechanism involves a backside attack by the nucleophile, leading to an inversion of stereochemistry at the carbon center.
+
+###### Response Understanding: 
+Reaction Change List:
+Part: | Change Type: | Change:
+C-Br | Bond | Single bond -> no bond
+C-I | Bond | no bond -> Single bond
+Br | Atom | no charge -> -1 charge
+I | Atom | -1 charge -> no charge
+
+Any reaction which undergoes the same set of atom and bond changes would be considered part of the same generic reaction. For example, reaction of Potassium Iodide rather than Sodium Iodide, or reaction of any alkyl bromide in place of Allyl Bromide all have the same list of atom and bond changes. Note that this bare-bones representation of the reaction does not take into account other factors which might affect the reaction such as the steric effects of a primary bromide versus a secondary or tertiary one, and the electronic activating effect of the allylic bond.
+
+As an aside, note the similarities of this representation with the "Difference Fingerprints" described previously. In effect, the difference fingerprint is calculated directly from the bond changes during a reaction (atom property changes like charge, stereochemistry, are not included). The difference fingerprints will be identical for all examples of a single generic reaction.
+
+So, there are two distinct requirements to accurately capture a generic reaction. First is the actual set of changes to the molecule which occur during the reaction (captured with the atom and bond changes) and second is the indirect effects of activating and deactivating groups near the reaction site.
+
+Within the Daylight system, the indirect effects on a generic reaction are most appropriately expressed with the SMARTS query language. With it, one can express concepts such as "electron-withdrawing group", "electron-donating group", aromaticity, unsaturation, steric effects, etc.
+
+The parallels here should be evident: a complete reaction consists of a set of atom and bond changes, plus the substrate molecule upon which the changes operate. A generic reaction consists of the same set of atom and bond changes, plus a substrate SMARTS pattern upon which the changes operate. Any molecule which matches the SMARTS pattern is a candidate for the generic reaction.
+
+## 5.2 Representation
+
+In the Daylight System, we adopted the reactant/product notation for generic reactions. It is not as compact as a reaction graph, but it is the most compatible and most consistent with the SMILES and SMARTS languages already defined for reactions.
+
+The language SMIRKS is defined for generic reactions. It is a hybrid of SMILES and SMARTS in order to meet the dual needs for a generic reaction: expression of a reaction graph and expression of indirect effects. It is a restricted version of reaction SMARTS involving changes in atom-bond patterns. The rules for SMIRKS are:
+
+The reactant and product sides of the transformation are required to have the same numbers and types of mapped atoms and the atom maps must be pairwise. However, non-mapped atoms may be added or deleted during a transformation.1
+Stoichiometry is defined to be 1-1 for all atoms in the reactant and product for a transformation. Hence, if non-unit stoichiometry is desired, reactants or products must be repeated.
+
+Explicit hydrogens that are used on one side of a transformation must appear explicitly on the other side of the transformation and must be mapped.
+
+Bond expressions must be valid SMILES (no bond queries allowed).
+
+Atomic expressions may be any valid atomic SMARTS expression for nodes where the bonding (connectivity & bond order) doesn't change.1 Otherwise, the atomic expressions must be valid SMILES.
+
+These above rules guarantee that the SMIRKS can be interpreted as a reaction graph and that the atom and bond changes can be derived from this representation. This set of rules satisfies the first requirement for a generic reaction. The final rule allows the expression of the "indirect effects" of a generic reaction for atoms which don't participate directly in the reaction.
+
+The net result of these rules is a language which can capture the ideas of generic reactions. A number of examples follow to illustrate features of the language.
+
+
+## 5.3 Transform Grammar
+transform   :	reactant '>' agent '>' product
+			|	reactant '>>' product
+			;
+reactant,
+agent,
+product		:	pattern
+			;
+pattern		:	SSMARTS
+			;
+
+SSMARTS:  a valid pattern specification, excluding bond expressions, and
+	  using a limited set of atom expressions (Subset-SMARTS).
+
+
+## 5.4 Examples
+First is a simple transform to interconvert nitro-group representations in the toolkit. The nitro group is typically represented either with pentavalent Nitrogen "*N(=O)=O" or as the charge-separated trivalent Nitrogen "*[N+](=O)[O-]". These can be interconverted with the following transform:
+
+Text: 
+
+When nitrogen dioxide, a neutral molecule with one unpaired electron, undergoes a reaction, it can form the nitronium ion. This transformation involves the nitrogen atom, which is double-bonded to one oxygen atom and single-bonded to another, losing its unpaired electron. The result is a positive charge on the nitrogen atom, making it an electron-deficient species. The resulting nitronium ion is highly reactive and often acts as an electrophile in reactions.
+
+Response :
+[*:1][N:2](=[O:3])=[O:4]>>[*:1][N+:2](=[O:3])[O-:4]
+
+This transform illustrates an important point: transforms need not represent real reactions. Transforms are useful as a general tool for manipulation of molecules in the toolkit. Most atom and bond changes can be written as legal transformations. Hence, transforms become a powerful tool in the chemist/programmers arsenal for chemical information processing. Also, as with any transform, this one can be used in either the forward or reverse direction.
+
+Inspection of the transform indicates that this meets the requirements for a legal transform. First, it has the same number of atom expressions on both sides of the transform, and they are mapped pairwise. The atom expressions are all legal SMILES and the bond expressions are all legal SMILES.
+
+In this example, there are no SMARTS expressions found. SMARTS atomic expressions could be substituted for the atoms of map classes ":1" and ":3" only. The two atoms attached to the bond which changes ("N:2" and "O:3") must be expressed as SMILES. The change in valence and charge which occurs can be deduced unambiguously from the SMIRKS. Were atomic expressions allowed for these nodes, the determination of atomic properties might not be possible.
+
+The next example illustrates the most confusing part of the SMIRKS language, which is the handling of hydrogens. Unfortunately, the SMILES and SMARTS languages express hydrogens inconsistently. These inconsistencies have been partially reconciled in the SMIRKS language by first, requiring that all hydrogens directly involved in a transform (bonds change) must be expressed explicitly and second, changing the meaning of SMARTS for a single case: [H]. There are still some cases which will cause confusion, however.
+
+
+
+[C:1](=[O:2])[Cl:3].[H:99][N:4]([H:100])[C:0]>> [C:1](=[O:2])[N:4]([H:100])[C:0].[Cl:3][H:99]
+
+Note that both hydrogens attached to the nitrogen of the reaction are shown as explicit. Based on the SMIRKS rules, the expression [H:99] must be interpreted as SMILES, since the bonding to this node changes during the reaction. The expression [H:100] may be interpreted as SMARTS, since its bonding does not change in the reaction. Recall that in versions of the Daylight system prior to 4.51, [H] as SMARTS meant: "any atom with a single attached hydrogen", while in SMILES it is a lone explicit hydrogen.
+
+These differences in interpretation would make SMIRKS unintelligible. Hence, a single change to SMARTS interpretation, for expressions of the form: [<weight>]H<charge><map>]. In SMARTS, these expressions now are interpreted as a hydrogen atom, rather than as any atom with one hydrogen attached. All other SMARTS hydrogen expressions retain their pre-4.51 meanings.
+
+
+#### SMARTS/SMIRKS hydrogen expressions:
+Expression:	| 4.42 meaning:	 | 4.51 meaning:
+--- | --- | ---
+[H]	| Atom with one attached hydrogen	| A hydrogen atom
+[#1]	| A hydrogen atom	| Unchanged
+[H1]	| Atom with one attached hydrogen	| Unchanged
+[*H]	| Atom with one attached hydrogen	| Unchanged
+[H,+] or [*,H], etc.	| 	| Unchanged
+
+
+
+
+The result of the change in semantics is that both explicit hydrogens in the example SMIRKS are interpreted consistently as hydrogen atoms. Note that there still may be confusion for 'implicit' hydrogens. For example, if the amide formation reaction were expressed as:
+
+Text:
+
+An acyl chloride, specifically one with a carbon atom singly bonded to a chlorine atom and doubly bonded to an oxygen atom, reacts with an amine. The amine consists of an NH group bonded to a methyl group (CH3). During the reaction, the chlorine atom from the acyl chloride and one hydrogen atom from the amine combine to form hydrogen chloride (HCl). The remaining parts of the molecules join, resulting in the formation of an amide. This new molecule is a substituted amide where the nitrogen atom is bonded to a carbonyl group (C=O) and a methyl group.
+
+Response: 
+[C:1](=[O:2])[Cl:3].[H:99][NH:4][C:0]>> [C:1](=[O:2])[NH:4][C:0].[Cl:3][H:99]
+
+This case only matches secondary amines. The expression [NH:4] matches a nitrogen with exactly one hydrogen attached (the [H:99] is it). Hence, any other attachments must be non-hydrogen. In general for SMIRKS, the best strategy for expressing hydrogens is to include them as explicit atoms if they are involved in the reaction directly or if they are attached to atoms which are involved in the reaction. This will eliminate most of the confusing cases.
+
+Stereochemistry in SMIRKS is handled locally based on atom map labels. That is, a stereochemical specification describes the orientation of atoms or bonds based solely on the ordering in the string and the atom map labels. For example:
+
+Text:
+
+A central carbon atom is bonded to four different groups, each represented by a pi bond. The molecule's initial state shows two of these pi bonds (labeled as 4 and 5) positioned in a wedge-dash configuration, indicating their stereochemical orientation. During a reaction, the molecule undergoes a transformation where the positions of these two pi bonds, 4 and 5, are interchanged. The other two pi bonds (labeled as 1 and 3) bonded to the central carbon atom remain in their original positions. This change suggests a process involving the inversion of stereochemistry at the central carbon atom.
+
+Response:
+
+[*:1][C@:2]([*:3])([*:4])[*:5]>>[*:1][C@@:2]([*:3])([*:4])[*:5]
+[*:1][C@:2]([*:3])([*:4])[*:5]>>[*:1][C@:2]([*:4])([*:3])[*:5]
+
+
+
+This inverts any carbon stereocenter encountered. On the reactant side of the transform, the expression describes a specific orientation of the nodes; similarly, on the product side the inverted orientation of the same nodes is described. Similarly, for bond stereochemistry:
+
+
+Text:
+
+A molecule containing a carbon-carbon double bond with four substituents undergoes a geometric isomerization. The two carbons of the double bond are each bonded to two different substituents. Specifically, one carbon atom is bonded to substituents 1 and 3, while the other carbon atom is bonded to substituents 5 and 6. Following a reaction, the positions of substituents 5 and 6 are swapped, resulting in a change in the overall spatial arrangement of the molecule. The other two substituents, 1 and 3, remain in their original positions. This transformation represents a cis-trans or E/Z isomerization.
+
+Response:
+
+[*:1]/[C:2]([*:3])=[C:4]([*:5])/[*:6]>>[*:1]/[C:2]([*:3])=[C:4]([*:5])\[*:6]
+
+This inverts any C=C double-bond stereochemistry matched. Note that both of the above examples can match a single stereocenter multiple ways, however the net result is always an inversion of the stereocenter based on the specification of the transform.
+
+In general, transforms which involve stereochemistry should be written with sufficient context for the toolkit to interpret the local chirality needed for analysis. For tetrahedral chirality, all four connections to the chiral atom should be explicitly shown and for double-bond chirality, all three connections to each atom (one double-bond and two single bonds) should be shown.
+
+Finally, a point about the new component-level grouping operators in SMARTS and SMIRKS. This syntax allows the expression of inter- and intramolecular reactions in both SMARTS and SMIRKS. This syntax is fully supported in SMIRKS. See the section on SMARTS section on Reaction Queries for more information.
+
+# Instruction
+
+You are provided with set of texts that contain specifc reactions. Your job is to identify the reactant and product and provide the reaction form in SMIRKS.
+Once parsed convert that to corresponding valid SMIRKS reaction and return us a list of reaction SMIRKS.
+
+<|end|><|start|>user<|message|>
+Following is the reaction text:
+
+` 8 Fe + S8 -> 8 FeS ` 
+<|end|><|start|>assistant<|message|>{"SMIRKS_reaction_response":["[Fe:1].[S:2]>>[Fe:1]-[S:2]"]}<|end|>
+
+        

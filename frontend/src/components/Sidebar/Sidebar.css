@@ -19,13 +19,39 @@
 }
 
 .sidebar-header {
-  padding: 20px;
+  padding: 20px 20px 10px 20px;
   border-bottom: 1px solid var(--primary-color);
   border-top-right-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 60px;
+  justify-content: center;
+  min-height: 50px;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
+
+.sidebar.collapsed .sidebar-brand {
+  justify-content: center;
+}
+
+.sidebar-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle-container {
+  padding: 10px 20px 10px 20px;
+  border-bottom: 1px solid var(--primary-color);
+  display: flex;
+  justify-content: center;
 }
 
 .sidebar-title {
@@ -184,6 +210,14 @@
   
   .sidebar.collapsed {
     width: 60px;
+  }
+  
+  .sidebar-header {
+    padding: 15px 15px 8px 15px;
+  }
+  
+  .sidebar-toggle-container {
+    padding: 8px 15px 8px 15px;
   }
   
   .sidebar-menu-button {

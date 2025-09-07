@@ -1,0 +1,177 @@
+/* ChemicalRenderer.css */
+.chemical-renderer {
+  border: 1px solid rgba(76, 222, 128, 0.3);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.chemical-renderer-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #9ca3af;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(76, 222, 128, 0.3);
+  border-top: 2px solid #4ade80;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.chemical-renderer-loading p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.chemical-renderer-error {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444;
+}
+
+.error-icon {
+  font-size: 20px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.error-content {
+  flex: 1;
+}
+
+.error-content h4 {
+  margin: 0 0 8px 0;
+  color: #ef4444;
+  font-size: 16px;
+}
+
+.error-content p {
+  margin: 0 0 8px 0;
+  color: #fca5a5;
+  font-size: 14px;
+}
+
+.error-data {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #d1d5db;
+  word-break: break-all;
+}
+
+.error-data strong {
+  color: #4ade80;
+}
+
+.error-data code {
+  color: #fbbf24;
+}
+
+.chemical-renderer-empty {
+  padding: 16px;
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.chemical-renderer-success {
+  display: flex;
+  flex-direction: column;
+}
+
+.structure-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(76, 222, 128, 0.1);
+  border-bottom: 1px solid rgba(76, 222, 128, 0.2);
+  font-size: 12px;
+}
+
+.structure-type {
+  background: rgba(76, 222, 128, 0.2);
+  color: #4ade80;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.structure-data {
+  color: #d1d5db;
+  font-family: 'Courier New', monospace;
+  margin-left: 8px;
+  word-break: break-all;
+  flex: 1;
+  text-align: right;
+}
+
+.structure-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.structure-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .structure-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .structure-data {
+    text-align: left;
+    margin-left: 0;
+  }
+}
+
+/* Size variants */
+.chemical-renderer.small .structure-image {
+  padding: 8px;
+}
+
+.chemical-renderer.large .structure-image {
+  padding: 24px;
+}
+
+/* Inline variant */
+.chemical-renderer.inline {
+  display: inline-block;
+  margin: 4px;
+  vertical-align: top;
+}
+
+.chemical-renderer.inline .structure-info {
+  padding: 4px 8px;
+}
+
+.chemical-renderer.inline .structure-image {
+  padding: 8px;
+}

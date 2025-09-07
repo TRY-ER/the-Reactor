@@ -131,6 +131,77 @@ class ProjectService {
       throw error;
     }
   }
+
+  // Get project master CSV file
+  async getProjectMasterCsv(projectId: string, fileName: string = "master.csv"): Promise<{
+    project_id: string;
+    file_path: string;
+    data: Array<Record<string, any>> | null;
+    headers: string[] | null;
+    exists: boolean;
+    row_count: number;
+    message?: string;
+    detail?: string;
+  }> {
+    try {
+      const url = new URL(`${this.baseUrl}/projects/${projectId}/master-csv`);
+      if (fileName !== "master.csv") {
+        url.searchParams.append('file_name', fileName);
+      }
+      
+      const response = await fetch(url.toString());
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to get project master CSV: ${response.status} ${errorText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching project master CSV:', error);
+      throw error;
+    }
+  }
+
+  // Save data to project master CSV
+  async saveProjectMasterCsv(
+    projectId: string, 
+    data: Array<Record<string, any>>, 
+    fileName: string = "master.csv",
+    mode: "overwrite" | "append" = "overwrite"
+  ): Promise<{
+    message: string;
+    project_id: string;
+    file_path: string;
+    rows_saved: number;
+    total_rows: number;
+    file_name: string;
+    mode: string;
+  }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/projects/${projectId}/save-master-csv`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          data: data,
+          file_name: fileName,
+          mode: mode
+        }),
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to save project master CSV: ${response.status} ${errorText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error saving project master CSV:', error);
+      throw error;
+    }
+  }
 }
 
 // Export a singleton instance

@@ -33,10 +33,11 @@ async def run_agent(
     model_key: str,
     query: str,
     agent_name: str = "SMILES_converter_agent",
+    return_agent= False,
     *args,
     **kwargs
 ):
-    model_identity="YOU ARE AN EXPERT AGENT THAT GENERATES SMILES NOTATION FOR CHEMICAL REACTION TEXTS",
+    model_identity="YOU ARE AN EXPERT AGENT THAT GENERATES SMILES NOTATION FOR CHEMICAL REACTION TEXTS"
 
     params = {
         "model_type": model_type,
@@ -50,11 +51,16 @@ async def run_agent(
         "output_schema": RXNSMILESOutputSchema, 
         "model_identity": model_identity,
         "validator": StringValidator(),
-        "validator_key": "SMILES_reaction_response"
+        "validator_key": "SMILES_reaction_response",
+        "return_agent": return_agent,
     }
 
-    result = await schema_run_agent(**params)
-    return result
+    if return_agent:
+        result, agent = await schema_run_agent(**params)
+        return result, agent 
+    else:
+        result = await schema_run_agent(**params)
+        return result
     
                             
 

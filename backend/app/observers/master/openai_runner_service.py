@@ -36,15 +36,27 @@ async def run_service_agent(
     **kwargs
     ):
 
+    master_prompt = ""
+
     params = {
         "model_type": model_type,
         "model_name": model_name,
         "model_key": model_key,
         "agent_name": agent_name,
         "query": query,
+        "return_agent": True,
     }
 
-    parser_response = await parser_run_agent(**params)     
+    parser_response, agent = await parser_run_agent(**params)     
+
+    # print('agent conv >>', agent.decode_conversations())
+
+    master_prompt += f"""
+
+    ## PARSER AGENT RESPONSE
+    {agent.decode_conversations()}
+
+    """
 
     assert type(parser_response) == list, "The parser is expected to return a list !"
 
@@ -59,13 +71,17 @@ async def run_service_agent(
         x: y for x, y in params.items() if x not in ["agent_name", "query"]
     }
 
+    print('parser response >>', parser_response)
+
     master_repo = []
 
     for i,text in enumerate(parser_response):
+        print("this text is getting triggered >>", text)
         yield format_for_stream("info", f"Starting for reaction {i}", aux={"info_type": "reaction_init", "reaction_index": i})
 
         assignable = {
-            "text": text
+            "index": i,
+            "reactions_text": text,
         }
 
         assert type(text)  == str , "The response from the parser has to be in string form !"
@@ -74,7 +90,15 @@ async def run_service_agent(
 
         yield format_for_stream("info", f"Starting SMILES Agent for reaction {i}", aux={"info_type": "smiles_init", "reaction_index": i})
 
-        smiles_response = await smiles_run_agent(**sub_agent_params, query=text) 
+        smiles_response, agent = await smiles_run_agent(**sub_agent_params, query=text) 
+
+
+        master_prompt += f"""
+
+        ## SMILES AGENT RESPONSE
+        {agent.decode_conversations()}
+
+        """
 
         if smiles_response:
             content = smiles_response.get("content", [])
@@ -89,20 +113,35 @@ async def run_service_agent(
 
             # print('values received >>', values)
             # print('invalid count >>', invalid_count)
-            
+
             returnable = {
                 "values": values,
                 "invalid_count": invalid_count
             }
 
-            assignable["SMILES"] = returnable 
+            assignable["reactions_composition_SMILES"] = values 
+            assignable["invalid_SMILE"] = invalid_count
 
             yield format_for_stream("data", f"Got SMILES values for reaction {i}", aux={"info_type": "smiles_update", "reaction_index": i, "returnable": returnable})
 
         yield format_for_stream("info", f"Starting Reaction SMILES Agent for reaction {i}", aux={"info_type": "rxn_smiles_init", "reaction_index": i})
 
-        smiles_rxn_response = await smiles_rxn_run_agent(**sub_agent_params, query=text)
+        try:
+            smiles_rxn_response, agent = await smiles_rxn_run_agent(**sub_agent_params, query=text)
+            agent.decode_conversations()
+            ...
+        except Exception as e:
+            print("Error in decoding conversations >>", e)
+            import traceback
+            print("Traceback:")
+            traceback.print_exc()
 
+        master_prompt += f"""
+
+        ## SMILES REACTION AGENT RESPONSE
+        {agent.decode_conversations()}
+
+        """
         # print("SMILES REACTION PART")
         # print("-----------")
 
@@ -122,13 +161,21 @@ async def run_service_agent(
                 "invalid_count": invalid_count
             }
 
-            assignable["SMILES_reaction"] = returnable 
+            assignable["reactions_SMILES"] = values
+            assignable["invalid_reaction_SMILES"] = invalid_count
 
             yield format_for_stream("data", f"Got Reaction SMILES values for reaction {i}", aux={"info_type": "smiles_rxn_update", "reaction_index": i, "returnable": returnable})
 
         yield format_for_stream("info", f"Starting Reaction SMARTS Agent for reaction {i}", aux={"info_type": "rxn_smarts_init", "reaction_index": i})
 
-        smarts_rxn_response = await smarts_rxn_run_agent(**sub_agent_params, query=text)
+        smarts_rxn_response, agent = await smarts_rxn_run_agent(**sub_agent_params, query=text)
+
+        master_prompt += f"""
+
+        ## SMARTS REACTION AGENT RESPONSE
+        {agent.decode_conversations()}
+
+        """
 
         if smarts_rxn_response:
             content = smarts_rxn_response.get("content", [])
@@ -140,20 +187,28 @@ async def run_service_agent(
 
             values = content_obj["SMARTS_reaction_response"]
             assert type(values) == list, "SMARTS_reaction_response is not a list"
+            
+            assignable["reactions_SMARTS"] = values
+            assignable["invalid_reaction_SMARTS"] = invalid_count
 
-            returnable =  {
+            returnable = {
                 "values": values,
                 "invalid_count": invalid_count
             }
-
-            assignable["SMARTS_reaction"] =  returnable
 
             yield format_for_stream("data", f"Got Reaction SMARTS values for reaction {i}", aux={"info_type": "smarts_rxn_update", "reaction_index": i, "returnable": returnable})
 
 
         yield format_for_stream("info", f"Starting Reaction SMIRKS Agent for reaction {i}", aux={"info_type": "rxn_smirks_init", "reaction_index": i})
 
-        smirks_rxn_response = await smirks_rxn_run_agent(**sub_agent_params, query=text)
+        smirks_rxn_response, agent = await smirks_rxn_run_agent(**sub_agent_params, query=text)
+
+        master_prompt += f"""
+
+        ## SMIRKS REACTION AGENT RESPONSE
+        {agent.decode_conversations()}
+
+        """
 
         if smirks_rxn_response:
             content = smirks_rxn_response.get("content", [])
@@ -166,22 +221,22 @@ async def run_service_agent(
             values = content_obj["SMIRKS_reaction_response"]
             assert type(values) == list, "SMIRKS_reaction_response is not a list"
 
-            # print('values received >>', values)
-            # print('invalid count >>', invalid_count)
+            assignable["reactions_SMIRKS"] = values
+            assignable["invalid_reaction_SMIRKS"] = invalid_count
 
             returnable = {
                 "values": values,
-                "invalid_count": invalid_count 
+                "invalid_count": invalid_count
             }
-
-            assignable["SMIRKS_reaction"] = returnable
-
+    
             yield format_for_stream("data", f"Got Reaction SMIRKS values for reaction {i}", aux={"info_type": "smirks_rxn_update", "reaction_index": i, "returnable": returnable})
 
         master_repo.append(assignable)
         yield format_for_stream("info", f"Completed reaction {i}", aux={"info_type": "reaction_complete", "reaction_index": i, "returnable": returnable})
 
     yield format_for_stream("info", f"Completed the run", aux={"info_type": "run_complete"})
+    yield {"master_prompt" : master_prompt }
+    print("master_repo >>", master_repo)
     yield {"final_csv": master_repo}
 
 

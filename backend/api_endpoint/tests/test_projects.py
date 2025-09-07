@@ -21,7 +21,7 @@ def setup_and_teardown_db():
 
 def test_create_project():
     response = client.post("/projects/", json={"name": "Test Project", "description": "A test project.", "sessions": ["sess1"]})
-    assert response.status_code == 200
+    assert response.status_code == 201  # Changed from 200 to 201 for creation
     data = response.json()
     assert data["name"] == "Test Project"
     assert data["description"] == "A test project."

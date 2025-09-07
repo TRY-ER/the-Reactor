@@ -96,7 +96,8 @@ class HarmonyAdapterBase:
         if self.conversations is None:
             raise ValueError("Conversation is not initialized. Please call init_conversation first.")
         encoding = load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)
-        prompt_token = encoding.render_conversation(self.conversations)
+        prompt_token = encoding.render_conversation(
+            conversation=self.conversations)
         prompt = encoding.decode(prompt_token)       
         return prompt
 

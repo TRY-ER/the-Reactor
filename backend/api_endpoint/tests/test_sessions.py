@@ -31,14 +31,14 @@ def test_create_session():
         "project_id": project_id
     }
     response = client.post("/sessions/", json=session_data)
-    assert response.status_code == 200
+    assert response.status_code == 201  # Changed from 200 to 201 for creation
     data = response.json()
     assert data["name"] == session_data["name"]
     assert data["project_id"] == project_id
     assert data["id"] is not None
     assert data["worker_id"] is not None
-    assert data["content"] is None
-    assert data["state"] == "active"  # Now defaults to "active" instead of None
+    assert data["content"] == []  # Should be empty list, not None
+    assert data["state"] == "init"  # Fixed: new sessions start in "init" state, not "active"
     assert "last_updated" in data
     assert "file_paths" in data
     assert data["file_paths"] == []
@@ -75,11 +75,11 @@ def test_update_session():
     # Update it
     update_data = {
         "name": "sess4", 
-        "content": "{\"updated\": true}", 
+        "content": [{"updated": True}],  # Fixed: should be list of dicts, not JSON string
         "state": "active", 
         "worker_id": "w2",
         "project_id": project_id,
-        "file_paths": ["test.txt"]
+        "file_paths": [{"path": "test.txt", "type": "file"}]  # Fixed: should be list of dicts
     }
     response = client.put(f"/sessions/{sess_id}", json=update_data)
     assert response.status_code == 200
@@ -89,7 +89,7 @@ def test_update_session():
     assert data["worker_id"] == update_data["worker_id"]
     assert data["name"] == update_data["name"]
     assert data["project_id"] == project_id
-    assert data["file_paths"] == ["test.txt"]
+    assert data["file_paths"] == [{"path": "test.txt", "type": "file"}]  # Fixed: expect list of dicts
 
 
 def test_delete_session():

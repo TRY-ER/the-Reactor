@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { MdTableChart, MdClose, MdDelete } from "react-icons/md";
+import type { IconBaseProps } from 'react-icons';
 import Sidebar from '../Sidebar';
-import { projectService, sessionService, type ProjectResponse, type Session } from '../../services';
+import { projectService, sessionService, type ProjectResponse, type Session, type SessionCreate } from '../../services';
 import './ProjectDetails.css';
 
 const ProjectDetails: React.FC = () => {
@@ -18,10 +20,36 @@ const ProjectDetails: React.FC = () => {
     description: ''
   });
   const [newSession, setNewSession] = useState({
-    name: ''
+    name: '',
+    query: '',
+    content: [] as Array<Record<string, any>>,
+    file_paths: [] as Array<Record<string, any>>
   });
   const [showSessionModal, setShowSessionModal] = useState(false);
   const [sessionError, setSessionError] = useState('');
+  
+  // Master CSV state
+  const [masterCsvFile, setMasterCsvFile] = useState<{
+    data: Array<Record<string, any>> | null;
+    headers: string[] | null;
+    exists: boolean;
+    file_path: string;
+    row_count: number;
+    message?: string;
+  } | null>(null);
+  const [loadingMasterCsv, setLoadingMasterCsv] = useState(false);
+  
+  // Master CSV modal states
+  const [masterCsvModal, setMasterCsvModal] = useState<{
+    isOpen: boolean;
+    data: Array<Record<string, any>>;
+    headers: string[];
+    isEditing: boolean;
+  }>({ isOpen: false, data: [], headers: [], isEditing: false });
+  
+  // Master CSV editing state
+  const [editedMasterCsvData, setEditedMasterCsvData] = useState<Array<Record<string, any>>>([]);
+  const [isSavingMasterCsv, setIsSavingMasterCsv] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -33,6 +61,7 @@ const ProjectDetails: React.FC = () => {
   useEffect(() => {
     if (project) {
       fetchSessions();
+      fetchMasterCsv();
     }
   }, [project]);
 
@@ -73,7 +102,16 @@ const ProjectDetails: React.FC = () => {
       const all = await Promise.all(
         project.sessions.map((sid: string) => sessionService.getSession(sid).catch(() => null))
       );
-      setSessions(all.filter(Boolean) as Session[]);
+      const validSessions = all.filter(Boolean) as Session[];
+      
+      // Sort sessions by last_updated date in descending order (most recent first)
+      const sortedSessions = validSessions.sort((a, b) => {
+        const dateA = a.last_updated ? new Date(a.last_updated).getTime() : 0;
+        const dateB = b.last_updated ? new Date(b.last_updated).getTime() : 0;
+        return dateB - dateA; // Descending order (newest first)
+      });
+      
+      setSessions(sortedSessions);
     } catch {
       setSessions([]);
     }
@@ -137,10 +175,25 @@ const ProjectDetails: React.FC = () => {
   const handleCreateSession = async (e: React.FormEvent) => {
     e.preventDefault();
     setSessionError('');
+    
+    if (!project?.id) {
+      setSessionError('Project ID is required');
+      return;
+    }
+    
     try {
-      const created = await sessionService.createSession(newSession);
-      setSessions(prev => [...prev, created]);
-      setNewSession({ name: '' });
+      const sessionData = {
+        ...newSession,
+        project_id: project.id
+      };
+      const created = await sessionService.createSession(sessionData);
+      setSessions(prev => [created, ...prev]); // Add new session at the beginning
+      setNewSession({ 
+        name: '', 
+        query: '', 
+        content: [], 
+        file_paths: [] 
+      });
       setShowSessionModal(false);
 
       // Update the project's sessions array to include the new session
@@ -158,6 +211,91 @@ const ProjectDetails: React.FC = () => {
       console.error('Error creating session:', error);
       setSessionError('Failed to create session');
     }
+  };
+
+  // Master CSV functions
+  const fetchMasterCsv = async () => {
+    if (!project?.id) return;
+    
+    try {
+      setLoadingMasterCsv(true);
+      const result = await projectService.getProjectMasterCsv(project.id);
+      setMasterCsvFile({
+        data: result.data,
+        headers: result.headers,
+        exists: result.exists,
+        file_path: result.file_path,
+        row_count: result.row_count,
+        message: result.message
+      });
+    } catch (error) {
+      console.warn('Failed to fetch master CSV:', error);
+      setMasterCsvFile(null);
+    } finally {
+      setLoadingMasterCsv(false);
+    }
+  };
+
+  const openMasterCsvModal = (data: Array<Record<string, any>>, headers: string[]) => {
+    setMasterCsvModal({ isOpen: true, data, headers, isEditing: false });
+    setEditedMasterCsvData(JSON.parse(JSON.stringify(data))); // Deep copy for editing
+  };
+
+  const closeMasterCsvModal = () => {
+    setMasterCsvModal({ isOpen: false, data: [], headers: [], isEditing: false });
+    setEditedMasterCsvData([]);
+    setIsSavingMasterCsv(false);
+  };
+
+  const toggleMasterCsvEditing = () => {
+    setMasterCsvModal(prev => ({ ...prev, isEditing: !prev.isEditing }));
+  };
+
+  const handleMasterCsvCellChange = (rowIndex: number, column: string, value: string) => {
+    setEditedMasterCsvData(prev => {
+      const newData = [...prev];
+      newData[rowIndex] = { ...newData[rowIndex], [column]: value };
+      return newData;
+    });
+  };
+
+  const deleteMasterCsvRow = (rowIndex: number) => {
+    setEditedMasterCsvData(prev => {
+      const newData = [...prev];
+      newData.splice(rowIndex, 1);
+      return newData;
+    });
+  };
+
+  const saveMasterCsvChanges = async () => {
+    if (!project?.id) return;
+    
+    try {
+      setIsSavingMasterCsv(true);
+      
+      // Save the edited data to the backend
+      const result = await projectService.saveProjectMasterCsv(project.id, editedMasterCsvData);
+      
+      // Update the local state with the saved data
+      setMasterCsvModal(prev => ({ ...prev, data: editedMasterCsvData, isEditing: false }));
+      setMasterCsvFile(prev => prev ? { 
+        ...prev, 
+        data: editedMasterCsvData,
+        row_count: editedMasterCsvData.length 
+      } : null);
+      
+      console.log('Master CSV data saved successfully:', result);
+      
+    } catch (error) {
+      console.error('Failed to save master CSV data:', error);
+      alert('Failed to save master CSV data. Please try again.');
+    } finally {
+      setIsSavingMasterCsv(false);
+    }
+  };
+
+  const resetMasterCsvChanges = () => {
+    setEditedMasterCsvData(JSON.parse(JSON.stringify(masterCsvModal.data)));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -254,11 +392,27 @@ const ProjectDetails: React.FC = () => {
             <div className="project-actions">
               {!isEditing && (
                 <>
-                  <button onClick={handleEdit} className="btn-primary">
-                    Edit Project
+                  <button 
+                    onClick={handleEdit} 
+                    className="btn-icon btn-primary" 
+                    data-tooltip="Edit Project"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                      <path d="m18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
                   </button>
-                  <button onClick={handleDelete} className="btn-danger">
-                    Delete Project
+                  <button 
+                    onClick={handleDelete} 
+                    className="btn-icon btn-danger" 
+                    data-tooltip="Delete Project"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="3,6 5,6 21,6"/>
+                      <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/>
+                      <line x1="10" y1="11" x2="10" y2="17"/>
+                      <line x1="14" y1="11" x2="14" y2="17"/>
+                    </svg>
                   </button>
                 </>
               )}
@@ -309,7 +463,6 @@ const ProjectDetails: React.FC = () => {
                   </div>
                 </div>
                 <div className="project-description">
-                  <h2>About this project</h2>
                   <p>{project.description}</p>
                 </div>
                 <div className="project-metadata">
@@ -319,24 +472,126 @@ const ProjectDetails: React.FC = () => {
                   </div>
                 </div>
                 {!isEditing && (
-                  <div className="project-sessions-list">
-                    <div className="sessions-header">
-                      <h2>Sessions</h2>
-                      <button className="add-session-btn" onClick={() => setShowSessionModal(true)} title="Add Session">
-                        +
-                      </button>
+                  <>
+                    {/* Master CSV Section */}
+                    <div className="project-master-csv-section">
+                      <div className="master-csv-header">
+                        <h2>Project Master CSV</h2>
+                        <span className="master-csv-subtitle">Consolidated project data</span>
+                      </div>
+                      {loadingMasterCsv ? (
+                        <div className="master-csv-loading">
+                          <p>Loading master CSV...</p>
+                        </div>
+                      ) : masterCsvFile?.exists ? (
+                        <div className="master-csv-item">
+                          <div className="master-csv-icon">
+                            {React.createElement(MdTableChart as React.ComponentType<IconBaseProps>, { 
+                              size: 24,
+                              title: "Master CSV Data File" 
+                            })}
+                          </div>
+                          <div className="master-csv-info">
+                            <h4>Master Data</h4>
+                            <div className="master-csv-details">
+                              <span className="master-csv-size">
+                                {masterCsvFile.row_count} rows
+                              </span>
+                              {masterCsvFile.headers && (
+                                <span className="master-csv-columns">
+                                  {masterCsvFile.headers.length} columns
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="master-csv-actions">
+                            {masterCsvFile.data && masterCsvFile.headers && (
+                              <>
+                                <button 
+                                  className="master-csv-btn view-btn"
+                                  onClick={() => openMasterCsvModal(masterCsvFile.data!, masterCsvFile.headers!)}
+                                  title="View master CSV data table"
+                                >
+                                  View Table
+                                </button>
+                                <button 
+                                  className="master-csv-btn download-btn"
+                                  onClick={() => {
+                                    // Convert data back to CSV format
+                                    const csvContent = [
+                                      masterCsvFile.headers!.join(','),
+                                      ...masterCsvFile.data!.map(row => 
+                                        masterCsvFile.headers!.map(header => 
+                                          JSON.stringify(row[header] || '')
+                                        ).join(',')
+                                      )
+                                    ].join('\n');
+                                    
+                                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                                    const url = URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = 'master.csv';
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                    URL.revokeObjectURL(url);
+                                  }}
+                                  title="Download master CSV file"
+                                >
+                                  Download
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="master-csv-empty">
+                          <p>No master CSV file found.</p>
+                          <p className="master-csv-hint">
+                            {masterCsvFile?.message || "Merge session data or create a master CSV to get started."}
+                          </p>
+                        </div>
+                      )}
                     </div>
-                    {sessions.length === 0 ? <p>No sessions for this project.</p> : (
-                      <ul>
-                        {sessions.map(sess => (
-                          <li key={sess.id}>
-                            <span className="session-link" onClick={() => navigate(`/project/${project.id}/session/${sess.id}`)}>{sess.name}</span>
-                            <span className="session-id">{sess.id}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                    
+                    {/* Sessions Section */}
+                    <div className="project-sessions-list">
+                      <div className="sessions-header">
+                        <h2>Sessions</h2>
+                        <button className="add-session-btn" onClick={() => setShowSessionModal(true)} title="Add Session">
+                          +
+                        </button>
+                      </div>
+                      {sessions.length === 0 ? <p>No sessions for this project.</p> : (
+                        <ul>
+                          {sessions.map(sess => (
+                            <li key={sess.id} className="session-item">
+                              <div 
+                                className="session-container" 
+                                onClick={() => navigate(`/project/${project.id}/session/${sess.id}`)}
+                              >
+                                <div className="session-main-content">
+                                  <span className="session-name">{sess.name}</span>
+                                  <span className={`session-state-badge ${sess.state || 'unknown'}`}>
+                                    {sess.state || 'unknown'}
+                                  </span>
+                                </div>
+                                <div className="session-details">
+                                  <span className="session-id">ID: {sess.id}</span>
+                                  {sess.last_updated && (
+                                    <span className="session-updated">
+                                      Updated: {new Date(sess.last_updated).toLocaleDateString()}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
             )}
@@ -366,6 +621,17 @@ const ProjectDetails: React.FC = () => {
                     required
                   />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="sessionQuery">Query (Optional)</label>
+                  <textarea
+                    id="sessionQuery"
+                    name="query"
+                    value={newSession.query}
+                    onChange={handleNewSessionChange}
+                    placeholder="Enter chemical reaction query (e.g., 8 Fe + S₈ → 8 FeS)"
+                    rows={3}
+                  />
+                </div>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn-secondary" onClick={() => setShowSessionModal(false)}>
@@ -377,6 +643,138 @@ const ProjectDetails: React.FC = () => {
               </div>
               {sessionError && <div className="error-banner">{sessionError}</div>}
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Master CSV Table Modal */}
+      {masterCsvModal.isOpen && (
+        <div className="modal-overlay" onClick={closeMasterCsvModal}>
+          <div className="modal-content csv-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <div className="modal-title">
+                <h2>Master CSV Data Table</h2>
+                <span className="csv-info">
+                  {masterCsvModal.data.length} rows × {masterCsvModal.headers.length} columns
+                </span>
+              </div>
+              <div className="modal-actions">
+                <button
+                  className={`modal-btn edit-toggle-btn ${masterCsvModal.isEditing ? 'active' : ''}`}
+                  onClick={toggleMasterCsvEditing}
+                  disabled={isSavingMasterCsv}
+                >
+                  {masterCsvModal.isEditing ? 'View Mode' : 'Edit Mode'}
+                </button>
+                <button 
+                  className="modal-close-btn"
+                  onClick={closeMasterCsvModal}
+                  title="Close"
+                >
+                  {React.createElement(MdClose as React.ComponentType<IconBaseProps>, { size: 24 })}
+                </button>
+              </div>
+            </div>
+            <div className="modal-body csv-modal-body">
+              <div className="csv-table-container">
+                <table className="csv-table">
+                  <thead>
+                    <tr>
+                      {masterCsvModal.headers.map((header, index) => (
+                        <th key={index} className="csv-header">
+                          {header}
+                        </th>
+                      ))}
+                      {masterCsvModal.isEditing && (
+                        <th className="csv-header csv-actions-header">
+                          Actions
+                        </th>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(masterCsvModal.isEditing ? editedMasterCsvData : masterCsvModal.data).map((row, rowIndex) => (
+                      <tr key={rowIndex} className="csv-row">
+                        {masterCsvModal.headers.map((header, colIndex) => (
+                          <td key={colIndex} className="csv-cell">
+                            {masterCsvModal.isEditing ? (
+                              <input
+                                type="text"
+                                className="csv-cell-input"
+                                value={editedMasterCsvData[rowIndex]?.[header] || ''}
+                                onChange={(e) => handleMasterCsvCellChange(rowIndex, header, e.target.value)}
+                              />
+                            ) : (
+                              <span className="csv-cell-value">
+                                {row[header] || ''}
+                              </span>
+                            )}
+                          </td>
+                        ))}
+                        {masterCsvModal.isEditing && (
+                          <td className="csv-cell csv-actions-cell">
+                            <button
+                              className="csv-delete-btn"
+                              onClick={() => deleteMasterCsvRow(rowIndex)}
+                              title="Delete this row"
+                              disabled={isSavingMasterCsv}
+                            >
+                              {React.createElement(MdDelete as React.ComponentType<IconBaseProps>, { size: 16 })}
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="modal-footer">
+              {masterCsvModal.isEditing && (
+                <div className="edit-actions">
+                  <button
+                    className="modal-btn save-btn"
+                    onClick={saveMasterCsvChanges}
+                    disabled={isSavingMasterCsv}
+                  >
+                    {isSavingMasterCsv ? 'Saving...' : 'Save Changes'}
+                  </button>
+                  <button
+                    className="modal-btn reset-btn"
+                    onClick={resetMasterCsvChanges}
+                    disabled={isSavingMasterCsv}
+                  >
+                    Reset
+                  </button>
+                </div>
+              )}
+              <button
+                className="modal-btn download-btn"
+                onClick={() => {
+                  const dataToDownload = masterCsvModal.isEditing ? editedMasterCsvData : masterCsvModal.data;
+                  const csvContent = [
+                    masterCsvModal.headers.join(','),
+                    ...dataToDownload.map(row => 
+                      masterCsvModal.headers.map(header => 
+                        JSON.stringify(row[header] || '')
+                      ).join(',')
+                    )
+                  ].join('\n');
+                  
+                  const blob = new Blob([csvContent], { type: 'text/csv' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'master.csv';
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                }}
+              >
+                Download CSV
+              </button>
+            </div>
           </div>
         </div>
       )}

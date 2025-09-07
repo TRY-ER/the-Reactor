@@ -89,7 +89,7 @@ This API provides project management functionality using FastAPI and SQLite.
     }
     ```
   - Response: Session object with `id`, `name`, `content`, `state`, `last_updated`, `worker_id`, `project_id`
-  - Note: `id` is automatically generated, `worker_id` is assigned randomly, `content` and `state` are initially null. If no state is provided, it defaults to "active". **project_id is required** - you must create a project first.
+  - Note: `id` is automatically generated, `worker_id` is assigned randomly, `content` is initially empty. If no state is provided, it defaults to "init". Sessions change to "active" when a worker is started. **project_id is required** - you must create a project first.
 
 - **GET /sessions/**
   - List all sessions (supports `skip` and `limit` query params)
