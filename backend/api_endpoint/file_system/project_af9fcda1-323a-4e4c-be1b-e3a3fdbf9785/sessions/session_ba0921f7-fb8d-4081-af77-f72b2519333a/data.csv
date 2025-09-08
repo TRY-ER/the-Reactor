@@ -1,2 +1,0 @@
-index,reactions_text,reactions_composition_SMILES,invalid_SMILE,reactions_SMILES,invalid_reaction_SMILES,reactions_SMARTS,invalid_reaction_SMARTS,reactions_SMIRKS,invalid_reaction_SMIRKS
-0,4H2 + O2 -> 2 H2O,"['[H][H]', 'O=O', 'O']",0,['[H][H].[H][H].[H][H].[H][H].O=O>>O.O'],0,['[H][H].[O]=[O]>>O.O'],0,['[H:1][H:2].[H:3][H:4].[O:5]=[O:6]>>[H:1][O:5][H:3].[H:2][O:6][H:4]'],0

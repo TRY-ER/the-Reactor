@@ -107,6 +107,13 @@ class SessionWorker:
             await self.content_queue.put({"_type": "completion", "status": "completed"})
             
         except Exception as e:
+            # Debug block starts
+
+            import traceback
+            traceback.print_exc()
+
+            # Debug block ends
+
             self.status = "error"
             self.error_state = str(e)
             self.is_complete = True

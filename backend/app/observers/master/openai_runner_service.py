@@ -50,13 +50,13 @@ async def run_service_agent(
     parser_response, agent = await parser_run_agent(**params)     
 
     # print('agent conv >>', agent.decode_conversations())
+    if agent != None:
+        master_prompt += f"""
 
-    master_prompt += f"""
+        ## PARSER AGENT RESPONSE
+        {agent.decode_conversations()}
 
-    ## PARSER AGENT RESPONSE
-    {agent.decode_conversations()}
-
-    """
+        """
 
     assert type(parser_response) == list, "The parser is expected to return a list !"
 
@@ -70,8 +70,6 @@ async def run_service_agent(
     sub_agent_params = {
         x: y for x, y in params.items() if x not in ["agent_name", "query"]
     }
-
-    print('parser response >>', parser_response)
 
     master_repo = []
 
@@ -92,15 +90,19 @@ async def run_service_agent(
 
         smiles_response, agent = await smiles_run_agent(**sub_agent_params, query=text) 
 
+        if agent != None:
+            master_prompt += f"""
 
-        master_prompt += f"""
+            ## SMILES AGENT RESPONSE
+            {agent.decode_conversations()}
 
-        ## SMILES AGENT RESPONSE
-        {agent.decode_conversations()}
+            """
 
-        """
+        if agent == None and "error" in smiles_response:
+            yield format_for_stream("error", f"Error from SMILES agent for reaction {i}: {smiles_response['error']}", aux={"info_type": "smiles_error", "reaction_index": i})
+            continue      
 
-        if smiles_response:
+        elif smiles_response:
             content = smiles_response.get("content", [])
             content_text = content[0]["text"]
             content_obj = json.loads(content_text) 
@@ -126,26 +128,21 @@ async def run_service_agent(
 
         yield format_for_stream("info", f"Starting Reaction SMILES Agent for reaction {i}", aux={"info_type": "rxn_smiles_init", "reaction_index": i})
 
-        try:
-            smiles_rxn_response, agent = await smiles_rxn_run_agent(**sub_agent_params, query=text)
-            agent.decode_conversations()
-            ...
-        except Exception as e:
-            print("Error in decoding conversations >>", e)
-            import traceback
-            print("Traceback:")
-            traceback.print_exc()
+        smiles_rxn_response, agent = await smiles_rxn_run_agent(**sub_agent_params, query=text)
+       
 
-        master_prompt += f"""
+        if agent != None: 
+            master_prompt += f"""
 
-        ## SMILES REACTION AGENT RESPONSE
-        {agent.decode_conversations()}
+            ## SMILES REACTION AGENT RESPONSE
+            {agent.decode_conversations()}
 
-        """
-        # print("SMILES REACTION PART")
-        # print("-----------")
+            """
 
-        if smiles_rxn_response:
+        if agent == None and "error" in smiles_rxn_response:
+            yield format_for_stream("error", f"Error from SMILES reaction agent for reaction {i}: {smiles_rxn_response['error']}", aux={"info_type": "smiles_rxn_error", "reaction_index": i})
+
+        elif smiles_rxn_response:
             content = smiles_rxn_response.get("content", [])
             content_text = content[0]["text"]
             content_obj = json.loads(content_text) 
@@ -170,14 +167,18 @@ async def run_service_agent(
 
         smarts_rxn_response, agent = await smarts_rxn_run_agent(**sub_agent_params, query=text)
 
-        master_prompt += f"""
 
-        ## SMARTS REACTION AGENT RESPONSE
-        {agent.decode_conversations()}
+        if agent != None:
+            master_prompt += f"""
 
-        """
+            {agent.decode_conversations()}
 
-        if smarts_rxn_response:
+            """
+        
+        if agent == None and "error" in smarts_rxn_response:
+            yield format_for_stream("error", f"Error from SMARTS reaction agent for reaction {i}: {smarts_rxn_response['error']}", aux={"info_type": "smarts_rxn_error", "reaction_index": i})
+
+        elif smarts_rxn_response:
             content = smarts_rxn_response.get("content", [])
             content_text = content[0]["text"]
             content_obj = json.loads(content_text) 
@@ -203,14 +204,17 @@ async def run_service_agent(
 
         smirks_rxn_response, agent = await smirks_rxn_run_agent(**sub_agent_params, query=text)
 
-        master_prompt += f"""
+        if agent != None:
+            master_prompt += f"""
 
-        ## SMIRKS REACTION AGENT RESPONSE
-        {agent.decode_conversations()}
+            ## SMIRKS REACTION AGENT RESPONSE
+            {agent.decode_conversations()}
 
-        """
+            """
+        if agent == None and "error" in smirks_rxn_response:
+            yield format_for_stream("error", f"Error from SMIRKS reaction agent for reaction {i}: {smirks_rxn_response['error']}", aux={"info_type": "smirks_rxn_error", "reaction_index": i})
 
-        if smirks_rxn_response:
+        elif smirks_rxn_response:
             content = smirks_rxn_response.get("content", [])
             content_text = content[0]["text"]
             content_obj = json.loads(content_text) 

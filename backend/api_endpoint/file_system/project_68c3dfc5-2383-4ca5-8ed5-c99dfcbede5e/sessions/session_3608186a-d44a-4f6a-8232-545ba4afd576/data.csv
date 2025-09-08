@@ -1,0 +1,3 @@
+index,reactions_text,reactions_composition_SMILES,invalid_SMILE,reactions_SMILES,invalid_reaction_SMILES,reactions_SMARTS,invalid_reaction_SMARTS,reactions_SMIRKS,invalid_reaction_SMIRKS
+0,CH3COOH + CH3CH2OH -> CH3COOCH2CH3 + H2O,"['CC(=O)O', 'CCO', 'CC(=O)OCC', 'O']",0,['CC(=O)O.CCO>>CC(=O)OCC.O'],0,['CC(=O)O.CCO>>CCOC(=O)C.O'],0,['[C:1](=O)[O:2][H:3].[C:4][C:5][O:6][H:7]>>[C:1](=O)[O:6][C:4][C:5].[O:2]([H:3])[H:7]'],0
+1,CH3COOCH2CH3 + NaOH -> CH3COONa + CH3CH2OH,"['CC(=O)OCC', '[Na+].[OH-]', '[Na+].CC(=O)[O-]', 'CCO']",0,['CC(=O)OCC.[Na+].[OH-]>>[Na+].CC(=O)[O-].CCO'],0,['[C](=O)O[CH2][CH3].[Na][OH]>>[C](=O)[O-].[Na].[CH3][CH2][OH]'],0,['[C:1](=O)[O:2][C:3].[O-:4]>>[C:1](=O)[O-:4].[O:2][C:3]'],0

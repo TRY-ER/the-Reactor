@@ -1,0 +1,2 @@
+index,reactions_text,reactions_composition_SMILES,invalid_SMILE,reactions_SMILES,invalid_reaction_SMILES,reactions_SMARTS,invalid_reaction_SMARTS,reactions_SMIRKS,invalid_reaction_SMIRKS
+0,NaCl(s) → Na+(aq) + Cl−(aq),"['[Na+].[Cl-]', '[Na+]', '[Cl-]']",0,['[Na+].[Cl-]>>[Na+].[Cl-]'],0,['[Na][Cl]>>[Na+].[Cl-]'],0,,

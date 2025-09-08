@@ -33,6 +33,7 @@ async def run_agent(
     query: str,
     agent_name: str = "SMILES_converter_agent",
     return_agent= False,
+    max_retries: int = 3,
     *args,
     **kwargs
 ):
@@ -53,12 +54,25 @@ async def run_agent(
         "validator_key": "SMILES_response",
         "return_agent": return_agent,
     }
+
     if return_agent:
-        result, agent = await schema_run_agent(**params)
-        return result, agent
+        while max_retries > 0:
+            max_retries -= 1
+            try:
+                result, agent = await schema_run_agent(**params)
+                return result, agent
+            except Exception as e:
+                if max_retries == 0:
+                    return {"error": str(e)}, None 
     else:
-        result = await schema_run_agent(**params)
-        return result
+        while max_retries > 0:
+            max_retries -= 1
+            try:
+                result = await schema_run_agent(**params)
+                return result
+            except Exception as e:
+                if max_retries == 0:
+                    return {"error": str(e)} 
                             
 
 if __name__ == "__main__":
