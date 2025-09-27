@@ -9,26 +9,26 @@ dotenv.load_dotenv()
 
 
 MODEL_PARAMS = {
-    "groq": {
-        "api_key": os.getenv("GROQ_API_KEY"),
-        "models": [
-            "groq/moonshotai/kimi-k2-instruct",
-            # "groq/openai/gpt-oss-120b",
-            # "groq/openai/gpt-oss-20b",
-        ]
-    },
+    # "groq": {
+    #     "api_key": os.getenv("GROQ_API_KEY"),
+    #     "models": [
+    #         "groq/moonshotai/kimi-k2-instruct",
+    #         # "groq/openai/gpt-oss-120b",
+    #         # "groq/openai/gpt-oss-20b",
+    #     ]
+    # },
     # "openai": {
     #     "api_key": os.getenv("OPENAI_API_KEY"),
     #     "models": [
     #         "gpt-5-2025-08-07",
     #     ]
     # },
-    # "xai": {
-    #     "api_key": os.getenv("XAI_API_KEY"),
-    #     "models": [
-    #         "xai/grok-4-0709",
-    #     ]
-    # },
+    "xai": {
+        "api_key": os.getenv("XAI_API_KEY"),
+        "models": [
+            "xai/grok-4-0709",
+        ]
+    },
     # "google": {
     #     "api_key": os.getenv("GEMINI_API_KEY"),
     #     "models": [

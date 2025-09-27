@@ -112,7 +112,7 @@ async def run_observation(experiment_name: str,
         for i, model_name in enumerate(MODEL_NAMES):
             reaction_progress = 1 
             for values in provide_reaction_details(
-                "/home/kalki/src/valency/reactor/analysis/data/chemical_reaction_types_completed_urls_modified.csv",
+                "/home/kalki/src/valency/reactor/analysis/final_all_eq_added.csv",
                     column_to_access=["Serial No.", "Reaction Type", "Generated Prompt"],
                     custom_range=data_range):
                 reaction_type = values.get("Reaction Type", "")
@@ -201,7 +201,7 @@ if __name__ == "__main__":
     dotenv.load_dotenv()
     import asyncio
     asyncio.run(run_observation(
-        experiment_name='experiment-22-08-2025-<18-20>',
+        experiment_name='experiment-11-09-2025-<14-25>',
         # experiment_name='experiment-test',
-        # data_range=[x for x in range(1, 10)]
+        data_range=[59]
     ))

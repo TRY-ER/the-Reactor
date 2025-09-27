@@ -45,8 +45,6 @@ reactor/
 
 #### API Server
 ```bash
-# Navigate to backend API directory
-cd backend/api_endpoint
 
 # Install Python dependencies
 pip install -r requirements.txt
@@ -125,7 +123,6 @@ DATABASE_URL=sqlite:///./projects.db
 ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
 
 # API Configuration
-API_KEY=your_api_key_here
 DEBUG=True
 
 # External Services
